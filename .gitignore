@@ -1,6 +1,7 @@
-*.class
-
-# Package Files #
-*.jar
-*.war
-*.ear
+.settings
+.checkstyle
+*.zip
+/*.jpage
+/bin
+/client/mcmod.info
+/client/version.properties

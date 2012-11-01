@@ -1,0 +1,17 @@
+[
+{
+  "modid": "mod_SpawnChecker",
+  "name": "SpawnChecker",
+  "description": "Drawing monster spawn points, slime chunks, and the MobSpawner informations.",
+  "version": "1.4.2 Ver0.1 #113",
+  "mcversion": "1.4.2",
+  "logoFile": "/spawnchecker_logo.png",
+  "url": "http://forum.minecraftuser.jp/viewtopic.php?t=3835",
+  "updateUrl": "http://forum.minecraftuser.jp/viewtopic.php?t=3835",
+  "authors": ["alalwww"],
+  "credits": "By alalwww, based on an original idea and mod by filippo",
+  "parent": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
