@@ -51,7 +51,7 @@ public class SpawnableCheckHelper
             return 0.5F - w.getLightBrightness(x, y, z) >= 0.0f;
         }
 
-        int time = (int)(w.getWorldTime() % 24000L);
+        int time = (int) (w.getWorldTime() % 24000L);
         int lightValueMinus4;
 
         if (time < 12000)
@@ -126,11 +126,6 @@ public class SpawnableCheckHelper
         World w = game.theWorld;
         entity.setPosition((double) x + 0.5F, (double) y, (double) z + 0.5F);
 
-        if (entity instanceof EntitySlime)
-        {
-            ((EntitySlime) entity).setSlimeSize(1);
-        }
-
         AxisAlignedBB bb = entity.boundingBox.copy();
 
         if (!w.getCollidingBoundingBoxes(entity, bb).isEmpty())
@@ -149,4 +144,5 @@ public class SpawnableCheckHelper
     private SpawnableCheckHelper()
     {
     }
+
 }

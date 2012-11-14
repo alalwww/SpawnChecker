@@ -7,6 +7,7 @@ import net.minecraft.src.EntitySilverfish;
 import net.minecraft.src.EntitySkeleton;
 import net.minecraft.src.EntitySlime;
 import net.minecraft.src.EntitySpider;
+import net.minecraft.src.SpawnCheckerProtectedAccessHelper;
 import net.minecraft.src.World;
 
 /**
@@ -34,7 +35,7 @@ class MeasurementEntity
         silverfish = new EntitySilverfish(w);
         skeleton = new EntitySkeleton(w);
         slime = new EntitySlime(w);
-        slime.setSlimeSize(1);
+        SpawnCheckerProtectedAccessHelper.setSlimeSize(slime, 1);
         spider = new EntitySpider(w);
     }
 

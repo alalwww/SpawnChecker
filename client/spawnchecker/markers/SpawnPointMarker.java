@@ -87,18 +87,12 @@ public class SpawnPointMarker extends MarkerBase<SpawnPointMarker>
 
     private SpawnPointMarker setVertices(double yOffset, double innerBoxSize, double innerBoxOffset)
     {
-//        double minX = stone.getMinX() + (double) x;
-        double minX = stone.func_83009_v() + (double) x;
-//        double minY = stone.getMinY() + (double)(y - 1.0D);
-        double minY = stone.func_83008_x() + (double)(y - 1.0D);
-//        double minZ = stone.getMinZ() + (double) z;
-        double minZ = stone.func_83005_z() + (double) z;
-//        double maxX = stone.getMaxX() + (double) x;
-        double maxX = stone.func_83007_w() + (double) x;
-//        double maxY = stone.getMaxY() + (double)(y - 1.0D);
-        double maxY = stone.func_83010_y() + (double)(y - 1.0D);
-//        double maxZ = stone.getMaxZ() + (double) z;
-        double maxZ = stone.func_83006_A() + (double) z;
+        double minX = stone.getBlockBoundsMinX() + (double) x;
+        double minY = stone.getBlockBoundsMinY() + (double) (y - 1.0D);
+        double minZ = stone.getBlockBoundsMinZ() + (double) z;
+        double maxX = stone.getBlockBoundsMaxX() + (double) x;
+        double maxY = stone.getBlockBoundsMaxY() + (double) (y - 1.0D);
+        double maxZ = stone.getBlockBoundsMaxZ() + (double) z;
         outerMinX = minX - BLOCK_SURFACE_MARGIN;
         outerMinY = minY - BLOCK_SURFACE_MARGIN;
         outerMinZ = minZ - BLOCK_SURFACE_MARGIN;

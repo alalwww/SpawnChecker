@@ -33,7 +33,7 @@ import spawnchecker.SpawnChecker;
  */
 public class mod_SpawnChecker extends BaseMod
 {
-    private static final String VERSION = "141v1 #113";
+    private static final String VERSION = "144v1 #115";
 
     /**
      * 難読化されている場合 true、Eclipse 上での実行時は false.

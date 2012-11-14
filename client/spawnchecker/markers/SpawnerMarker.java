@@ -87,29 +87,23 @@ public class SpawnerMarker extends MarkerBase<SpawnerMarker>
     private void setVertices()
     {
         Block spawner = Block.mobSpawner;
-//        centerMinX = spawner.getMinX() + x - BLOCK_SURFACE_MARGIN;
-        centerMinX = spawner.func_83009_v() + x - BLOCK_SURFACE_MARGIN;
-//        centerMinY = spawner.getMinY() + y - BLOCK_SURFACE_MARGIN;
-        centerMinY = spawner.func_83008_x() + y - BLOCK_SURFACE_MARGIN;
-//        centerMinZ = spawner.getMinZ() + z - BLOCK_SURFACE_MARGIN;
-        centerMinZ = spawner.func_83005_z() + z - BLOCK_SURFACE_MARGIN;
-//        centerMaxX = spawner.getMaxX() + x + BLOCK_SURFACE_MARGIN;
-        centerMaxX = spawner.func_83007_w() + x + BLOCK_SURFACE_MARGIN;
-//        centerMaxY = spawner.getMaxY() + y + BLOCK_SURFACE_MARGIN;
-        centerMaxY = spawner.func_83010_y() + y + BLOCK_SURFACE_MARGIN;
-//        centerMaxZ = spawner.getMaxZ() + z + BLOCK_SURFACE_MARGIN;
-        centerMaxZ = spawner.func_83006_A() + z + BLOCK_SURFACE_MARGIN;
-        areaMinX = (double)(x - 4);
-        areaMinY = (double)(y - 1);
-        areaMinZ = (double)(z - 4);
-        areaMaxX = (double)(x + 4);
-        areaMaxY = (double)(y + 2);
-        areaMaxZ = (double)(z + 4);
-        duplicationAreaMinX = (double)(x - 8);
-        duplicationAreaMinY = (double)(y - 4);
-        duplicationAreaMinZ = (double)(z - 8);
-        duplicationAreaMaxX = (double)(x + 9);
-        duplicationAreaMaxY = (double)(y + 5);
-        duplicationAreaMaxZ = (double)(z + 9);
+        centerMinX = spawner.getBlockBoundsMinX() + x - BLOCK_SURFACE_MARGIN;
+        centerMinY = spawner.getBlockBoundsMinY() + y - BLOCK_SURFACE_MARGIN;
+        centerMinZ = spawner.getBlockBoundsMinZ() + z - BLOCK_SURFACE_MARGIN;
+        centerMaxX = spawner.getBlockBoundsMaxX() + x + BLOCK_SURFACE_MARGIN;
+        centerMaxY = spawner.getBlockBoundsMaxY() + y + BLOCK_SURFACE_MARGIN;
+        centerMaxZ = spawner.getBlockBoundsMaxZ() + z + BLOCK_SURFACE_MARGIN;
+        areaMinX = (double) (x - 4);
+        areaMinY = (double) (y - 1);
+        areaMinZ = (double) (z - 4);
+        areaMaxX = (double) (x + 4);
+        areaMaxY = (double) (y + 2);
+        areaMaxZ = (double) (z + 4);
+        duplicationAreaMinX = (double) (x - 8);
+        duplicationAreaMinY = (double) (y - 4);
+        duplicationAreaMinZ = (double) (z - 8);
+        duplicationAreaMaxX = (double) (x + 9);
+        duplicationAreaMaxY = (double) (y + 5);
+        duplicationAreaMaxZ = (double) (z + 9);
     }
 }

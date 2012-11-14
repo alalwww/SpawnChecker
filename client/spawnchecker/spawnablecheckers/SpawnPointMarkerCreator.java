@@ -56,23 +56,19 @@ class SpawnPointMarkerCreator
 
         if (bid == Block.snow.blockID)
         {
-//            return Block.snow.getMaxY();
-            return Block.snow.func_83010_y();
+            return Block.snow.getBlockBoundsMaxY();
         }
         else if (bid == Block.rail.blockID)
         {
-//            return Block.rail.getMaxY();
-            return Block.rail.func_83010_y();
+            return Block.rail.getBlockBoundsMaxY();
         }
         else if (bid == Block.railDetector.blockID)
         {
-//            return Block.railDetector.getMaxY();
-            return Block.railDetector.func_83010_y();
+            return Block.railDetector.getBlockBoundsMaxY();
         }
         else if (bid == Block.railPowered.blockID)
         {
-//            return Block.railPowered.getMaxY();
-            return Block.railPowered.func_83010_y();
+            return Block.railPowered.getBlockBoundsMaxY();
         }
         else if (bid == Block.lever.blockID)
         {
