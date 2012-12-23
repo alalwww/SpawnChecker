@@ -1,6 +1,79 @@
 package spawnchecker;
 
-import static net.minecraft.src.mod_SpawnChecker.*;
+import static net.minecraft.src.mod_SpawnChecker.brightness;
+import static net.minecraft.src.mod_SpawnChecker.checkMinDuration;
+import static net.minecraft.src.mod_SpawnChecker.duplicationAreaAlpha;
+import static net.minecraft.src.mod_SpawnChecker.duplicationAreaBlue;
+import static net.minecraft.src.mod_SpawnChecker.duplicationAreaGreen;
+import static net.minecraft.src.mod_SpawnChecker.duplicationAreaRed;
+import static net.minecraft.src.mod_SpawnChecker.enabledSpawnerVisualizerRightClick;
+import static net.minecraft.src.mod_SpawnChecker.enablingItemsCSV;
+import static net.minecraft.src.mod_SpawnChecker.entityOffsetX;
+import static net.minecraft.src.mod_SpawnChecker.entityOffsetY;
+import static net.minecraft.src.mod_SpawnChecker.entityOffsetZ;
+import static net.minecraft.src.mod_SpawnChecker.infoBlue;
+import static net.minecraft.src.mod_SpawnChecker.infoGreen;
+import static net.minecraft.src.mod_SpawnChecker.infoHOffset;
+import static net.minecraft.src.mod_SpawnChecker.infoRed;
+import static net.minecraft.src.mod_SpawnChecker.infoVOffset;
+import static net.minecraft.src.mod_SpawnChecker.informationTimeout;
+import static net.minecraft.src.mod_SpawnChecker.marker1Alpha;
+import static net.minecraft.src.mod_SpawnChecker.marker1Blue;
+import static net.minecraft.src.mod_SpawnChecker.marker1Green;
+import static net.minecraft.src.mod_SpawnChecker.marker1Red;
+import static net.minecraft.src.mod_SpawnChecker.marker2Alpha;
+import static net.minecraft.src.mod_SpawnChecker.marker2Blue;
+import static net.minecraft.src.mod_SpawnChecker.marker2Green;
+import static net.minecraft.src.mod_SpawnChecker.marker2Red;
+import static net.minecraft.src.mod_SpawnChecker.marker3Alpha;
+import static net.minecraft.src.mod_SpawnChecker.marker3Blue;
+import static net.minecraft.src.mod_SpawnChecker.marker3Green;
+import static net.minecraft.src.mod_SpawnChecker.marker3Red;
+import static net.minecraft.src.mod_SpawnChecker.marker4Alpha;
+import static net.minecraft.src.mod_SpawnChecker.marker4Blue;
+import static net.minecraft.src.mod_SpawnChecker.marker4Green;
+import static net.minecraft.src.mod_SpawnChecker.marker4Red;
+import static net.minecraft.src.mod_SpawnChecker.marker5Alpha;
+import static net.minecraft.src.mod_SpawnChecker.marker5Blue;
+import static net.minecraft.src.mod_SpawnChecker.marker5Green;
+import static net.minecraft.src.mod_SpawnChecker.marker5Red;
+import static net.minecraft.src.mod_SpawnChecker.modeValue;
+import static net.minecraft.src.mod_SpawnChecker.optionSC;
+import static net.minecraft.src.mod_SpawnChecker.optionSF;
+import static net.minecraft.src.mod_SpawnChecker.optionSV;
+import static net.minecraft.src.mod_SpawnChecker.optionSetSC;
+import static net.minecraft.src.mod_SpawnChecker.optionSetSF;
+import static net.minecraft.src.mod_SpawnChecker.optionSetSV;
+import static net.minecraft.src.mod_SpawnChecker.rangeHorizontal;
+import static net.minecraft.src.mod_SpawnChecker.rangeVertical;
+import static net.minecraft.src.mod_SpawnChecker.slimeChunkAlpha;
+import static net.minecraft.src.mod_SpawnChecker.slimeChunkBlue;
+import static net.minecraft.src.mod_SpawnChecker.slimeChunkGreen;
+import static net.minecraft.src.mod_SpawnChecker.slimeChunkRed;
+import static net.minecraft.src.mod_SpawnChecker.spawnerActivateAreaAlpha;
+import static net.minecraft.src.mod_SpawnChecker.spawnerActivateAreaBlue;
+import static net.minecraft.src.mod_SpawnChecker.spawnerActivateAreaGreen;
+import static net.minecraft.src.mod_SpawnChecker.spawnerActivateAreaLineAlpha;
+import static net.minecraft.src.mod_SpawnChecker.spawnerActivateAreaLineBlue;
+import static net.minecraft.src.mod_SpawnChecker.spawnerActivateAreaLineGreen;
+import static net.minecraft.src.mod_SpawnChecker.spawnerActivateAreaLineRed;
+import static net.minecraft.src.mod_SpawnChecker.spawnerActivateAreaRed;
+import static net.minecraft.src.mod_SpawnChecker.spawnerAlpha;
+import static net.minecraft.src.mod_SpawnChecker.spawnerBlue;
+import static net.minecraft.src.mod_SpawnChecker.spawnerGreen;
+import static net.minecraft.src.mod_SpawnChecker.spawnerRed;
+import static net.minecraft.src.mod_SpawnChecker.spawnerSpawnAreaAlpha;
+import static net.minecraft.src.mod_SpawnChecker.spawnerSpawnAreaBlue;
+import static net.minecraft.src.mod_SpawnChecker.spawnerSpawnAreaGreen;
+import static net.minecraft.src.mod_SpawnChecker.spawnerSpawnAreaRed;
+import static net.minecraft.src.mod_SpawnChecker.spawnerSpawnablePointAlpha;
+import static net.minecraft.src.mod_SpawnChecker.spawnerSpawnablePointBlue;
+import static net.minecraft.src.mod_SpawnChecker.spawnerSpawnablePointGreen;
+import static net.minecraft.src.mod_SpawnChecker.spawnerSpawnablePointRed;
+import static net.minecraft.src.mod_SpawnChecker.spawnerUnspawnablePointAlpha;
+import static net.minecraft.src.mod_SpawnChecker.spawnerUnspawnablePointBlue;
+import static net.minecraft.src.mod_SpawnChecker.spawnerUnspawnablePointGreen;
+import static net.minecraft.src.mod_SpawnChecker.spawnerUnspawnablePointRed;
 import static spawnchecker.constants.Constants.MAX_BRIGHTNESS;
 import static spawnchecker.constants.Constants.MAX_RANGE_HORIZONTAL;
 import static spawnchecker.constants.Constants.MAX_RANGE_VERTICAL;
@@ -12,8 +85,8 @@ import java.awt.Color;
 import java.util.Collections;
 import java.util.List;
 
-import net.minecraft.src.KeyBinding;
-import net.minecraft.src.World;
+import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.world.World;
 
 import org.lwjgl.input.Keyboard;
 
@@ -29,7 +102,7 @@ import spawnchecker.utils.MPWorldSeedHelper;
 
 /**
  * SpawnChecker の設定.
- *
+ * 
  * @author takuru/ale
  */
 public class Settings
@@ -83,9 +156,9 @@ public class Settings
     {
         Mode.initializeModes(this);
         resetRenderDatas();
-        checkMinDurationNanoSec = ((long) checkMinDuration) * 1000L * 1000L;
+        checkMinDurationNanoSec = (checkMinDuration) * 1000L * 1000L;
         SpawnChecker.mod.info("check duration=", checkMinDuration, "ms (", checkMinDurationNanoSec, " nano sec)");
-        informationTimeoutNanoSec = ((long)informationTimeout) * 1000L * 1000L;
+        informationTimeoutNanoSec = (informationTimeout) * 1000L * 1000L;
         // 色設定
         endermanMarkerColor = new Color(marker1Red, marker1Green, marker1Blue, marker1Alpha);
         skeletonMarkerColor = new Color(marker2Red, marker2Green, marker2Blue, marker2Alpha);
@@ -172,6 +245,13 @@ public class Settings
                     }
 
                     break;
+
+                case SURFACE:
+                case UNKNOWN:
+                    break;
+
+                default:
+                    throw new InternalError("unexpected dimension type:" + getDimension());
             }
 
             return mode;
@@ -382,12 +462,12 @@ public class Settings
 
     public int getInfoVOffset()
     {
-        return (int) infoVOffset;
+        return infoVOffset;
     }
 
     public int getInfoHOffset()
     {
-        return (int) infoHOffset;
+        return infoHOffset;
     }
 
     public long getInformationTimeout()

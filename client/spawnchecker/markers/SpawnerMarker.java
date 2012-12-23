@@ -4,7 +4,7 @@ import static spawnchecker.constants.Constants.BLOCK_SURFACE_MARGIN;
 
 import java.util.Random;
 
-import net.minecraft.src.Block;
+import net.minecraft.block.Block;
 
 /**
  * spawner spawn-able area model.
@@ -93,17 +93,17 @@ public class SpawnerMarker extends MarkerBase<SpawnerMarker>
         centerMaxX = spawner.getBlockBoundsMaxX() + x + BLOCK_SURFACE_MARGIN;
         centerMaxY = spawner.getBlockBoundsMaxY() + y + BLOCK_SURFACE_MARGIN;
         centerMaxZ = spawner.getBlockBoundsMaxZ() + z + BLOCK_SURFACE_MARGIN;
-        areaMinX = (double) (x - 4);
-        areaMinY = (double) (y - 1);
-        areaMinZ = (double) (z - 4);
-        areaMaxX = (double) (x + 4);
-        areaMaxY = (double) (y + 2);
-        areaMaxZ = (double) (z + 4);
-        duplicationAreaMinX = (double) (x - 8);
-        duplicationAreaMinY = (double) (y - 4);
-        duplicationAreaMinZ = (double) (z - 8);
-        duplicationAreaMaxX = (double) (x + 9);
-        duplicationAreaMaxY = (double) (y + 5);
-        duplicationAreaMaxZ = (double) (z + 9);
+        areaMinX = x - 4;
+        areaMinY = y - 1;
+        areaMinZ = z - 4;
+        areaMaxX = x + 4;
+        areaMaxY = y + 2;
+        areaMaxZ = z + 4;
+        duplicationAreaMinX = x - 8;
+        duplicationAreaMinY = y - 4;
+        duplicationAreaMinZ = z - 8;
+        duplicationAreaMaxX = x + 9;
+        duplicationAreaMaxY = y + 5;
+        duplicationAreaMaxZ = z + 9;
     }
 }

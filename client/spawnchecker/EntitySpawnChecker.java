@@ -2,23 +2,23 @@ package spawnchecker;
 
 import static spawnchecker.constants.Constants.ENTITY_HEIGHT;
 import static spawnchecker.constants.Constants.ENTITY_WIDTH;
-import net.minecraft.src.DamageSource;
-import net.minecraft.src.Entity;
-import net.minecraft.src.EntityLightningBolt;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.effect.EntityLightningBolt;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.src.ModLoader;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.World;
 import net.minecraft.src.mod_SpawnChecker;
+import net.minecraft.util.DamageSource;
+import net.minecraft.world.World;
 
 /**
  * Entity for rendering class.
- *
+ * 
  * マーカー等の描画をレンダリングのフェーズで行うために、
  * プレイヤーの近くを追従するだけのエンティティ.
- *
+ * 
  * 他の追加要素がこのエンティティを処理する際、どのメソッドを使いたいかは判らないため、
  * 外から影響を受けそうな気がするメソッドをいくつかオーバーライドし、デフォルト処理を無効化している。
- *
+ * 
  * @author takuru/ale
  */
 class EntitySpawnChecker extends Entity

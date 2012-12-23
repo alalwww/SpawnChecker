@@ -1,25 +1,25 @@
 package spawnchecker.enums;
 
-import static net.minecraft.src.EntityList.getEntityString;
-import net.minecraft.src.EntityBlaze;
-import net.minecraft.src.EntityCaveSpider;
-import net.minecraft.src.EntityCreeper;
-import net.minecraft.src.EntityEnderman;
-import net.minecraft.src.EntityGhast;
-import net.minecraft.src.EntityGiantZombie;
-import net.minecraft.src.EntityMagmaCube;
-import net.minecraft.src.EntityPigZombie;
-import net.minecraft.src.EntitySilverfish;
-import net.minecraft.src.EntitySkeleton;
-import net.minecraft.src.EntitySlime;
-import net.minecraft.src.EntitySpider;
-import net.minecraft.src.EntityZombie;
+import static net.minecraft.entity.EntityList.getEntityString;
+import net.minecraft.entity.monster.EntityBlaze;
+import net.minecraft.entity.monster.EntityCaveSpider;
+import net.minecraft.entity.monster.EntityCreeper;
+import net.minecraft.entity.monster.EntityEnderman;
+import net.minecraft.entity.monster.EntityGhast;
+import net.minecraft.entity.monster.EntityGiantZombie;
+import net.minecraft.entity.monster.EntityMagmaCube;
+import net.minecraft.entity.monster.EntityPigZombie;
+import net.minecraft.entity.monster.EntitySilverfish;
+import net.minecraft.entity.monster.EntitySkeleton;
+import net.minecraft.entity.monster.EntitySlime;
+import net.minecraft.entity.monster.EntitySpider;
+import net.minecraft.entity.monster.EntityZombie;
 
 /**
  * スポーンするエンティティの列挙.
- *
+ * 
  * 使用可否考えずにとりあえず敵対するやつごっそり.
- *
+ * 
  * @author takuru/ale
  */
 public enum SpawnableEntity

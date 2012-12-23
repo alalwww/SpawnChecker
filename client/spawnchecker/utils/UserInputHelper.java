@@ -7,12 +7,12 @@ import static spawnchecker.constants.Constants.REPEAT_START_DURATION;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.src.Block;
-import net.minecraft.src.EnumMovingObjectType;
-import net.minecraft.src.KeyBinding;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.src.ModLoader;
-import net.minecraft.src.MovingObjectPosition;
+import net.minecraft.util.EnumMovingObjectType;
+import net.minecraft.util.MovingObjectPosition;
 
 import org.lwjgl.input.Keyboard;
 
@@ -42,7 +42,7 @@ public class UserInputHelper
      * modLoaderによるキーダウンのリピート間隔はワールド時間の変更を基準に発生するが
      * 結構高頻度で、FPSが高くなると高速リピートして操作性がよくないため、適当に遅延を設けるための処理。
      * </p>
-     *
+     * 
      * @param key
      *            KeyBinding
      * @return キーダウンが有効なら true

@@ -2,7 +2,19 @@ package net.minecraft.src;
 
 import static java.lang.reflect.Modifier.PUBLIC;
 import static java.lang.reflect.Modifier.STATIC;
-import static spawnchecker.enums.Mode.Option.*;
+import static spawnchecker.enums.Mode.Option.ACTIVATE_AREA;
+import static spawnchecker.enums.Mode.Option.CHUNK_MARKER;
+import static spawnchecker.enums.Mode.Option.DISABLE;
+import static spawnchecker.enums.Mode.Option.DUPLICATION_AREA;
+import static spawnchecker.enums.Mode.Option.FORCE;
+import static spawnchecker.enums.Mode.Option.GHAST;
+import static spawnchecker.enums.Mode.Option.GUIDELINE;
+import static spawnchecker.enums.Mode.Option.MARKER;
+import static spawnchecker.enums.Mode.Option.SLIME;
+import static spawnchecker.enums.Mode.Option.SPAWNABLE_POINT;
+import static spawnchecker.enums.Mode.Option.SPAWNER;
+import static spawnchecker.enums.Mode.Option.SPAWN_AREA;
+import static spawnchecker.enums.Mode.Option.UNSPAWNABLE_POINT;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,11 +31,14 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.Entity;
+import spawnchecker.SpawnChecker;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
-
-import net.minecraft.client.Minecraft;
-import spawnchecker.SpawnChecker;
 
 /**
  * mod_SpawnChecker.

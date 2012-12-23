@@ -1,10 +1,11 @@
 package spawnchecker.spawnablecheckers;
 
 import static spawnchecker.constants.Constants.SLIME_CHUNK_CHECKED_CHACHE;
-import static java.util.Map.Entry;
+
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 

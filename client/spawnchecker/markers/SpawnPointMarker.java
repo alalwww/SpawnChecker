@@ -1,6 +1,6 @@
 package spawnchecker.markers;
 
-import static net.minecraft.src.Block.stone;
+import static net.minecraft.block.Block.stone;
 import static spawnchecker.constants.Constants.BLOCK_SURFACE_MARGIN;
 
 import java.util.ArrayList;

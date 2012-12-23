@@ -32,12 +32,12 @@ import static spawnchecker.enums.Mode.Option.UNSPAWNABLE_POINT;
 import java.awt.Color;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.src.Entity;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.entity.Entity;
 import net.minecraft.src.ModLoader;
-import net.minecraft.src.OpenGlHelper;
-import net.minecraft.src.Render;
-import net.minecraft.src.RenderHelper;
-import net.minecraft.src.Tessellator;
 import net.minecraft.src.mod_SpawnChecker;
 
 import org.lwjgl.opengl.GL11;
@@ -84,7 +84,7 @@ class RenderSpawnChecker extends Render
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) 240.0f, (float) 240.0f);
+        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240.0f, 240.0f);
         RenderHelper.disableStandardItemLighting();
 
         switch (mode)
@@ -229,12 +229,12 @@ class RenderSpawnChecker extends Render
                 {
                     for (int iy = marker.y - 1; iy < maxY; iy++)
                     {
-                        float a = (float)(currentTick + marker.spawnablesOffset[index]) * 0.06f;
+                        float a = (currentTick + marker.spawnablesOffset[index]) * 0.06f;
                         float yOffset = (float) Math.sin(a) * 0.02f;
                         // 中央にするため各座標+0.5d
-                        double x = (double) ix - renderManager.viewerPosX + 0.5d;
-                        double y = (double) iy - renderManager.viewerPosY + 0.5d + yOffset;
-                        double z = (double) iz - renderManager.viewerPosZ + 0.5d;
+                        double x = ix - renderManager.viewerPosX + 0.5d;
+                        double y = iy - renderManager.viewerPosY + 0.5d + yOffset;
+                        double z = iz - renderManager.viewerPosZ + 0.5d;
 
                         if (marker.spawnables[index++])
                         {
@@ -271,9 +271,9 @@ class RenderSpawnChecker extends Render
 
         if (mode.hasOption(ACTIVATE_AREA))
         {
-            double centerX = (double) marker.x + 0.5d - renderManager.viewerPosX;
-            double centerY = (double) marker.y + 0.5d - renderManager.viewerPosY;
-            double centerZ = (double) marker.z + 0.5d - renderManager.viewerPosZ;
+            double centerX = marker.x + 0.5d - renderManager.viewerPosX;
+            double centerY = marker.y + 0.5d - renderManager.viewerPosY;
+            double centerZ = marker.z + 0.5d - renderManager.viewerPosZ;
             drawActivateArea(centerX, centerY, centerZ, currentTick / SPAWNER_ACTIVATE_AREA_LINE_SLICES, brightness);
         }
 
@@ -352,7 +352,7 @@ class RenderSpawnChecker extends Render
             double z = (marker.innerMaxZ + marker.innerMinZ) / 2.0D - renderManager.viewerPosZ;
             double bottomY = marker.outerMaxY - renderManager.viewerPosY;
             double topY = Math.min(GUIDELINE_LENGTH + bottomY,
-                    (double) WORLD_HEIGHT_MAX - renderManager.viewerPosY);
+                    WORLD_HEIGHT_MAX - renderManager.viewerPosY);
             Tessellator.instance.startDrawing(GL11.GL_LINES);
             setColorAndBrightness(color, brightness);
             Tessellator.instance.addVertex(x, topY, z);

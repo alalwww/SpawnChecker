@@ -1,13 +1,12 @@
 package spawnchecker.spawnablecheckers;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.src.AxisAlignedBB;
-import net.minecraft.src.EntityLiving;
-import net.minecraft.src.EntitySlime;
-import net.minecraft.src.EnumCreatureType;
-import net.minecraft.src.EnumSkyBlock;
-import net.minecraft.src.SpawnerAnimals;
-import net.minecraft.src.World;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.EnumSkyBlock;
+import net.minecraft.world.SpawnerAnimals;
+import net.minecraft.world.World;
 
 /**
  * Mob湧き判定ヘルパークラス.
@@ -124,7 +123,7 @@ public class SpawnableCheckHelper
     public static boolean isColliding(int x, int y, int z, EntityLiving entity)
     {
         World w = game.theWorld;
-        entity.setPosition((double) x + 0.5F, (double) y, (double) z + 0.5F);
+        entity.setPosition((double) x + 0.5F, y, (double) z + 0.5F);
 
         AxisAlignedBB bb = entity.boundingBox.copy();
 

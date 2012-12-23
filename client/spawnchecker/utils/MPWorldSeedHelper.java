@@ -11,11 +11,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import net.minecraft.src.NetClientHandler;
-import net.minecraft.src.INetworkManager;
-import net.minecraft.src.TcpConnection;
-import net.minecraft.src.World;
-import net.minecraft.src.WorldClient;
+import net.minecraft.client.multiplayer.NetClientHandler;
+import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.network.INetworkManager;
+import net.minecraft.network.TcpConnection;
+import net.minecraft.world.World;
 import spawnchecker.Settings;
 import spawnchecker.SpawnChecker;
 

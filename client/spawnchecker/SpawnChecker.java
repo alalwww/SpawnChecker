@@ -14,17 +14,17 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.src.Block;
-import net.minecraft.src.Entity;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.KeyBinding;
 import net.minecraft.src.ModLoader;
-import net.minecraft.src.MovingObjectPosition;
-import net.minecraft.src.Render;
-import net.minecraft.src.WorldServer;
 import net.minecraft.src.mod_SpawnChecker;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.world.WorldServer;
 import spawnchecker.constants.Resources;
 import spawnchecker.enums.Dimension;
 import spawnchecker.enums.Mode;
@@ -43,7 +43,7 @@ import spawnchecker.utils.UserInputHelper;
 
 /**
  * SpawnChecker main logic.
- *
+ * 
  * @author takuru/ale
  */
 public class SpawnChecker
@@ -55,7 +55,7 @@ public class SpawnChecker
 
     /**
      * Constructor.
-     *
+     * 
      * @param mod
      *            mod_SpawnChecker
      */
@@ -91,11 +91,11 @@ public class SpawnChecker
 
     /**
      * レンダー追加.
-     *
+     * 
      * @param map
      *            エンティティレンダーマップ
      */
-    public void addRender(Map < Class <? extends Entity > , Render > map)
+    public void addRender(Map<Class<? extends Entity>, Render> map)
     {
         map.put(EntitySpawnChecker.class, new RenderSpawnChecker());
         mod.debug("SpawnCheckerRenderer added.");
@@ -103,7 +103,7 @@ public class SpawnChecker
 
     /**
      * 毎フレーム処理.
-     *
+     * 
      * @param game
      *            minecraft
      * @return true
@@ -208,7 +208,7 @@ public class SpawnChecker
 
     /**
      * キーボードイベントのハンドラー.
-     *
+     * 
      * @param key
      *            キーバインディング
      */
@@ -301,6 +301,13 @@ public class SpawnChecker
                 case NETHER:
                 case THE_END:
                     changeMode(Mode.SPAWABLE_POINT_CHECKER);
+
+                case SURFACE:
+                case UNKNOWN:
+                    break;
+
+                default:
+                    throw new InternalError("unexpected dimension type:" + settings.getDimension());
             }
         }
 
@@ -422,9 +429,9 @@ public class SpawnChecker
             String sound = Block.mobSpawner.stepSound.getStepSound();
             float volume = (Block.mobSpawner.stepSound.getVolume() + 1.0F) / 8F;
             float pitch = Block.mobSpawner.stepSound.getPitch() * 0.5F;
-            float x = (float) mop.blockX + 0.5F;
-            float y = (float) mop.blockY + 0.5F;
-            float z = (float) mop.blockZ + 0.5F;
+            float x = mop.blockX + 0.5F;
+            float y = mop.blockY + 0.5F;
+            float z = mop.blockZ + 0.5F;
             game.sndManager.playSound(sound, x, y, z, volume, pitch);
         }
 
@@ -487,6 +494,13 @@ public class SpawnChecker
                         case SURFACE:
                             changeMode(Mode.SLIME_CHUNK_FINDER);
                             return;
+                        case NETHER:
+                        case THE_END:
+                        case UNKNOWN:
+                            break;
+
+                        default:
+                            throw new InternalError("unexpected dimension type:" + settings.getDimension());
                     }
 
                     // fall-throw
@@ -530,6 +544,13 @@ public class SpawnChecker
                         case SURFACE:
                             changeMode(Mode.SLIME_CHUNK_FINDER);
                             return;
+                        case NETHER:
+                        case THE_END:
+                        case UNKNOWN:
+                            break;
+
+                        default:
+                            throw new InternalError("unexpected dimension type:" + settings.getDimension());
                     }
 
                     // fall-throw

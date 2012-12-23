@@ -16,10 +16,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.src.BiomeGenBase;
-import net.minecraft.src.EntityPlayerSP;
-import net.minecraft.src.MathHelper;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.src.ModLoader;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.biome.BiomeGenBase;
 import spawnchecker.Settings;
 import spawnchecker.SpawnChecker;
 import spawnchecker.enums.Mode;
@@ -226,6 +226,17 @@ public class SpawnPointChecker
                             return false;
                         }
 
+                        break;
+
+                    case BLAZE:
+                    case GHAST:
+                    case GIANT:
+                    case MAGMA_CUBE:
+                    case OTHERS:
+                    case PIG_ZOMBIE:
+                    case SILVERFISH:
+                    case SLIME:
+                    default:
                         break;
                 }
 

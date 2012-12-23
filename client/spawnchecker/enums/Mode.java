@@ -13,7 +13,7 @@ import spawnchecker.constants.Resources;
 
 /**
  * SpawnChecker mode.
- *
+ * 
  * @author takuru/ale
  */
 public enum Mode
@@ -28,6 +28,7 @@ public enum Mode
         {
             return settings.getOptionSetSC();
         }
+
         @Override
         protected int getOptionMask()
         {
@@ -46,15 +47,21 @@ public enum Mode
 
                 case THE_END:
                     return Option.SLIME | Option.GHAST;
-            }
 
-            return 0;
+                case UNKNOWN:
+                    return 0;
+
+                default:
+                    throw new InternalError("unexpected dimension type:" + settings.getDimension());
+            }
         }
+
         @Override
         protected int getOptionSetting()
         {
             return settings.getOptionSC();
         }
+
         @Override
         protected void updateOption(int newOption)
         {
@@ -62,27 +69,27 @@ public enum Mode
 
             if (newOption > Option.DISABLE)
             {
-                if ( and (newOption, Option.GHAST))
+                if (and(newOption, Option.GHAST))
                 {
                     descList.add(Resources.MODE_GHAST_MARKER);
                 }
 
-                if ( and (newOption, Option.MARKER))
+                if (and(newOption, Option.MARKER))
                 {
                     descList.add(Resources.MODE_MAKER);
                 }
 
-                if ( and (newOption, Option.SLIME))
+                if (and(newOption, Option.SLIME))
                 {
                     descList.add(Resources.MODE_SLIME_FINDER);
                 }
 
-                if ( and (newOption, Option.GUIDELINE))
+                if (and(newOption, Option.GUIDELINE))
                 {
                     descList.add(Resources.MODE_GUIDELINE);
                 }
 
-                if ( and (newOption, Option.FORCE))
+                if (and(newOption, Option.FORCE))
                 {
                     descList.add(Resources.MODE_FORCE);
                 }
@@ -94,6 +101,7 @@ public enum Mode
 
             settings.setOptionSC(newOption);
         }
+
         @Override
         public String toString()
         {
@@ -110,6 +118,7 @@ public enum Mode
         {
             return settings.getOptionSetSF();
         }
+
         @Override
         protected int getOptionMask()
         {
@@ -128,21 +137,28 @@ public enum Mode
 
                 case THE_END:
                     return 0xf;
-            }
 
-            return 0;
+                case UNKNOWN:
+                    return 0;
+
+                default:
+                    throw new InternalError("unexpected dimension type:" + settings.getDimension());
+            }
         }
+
         @Override
         protected int getOptionSetting()
         {
             return settings.getOptionSF();
         }
+
         @Override
         public int getOption()
         {
             int b = super.getOption();
             return b > Option.DISABLE ? (b | Option.SLIME) : b;
         }
+
         @Override
         protected void updateOption(int newOption)
         {
@@ -151,17 +167,17 @@ public enum Mode
 
             if (newOption > Option.DISABLE)
             {
-                if ( and (newOption, Option.MARKER))
+                if (and(newOption, Option.MARKER))
                 {
                     descList.add(Resources.MODE_MAKER);
                 }
 
-                if ( and (newOption, Option.GUIDELINE))
+                if (and(newOption, Option.GUIDELINE))
                 {
                     descList.add(Resources.MODE_GUIDELINE);
                 }
 
-                if ( and (newOption, Option.CHUNK_MARKER))
+                if (and(newOption, Option.CHUNK_MARKER))
                 {
                     descList.add(Resources.MODE_CHUNK_MARKER);
                 }
@@ -173,6 +189,7 @@ public enum Mode
 
             settings.setOptionSF(newOption);
         }
+
         @Override
         public String toString()
         {
@@ -189,16 +206,19 @@ public enum Mode
         {
             return settings.getOptionSetSV();
         }
+
         @Override
         protected int getOptionMask()
         {
             return 0;
         }
+
         @Override
         protected int getOptionSetting()
         {
             return settings.getOptionSV();
         }
+
         @Override
         protected void updateOption(int newOption)
         {
@@ -206,32 +226,32 @@ public enum Mode
 
             if (newOption > Option.DISABLE)
             {
-                if ( and (newOption, Option.SPAWNER))
+                if (and(newOption, Option.SPAWNER))
                 {
                     descList.add(Resources.MODE_SPAWNER);
                 }
 
-                if ( and (newOption, Option.SPAWN_AREA))
+                if (and(newOption, Option.SPAWN_AREA))
                 {
                     descList.add(Resources.MODE_SPAWN_AREA);
                 }
 
-                if ( and (newOption, Option.SPAWNABLE_POINT))
+                if (and(newOption, Option.SPAWNABLE_POINT))
                 {
                     descList.add(Resources.MODE_SPAWNABLE_POINT);
                 }
 
-                if ( and (newOption, Option.UNSPAWNABLE_POINT))
+                if (and(newOption, Option.UNSPAWNABLE_POINT))
                 {
                     descList.add(Resources.MODE_UNSPAWNABLE_POINT);
                 }
 
-                if ( and (newOption, Option.DUPLICATION_AREA))
+                if (and(newOption, Option.DUPLICATION_AREA))
                 {
                     descList.add(Resources.MODE_DUPLICATION_AREA);
                 }
 
-                if ( and (newOption, Option.ACTIVATE_AREA))
+                if (and(newOption, Option.ACTIVATE_AREA))
                 {
                     descList.add(Resources.MODE_ACTIVATE_AREA);
                 }
@@ -243,6 +263,7 @@ public enum Mode
 
             settings.setOptionSV(newOption);
         }
+
         @Override
         public String toString()
         {
@@ -259,7 +280,7 @@ public enum Mode
         }
     }
 
-    public static boolean and (int b1, int b2)
+    public static boolean and(int b1, int b2)
     {
         return (b1 & b2) != 0;
     }
@@ -293,7 +314,7 @@ public enum Mode
 
     public boolean hasOption(int option)
     {
-        return and (getOption(), option);
+        return and(getOption(), option);
     }
 
     public boolean isInvalidOption()

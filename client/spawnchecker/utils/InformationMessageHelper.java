@@ -6,8 +6,8 @@ import java.awt.Point;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.src.ModLoader;
-import net.minecraft.src.ScaledResolution;
 import spawnchecker.Settings;
 import spawnchecker.SpawnChecker;
 import spawnchecker.constants.Resources;

@@ -2,15 +2,15 @@ package spawnchecker.utils;
 
 import java.util.Arrays;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.ItemStack;
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemStack;
 import net.minecraft.src.ModLoader;
 import spawnchecker.Settings;
 import spawnchecker.SpawnChecker;
 
 /**
  * 手に持ってるアイテムの判定などを行うヘルパークラス.
- *
+ * 
  * @author takuru/ale
  */
 public class EnablingItemsHelper

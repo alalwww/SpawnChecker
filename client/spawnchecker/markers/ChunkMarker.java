@@ -4,7 +4,7 @@ import static spawnchecker.constants.Constants.CHUNKMARKER_LENGTH;
 
 import java.util.ArrayList;
 
-import net.minecraft.src.EntityPlayerSP;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.src.ModLoader;
 
 /**

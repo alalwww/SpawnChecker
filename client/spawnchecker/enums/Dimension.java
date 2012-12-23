@@ -1,6 +1,8 @@
 package spawnchecker.enums;
 
-import static spawnchecker.constants.Constants.*;
+import static spawnchecker.constants.Constants.DIMENSION_NETHER;
+import static spawnchecker.constants.Constants.DIMENSION_SURFACE;
+import static spawnchecker.constants.Constants.DIMENSION_THEEND;
 
 /**
  * ディメンションの列挙.

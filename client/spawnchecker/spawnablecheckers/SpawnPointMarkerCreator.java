@@ -7,15 +7,15 @@ import static spawnchecker.markers.SpawnPointMarker.getInstanceFromPool;
 
 import java.util.List;
 
-import net.minecraft.src.Block;
+import net.minecraft.block.Block;
 import net.minecraft.src.ModLoader;
-import net.minecraft.src.World;
+import net.minecraft.world.World;
 import spawnchecker.enums.SpawnableEntity;
 import spawnchecker.markers.SpawnPointMarker;
 
 /**
  * スポーンポイントマーカー生成ヘルパー.
- *
+ * 
  * @author takuru/ale
  */
 class SpawnPointMarkerCreator
