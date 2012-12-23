@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 	<name>SpawnChecker</name>
-	<comment></comment>
+	<comment>Minecraft mod. Drawing monster spawn points, slime chunks, and the MobSpawner informations.</comment>
 	<projects>
 	</projects>
 	<buildSpec>
