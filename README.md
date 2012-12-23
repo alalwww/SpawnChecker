@@ -19,3 +19,7 @@ Installation instructions.
 FML (もしくは Minecraft Forge) をダウンロードし、minecraft.jar に導入します。
 2. Add this MOD's ZIP file into mods folder, and run Minecraft. ENJOY!
 このMODのZIPファイルを mods フォルダーに加え、マインクラフトを実行します。
+
+Downloads
+---------------
+*[Downloads](http://goo.gl/Hkp2d)
