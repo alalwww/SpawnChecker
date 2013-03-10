@@ -9,7 +9,7 @@ import static net.minecraft.src.mod_SpawnChecker.RELEASE;
  */
 public final class ReflectionConstants
 {
-    // for minecraft1.4.1 (MCP7.19)
+    // for minecraft1.5.0 pre (MCP7.42)
     /**
      * sendQueue.
      *
