@@ -49,7 +49,7 @@ public enum Mode
                     return Option.SLIME | Option.GHAST;
 
                 case UNKNOWN:
-                    return 0;
+                    return Option.SLIME | Option.GHAST;
 
                 default:
                     throw new InternalError("unexpected dimension type:" + settings.getDimension());
@@ -139,7 +139,7 @@ public enum Mode
                     return 0xf;
 
                 case UNKNOWN:
-                    return 0;
+                    return 0xf;
 
                 default:
                     throw new InternalError("unexpected dimension type:" + settings.getDimension());
