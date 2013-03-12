@@ -22,7 +22,7 @@ import spawnchecker.spawnablecheckers.SpawnPointChecker;
 
 /**
  * スポーナーを可視化するモードの処理です.
- * 
+ *
  * @author takuru/ale
  */
 public class SpawnerVisualizer
@@ -44,7 +44,7 @@ public class SpawnerVisualizer
 
     /**
      * 周囲のスポーナーを探します.
-     * 
+     *
      * @return 見つかったら true
      */
     public static boolean findSpawner()
@@ -101,7 +101,7 @@ public class SpawnerVisualizer
 
     /**
      * プレイヤーが見つけているスポーナーから離れたかを判定.
-     * 
+     *
      * @param player
      *            プレイヤー
      * @return スポナーを見つけていないか離れた場合 true
@@ -198,7 +198,7 @@ public class SpawnerVisualizer
             spawnerX = x;
             spawnerY = y;
             spawnerZ = z;
-            mobID = ((TileEntityMobSpawner) spawner).func_92015_a();
+            mobID = ((TileEntityMobSpawner) spawner).getMobID();
             spawnableEntity = SpawnableEntity.getByMobID(mobID);
             currentChunk = null;
             markerData = SpawnerMarker.getInstance(spawnerX, spawnerY, spawnerZ);
