@@ -106,6 +106,7 @@ public class SpawnPointChecker
                 break;
 
             case SURFACE:
+            case UNKNOWN:
                 checkSpawnableBySurface(x, y, z);
                 break;
 
