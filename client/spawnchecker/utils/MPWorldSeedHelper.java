@@ -94,7 +94,7 @@ public class MPWorldSeedHelper
         Settings settings = SpawnChecker.getSettings();
         World w = settings.getCurrentWorld();
 
-        if (!(w instanceof WorldClient))
+        if (!(w instanceof WorldClient) || mpSeedMap.isEmpty())
         {
             return null;
         }
