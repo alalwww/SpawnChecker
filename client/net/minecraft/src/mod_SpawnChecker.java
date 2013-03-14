@@ -51,11 +51,6 @@ public class mod_SpawnChecker extends BaseMod
     private static final String VERSION = "144v1 #115";
 
     /**
-     * 難読化されている場合 true、Eclipse 上での実行時は false.
-     */
-    public static final boolean RELEASE = BaseMod.class.getPackage() == null;
-
-    /**
      * mode.
      */
     @MLProp(name = "mode", info = "sc: Spawable point checker, sf: Slime chunk finder, sv: Spawner visualizer")
@@ -312,14 +307,17 @@ public class mod_SpawnChecker extends BaseMod
     public static double entityOffsetZ = 0.0D;
 
     /**
-     * debug mode flag.
+     * 難読化されている場合 true、Eclipse 上での実行時は false.
      */
-    @MLProp(name = "debug")
-    public static boolean DEBUG_MODE = !RELEASE;
+    public static final boolean RELEASE;
 
     static
     {
-        optionSetSC = "" + DISABLE
+    	String isDebug = System.getProperty("spawnchecker.debug");
+
+    	RELEASE = isDebug == null || !isDebug.equals("true");
+
+    	optionSetSC = "" + DISABLE
                 + "," + (GHAST)
                 + "," + (GHAST | GUIDELINE)
                 + "," + (MARKER)
@@ -352,6 +350,12 @@ public class mod_SpawnChecker extends BaseMod
                 + "," + (SPAWNER | SPAWN_AREA | SPAWNABLE_POINT | UNSPAWNABLE_POINT | DUPLICATION_AREA | ACTIVATE_AREA)
                 ;
     }
+
+    /**
+     * debug mode flag.
+     */
+    @MLProp(name = "debug")
+    public static boolean DEBUG_MODE = !RELEASE;
 
     private final SpawnChecker checker;
 
