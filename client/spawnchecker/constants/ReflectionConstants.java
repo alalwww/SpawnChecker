@@ -29,7 +29,7 @@ public final class ReflectionConstants
      *
      * @see net.minecraft.src.TcpConnection
      */
-    public static final String REMOTE_ADDR = RELEASE ? "j" : "remoteSocketAddress";
+    public static final String REMOTE_ADDR = RELEASE ? "k" : "remoteSocketAddress";
 
     private ReflectionConstants()
     {
