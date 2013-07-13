@@ -7,3 +7,6 @@
 /client/mcmod.info
 /client/version.properties
 version.properties
+
+.modrevision
+src/main/resources/mcmod.info
