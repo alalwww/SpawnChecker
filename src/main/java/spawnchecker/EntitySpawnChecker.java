@@ -109,7 +109,7 @@ class EntitySpawnChecker extends Entity
     }
 
     @Override
-    public boolean attackEntityFrom(DamageSource damageSource, int damage)
+    public boolean attackEntityFrom(DamageSource damageSource, float damage)
     {
         return false;
     }
