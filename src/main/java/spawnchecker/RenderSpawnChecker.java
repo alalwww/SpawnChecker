@@ -44,6 +44,8 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.glu.Sphere;
 
+import net.minecraft.client.resources.ResourceLocation;
+
 import spawnchecker.enums.Mode;
 import spawnchecker.enums.Mode.Option;
 import spawnchecker.enums.SpawnableEntity;
@@ -573,5 +575,11 @@ class RenderSpawnChecker extends Render
     public void doRenderShadowAndFire(Entity entity, double x, double y, double z, float yaw, float partialTickTime)
     {
         // nothing
+    }
+
+    @Override
+    protected ResourceLocation func_110775_a(Entity entity)
+    {
+        return null;
     }
 }

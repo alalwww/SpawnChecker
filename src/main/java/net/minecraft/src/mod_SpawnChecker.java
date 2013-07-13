@@ -48,7 +48,7 @@ import cpw.mods.fml.common.registry.EntityRegistry;
  */
 public class mod_SpawnChecker extends BaseMod
 {
-    private static final String VERSION = "152v2 #122";
+    private static final String VERSION = "161v1 #123";
 
     /**
      * mode.
@@ -313,7 +313,7 @@ public class mod_SpawnChecker extends BaseMod
 
     static
     {
-    	String isDebug = System.getProperty("spawnchecker.debug");
+    	String isDebug = System.getProperty("net.awairo.develop");
 
     	RELEASE = isDebug == null || !isDebug.equals("true");
 
