@@ -1,0 +1,3 @@
+[submodule "ModBuilder"]
+	path = ModBuilder
+	url = git@github.com:alalwww/ModBuilder.git

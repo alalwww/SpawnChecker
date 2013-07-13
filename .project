@@ -20,16 +20,4 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.python.pydev.pythonNature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>client/mcmod.info</name>
-			<type>1</type>
-			<locationURI>PROJECT_LOC/mcmod.info</locationURI>
-		</link>
-		<link>
-			<name>client/version.properties</name>
-			<type>1</type>
-			<locationURI>PROJECT_LOC/version.properties</locationURI>
-		</link>
-	</linkedResources>
 </projectDescription>
