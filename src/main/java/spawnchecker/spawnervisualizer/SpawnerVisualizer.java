@@ -198,7 +198,7 @@ public class SpawnerVisualizer
             spawnerX = x;
             spawnerY = y;
             spawnerZ = z;
-            mobID = ((TileEntityMobSpawner) spawner).func_98049_a().getEntityNameToSpawn();
+            mobID = ((TileEntityMobSpawner) spawner).getSpawnerLogic().getEntityNameToSpawn();
             spawnableEntity = SpawnableEntity.getByMobID(mobID);
             currentChunk = null;
             markerData = SpawnerMarker.getInstance(spawnerX, spawnerY, spawnerZ);

@@ -1,35 +1,13 @@
 package spawnchecker;
 
-import static spawnchecker.constants.Constants.BASE_BRIGHTNESS;
-import static spawnchecker.constants.Constants.BRIGHTNESS_RATIO;
-import static spawnchecker.constants.Constants.GUIDELINE_LENGTH;
-import static spawnchecker.constants.Constants.SLIME_CHUNK_MERKER_INTERVAL;
-import static spawnchecker.constants.Constants.SPAWNAREA_AREA_INTERVAL;
-import static spawnchecker.constants.Constants.SPAWNAREA_AREA_OFFSET;
-import static spawnchecker.constants.Constants.SPAWNER_ACTIVATE_AREA_LINE_SLICES;
-import static spawnchecker.constants.Constants.SPAWNER_ACTIVATE_AREA_LINE_STACKS;
-import static spawnchecker.constants.Constants.SPAWNER_ACTIVATE_AREA_RADIUS;
-import static spawnchecker.constants.Constants.SPAWNER_ACTIVATE_AREA_SLICES;
-import static spawnchecker.constants.Constants.SPAWNER_ACTIVATE_AREA_STACKS;
-import static spawnchecker.constants.Constants.SPAWNER_POINT_MARKER_TICK_RATIO;
-import static spawnchecker.constants.Constants.SPAWNER_POINT_RADIUS_INNER;
-import static spawnchecker.constants.Constants.SPAWNER_POINT_RADIUS_OUTER;
-import static spawnchecker.constants.Constants.SPAWNER_POINT_SLICES_INNER;
-import static spawnchecker.constants.Constants.SPAWNER_POINT_SLICES_OUTER;
-import static spawnchecker.constants.Constants.SPAWNER_POINT_STACKS_INNER;
-import static spawnchecker.constants.Constants.SPAWNER_POINT_STACKS_OUTER;
-import static spawnchecker.constants.Constants.WORLD_HEIGHT_MAX;
-import static spawnchecker.constants.Constants.WORLD_HEIGHT_MIN;
-import static spawnchecker.enums.Mode.Option.ACTIVATE_AREA;
-import static spawnchecker.enums.Mode.Option.CHUNK_MARKER;
-import static spawnchecker.enums.Mode.Option.DISABLE;
-import static spawnchecker.enums.Mode.Option.DUPLICATION_AREA;
-import static spawnchecker.enums.Mode.Option.SPAWNABLE_POINT;
-import static spawnchecker.enums.Mode.Option.SPAWNER;
-import static spawnchecker.enums.Mode.Option.SPAWN_AREA;
-import static spawnchecker.enums.Mode.Option.UNSPAWNABLE_POINT;
+import static spawnchecker.constants.Constants.*;
+import static spawnchecker.enums.Mode.Option.*;
 
 import java.awt.Color;
+
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.glu.GLU;
+import org.lwjgl.util.glu.Sphere;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -39,13 +17,7 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.mod_SpawnChecker;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.glu.GLU;
-import org.lwjgl.util.glu.Sphere;
-
-import net.minecraft.client.resources.ResourceLocation;
-
+import net.minecraft.util.ResourceLocation;
 import spawnchecker.enums.Mode;
 import spawnchecker.enums.Mode.Option;
 import spawnchecker.enums.SpawnableEntity;
