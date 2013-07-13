@@ -460,7 +460,6 @@ public class mod_SpawnChecker extends BaseMod
             for (Map.Entry < Class <? extends Entity > , Render > entry : map.entrySet())
             {
                 RenderingRegistry.registerEntityRenderingHandler(entry.getKey(), entry.getValue());
-                EntityRegistry.registerGlobalEntityID(entry.getKey(), "spawnChecker", ModLoader.getUniqueEntityId());
                 break;
             }
         }
