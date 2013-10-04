@@ -48,7 +48,7 @@ import cpw.mods.fml.common.registry.EntityRegistry;
  */
 public class mod_SpawnChecker extends BaseMod
 {
-    private static final String VERSION = "162v1 #124";
+    private static final String VERSION = "164v1 #125";
 
     /**
      * mode.

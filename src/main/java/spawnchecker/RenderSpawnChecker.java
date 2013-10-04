@@ -550,7 +550,7 @@ class RenderSpawnChecker extends Render
     }
 
     @Override
-    protected ResourceLocation func_110775_a(Entity entity)
+    protected ResourceLocation getEntityTexture(Entity entity)
     {
         return null;
     }
