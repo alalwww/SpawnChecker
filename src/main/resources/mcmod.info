@@ -1,16 +1,20 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "awairo.spawnchecker",
+  "name": "Spawn Checker",
+  "description": "The SpawnChecer draw informations to ingame of monster spawn points, slime chunks, and the MobSpawner.",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
+  "url": "http://www.awairo.net/minecraft/",
   "updateUrl": "",
-  "authors": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
-  "logoFile": "",
+  "authors": ["alalwww"],
+  "credits": "By alalwww, based on an original idea and mod by fillppo",
+  "logoFile": "logo.png",
+  "parent": "",
   "screenshots": [],
-  "dependencies": []
+  "requiredMods": [],
+  "dependencies": [],
+  "dependants": [],
+  "useDependencyInformation": "false"
 }
 ]
