@@ -1,0 +1,40 @@
+apply plugin: 'forge'
+
+repositories { mavenCentral() }
+
+[compileJava, compileTestJava].each{
+    it.options.encoding = 'UTF-8'
+    it.options.compilerArgs += ['-source', '1.7', '-target', '1.7']
+}
+
+apply from: 'project.gradle'
+apply from: 'version-writer.gradle'
+version = versionInfo.version()
+
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.1-SNAPSHOT'
+    }
+}
+
+processResources {
+
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+        expand 'version':project.versionInfo.modinfoVersion(), 'mcversion':project.minecraft.version
+    }
+
+    from(sourceSets.main.resources.srcDirs) { exclude 'mcmod.info' }
+}
+
