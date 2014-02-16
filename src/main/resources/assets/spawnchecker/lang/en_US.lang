@@ -1,0 +1,27 @@
+spawnchecker.key.category=Spawn Checker Control
+spawnchecker.key.up=Mode/Option Shift UP
+spawnchecker.key.down=Mode/Option Shift DOWN
+spawnchecker.key.plus=Range/Brightness UP
+spawnchecker.key.minus=Range/Brightness DOWN
+
+spawnchecker.gui.title=tentative: Spawn Checker Configuration
+spawnchecker.gui.toggletest=test button
+spawnchecker.gui.disable=Disable
+spawnchecker.gui.enable=Enable
+
+spawnchecker.mode.spawnchecker=Spawn checker
+spawnchecker.mode.slimechunk_visualizer=Slime chunk visualizer
+spawnchecker.mode.spawner_visualizer=Spawner visualizer
+
+spawnchecker.info.brightness=Brightness: %+d
+spawnchecker.info.horizontal_range=H Range: %2d
+spawnchecker.info.vertical_range=V Range: %2d
+
+spawnchecker.option.disabled= - Disabled
+spawnchecker.option.marker= - Marker
+spawnchecker.option.guideline= - Guideline
+spawnchecker.option.force= - Force
+spawnchecker.option.slime= - Slime marker
+spawnchecker.option.ghast= - Ghast marker
+
+spawnchecker.fingerprint_violation=fingerprint violation: This mod may have been hacked. (modid: %s)

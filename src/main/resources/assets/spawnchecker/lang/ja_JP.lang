@@ -1,0 +1,27 @@
+spawnchecker.key.category=スポーンチェッカー操作
+spawnchecker.key.up=モード/オプション変更(UP)
+spawnchecker.key.down=モード/オプション変更(DOWN)
+spawnchecker.key.plus=範囲/明るさ変更(UP)
+spawnchecker.key.minus=範囲/明るさ変更(DOWN)
+
+spawnchecker.gui.title=スポーンチェッカー設定(仮)
+spawnchecker.gui.toggletest=ボタンのテスト
+spawnchecker.gui.disable=無効
+spawnchecker.gui.enable=有効
+
+spawnchecker.mode.spawnchecker=スポーンチェッカー
+spawnchecker.mode.slimechunk_visualizer=スライムチャンク表示
+spawnchecker.mode.spawner_visualizer=スポーンブロック可視化
+
+spawnchecker.info.brightness=マーカー明るさ: %+d
+spawnchecker.info.horizontal_range=水平範囲: %2d
+spawnchecker.info.vertical_range=垂直範囲: %2d
+
+spawnchecker.option.disabled= - 無効
+spawnchecker.option.marker= - マーカー
+spawnchecker.option.guideline= - ガイドライン
+spawnchecker.option.force= - 常に表示
+spawnchecker.option.slime= - スライムマーカー
+spawnchecker.option.ghast= - ガストマーカー
+
+spawnchecker.fingerprint_violation=fingerprint violation: このModはハックされている可能性があります。 (modid: %s)
