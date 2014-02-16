@@ -6,7 +6,7 @@ dependencies {
 }
 
 minecraft {
-    version = "1.7.2-10.12.0.1018"
+    version = "1.7.2-10.12.0.1024"
     assetDir = "run/assets"
 }
 
