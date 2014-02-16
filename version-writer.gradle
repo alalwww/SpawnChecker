@@ -38,8 +38,15 @@ def getVersionInfo = {
     return new VersionInfo(major, minor, build, revision, githash, beta)
 }
 
-def writeVersion = {
+// add version info
+project.ext.versionInfo = getVersionInfo()
+
+// ------------------------------------------------------------------------------------
+
+// writeversion task
+project.ext.writeVersion = {
     ->
+
     def fw = file("src/main/resources/version.properties")
     fw.metaClass.writeLine = { f, ... a -> append(format(f, a) + "\n") }
     fw.write("")
@@ -59,16 +66,8 @@ def writeVersion = {
             project.versionInfo.version(), project.versionInfo.githash))
 }
 
-// ------------------------------------------------------------------------------------
-
-// add version info
-project.ext.versionInfo = getVersionInfo()
-
-// reflesh version.properties
-writeVersion()
-
-// add revision up task
-task revisionUp << {
+project.ext.revisionUp = {
+    ->
 
     def vi = project.versionInfo
 
@@ -82,8 +81,8 @@ task revisionUp << {
     writeVersion()
 }
 
-// revision down task
-task revisionDown << {
+project.ext.revisionDown = {
+    ->
 
     def vi = project.versionInfo
 
@@ -95,6 +94,23 @@ task revisionDown << {
     logger.quiet(format("    new revision: %s", vi.revision))
 
     writeVersion()
+}
+
+// ------------------------------------------------------------------------------------
+
+task writeVersion << {
+    description = "create new version.properties"
+    writeVersion()
+}
+
+task revisionUp << {
+    description = "revision count up"
+    revisionUp()
+}
+
+task revisionDown << {
+    description = "revision count down"
+    revisionDown()
 }
 
 // ------------------------------------------------------------------------------------
@@ -116,10 +132,21 @@ def class VersionInfo {
         beta = values[5]
     }
 
-    // 0.0.0.0
-    def version() { return String.format("%s.%s.%s.%s", major, minor, build, revision) }
-    // 0.0.0 #0
-    def modinfoVersion() { return String.format("%s.%s.%s #%s", major, minor, build, revision) }
+    // 0.0.0-SNAPSHOT or 0.0.0.0
+    def version()
+    {
+        return (beta
+            ? String.format("%s.%s.%s-SNAPSHOT", major, minor, build)
+            : String.format("%s.%s.%s.%s", major, minor, build, revision))
+    }
+
+    // 0.0.0 SANPSHOT or 0.0.0 #0
+    def modinfoVersion()
+    {
+        return (beta
+            ? String.format("%s.%s.%s SNAPSHOT", major, minor, build)
+            : String.format("%s.%s.%s #%s", major, minor, build, revision))
+    }
 
     def String toString() { return version }
 }

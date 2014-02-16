@@ -1,16 +1,10 @@
 apply plugin: 'forge'
 
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+tasks.withType(Compile) { options.encoding = 'UTF-8' }
+
 repositories { mavenCentral() }
-
-[compileJava, compileTestJava].each{
-    it.options.encoding = 'UTF-8'
-    it.options.compilerArgs += ['-source', '1.7', '-target', '1.7']
-}
-
-apply from: 'project.gradle'
-apply from: 'version-writer.gradle'
-version = versionInfo.version()
-
 buildscript {
     repositories {
         mavenCentral()
@@ -28,13 +22,60 @@ buildscript {
     }
 }
 
+apply from: 'project.gradle'
+apply from: 'version-writer.gradle'
+
 processResources {
+
+    exclude 'Log4j-config.xsd', 'Log4j-events.dtd', 'Log4j-events.xsd', 'log4j2.xml'
 
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
-        expand 'version':project.versionInfo.modinfoVersion(), 'mcversion':project.minecraft.version
+        expand 'version':versionInfo.modinfoVersion(), 'mcversion':minecraft.version
     }
-
-    from(sourceSets.main.resources.srcDirs) { exclude 'mcmod.info' }
 }
 
+task signJar(dependsOn:assemble) << {
+    description = "signing jar files"
+
+    ant.property(file: '../keystore.properties')
+    ant.signjar(
+        jar: 'build/libs/*.jar',
+        alias: '${mod.jar.alias}',
+        storepass: '${mod.jar.storepass}'
+    )
+}
+
+build.dependsOn signJar
+
+task releaseSnapshot(dependsOn:build) << {
+    println 'release!!!' + version
+}
+
+task release(dependsOn:build) << {
+    if (versionInfo.beta)
+    {
+        println '------------------------'
+        println '   snapshot version!!!'
+        println '      stop release'
+        println '------------------------'
+        revisionDown()
+        throw new StopExecutionException()
+    }
+
+    println 'release!!!' + version
+}
+
+gradle.taskGraph.whenReady { taskGraph ->
+
+    if (taskGraph.hasTask(release))
+    {
+        revisionUp()
+    }
+    else
+    {
+        writeVersion()
+    }
+
+    version = versionInfo.version()
+}
