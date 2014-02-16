@@ -13,4 +13,4 @@ minecraft {
 project.group = "net.awairo.mcmod.spawnchecker"
 project.archivesBaseName = "SpawnChecker"
 
-project.ext.modid = "awairo.spawnchecker"
+project.ext.modid = "spawnchecker"
