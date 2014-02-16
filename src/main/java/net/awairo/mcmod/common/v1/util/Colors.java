@@ -73,6 +73,31 @@ public final class Colors
     /**
      * merge int value of primary colors.
      * 
+     * @param color color
+     * @return merged RGB color
+     */
+    public static int toIntColor(Color color)
+    {
+        return toIntColor(color, true);
+    }
+
+    /**
+     * merge int value of primary colors.
+     * 
+     * @param color color
+     * @param hasAlpha has alpha
+     * @return merged RGB color
+     */
+    public static int toIntColor(Color color, boolean hasAlpha)
+    {
+        return hasAlpha
+                ? toIntColor(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha())
+                : toIntColor(color.getRed(), color.getGreen(), color.getBlue());
+    }
+
+    /**
+     * merge int value of primary colors.
+     * 
      * @param r
      *            red
      * @param g
@@ -83,10 +108,7 @@ public final class Colors
      */
     public static int toIntColor(int r, int g, int b)
     {
-        int color = b;
-        color += g << 8;
-        color += r << 16;
-        return color;
+        return toIntColor(r, g, b, 0);
     }
 
     /**
@@ -112,6 +134,8 @@ public final class Colors
     }
 
     /**
+     * {@link Color} builder.
+     * 
      * @return builder
      */
     public static ColorBuilder builder()
@@ -120,7 +144,10 @@ public final class Colors
     }
 
     /**
-     * @return builder
+     * new color from color string.
+     * 
+     * @param colorString RGB or ARGB string (ex. #FFFFFF
+     * @return Color optional
      */
     public static Optional<Color> fromString(String colorString)
     {
@@ -135,11 +162,28 @@ public final class Colors
         return Optional.of(builder().rgb(colorString).build());
     }
 
+    /**
+     * new color from ARGB values.
+     * 
+     * @param alpha 0-255
+     * @param red 0-255
+     * @param green 0-255
+     * @param blue 0-255
+     * @return color
+     */
     public static Color fromARGB(int alpha, int red, int green, int blue)
     {
         return builder().alpha(alpha).red(red).green(green).blue(blue).build();
     }
 
+    /**
+     * new color from RGB values.
+     * 
+     * @param red 0-255
+     * @param green 0-255
+     * @param blue 0-255
+     * @return color
+     */
     public static Color fromRGB(int red, int green, int blue)
     {
         return builder().red(red).green(green).blue(blue).build();
