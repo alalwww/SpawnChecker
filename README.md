@@ -1,5 +1,7 @@
-SpawnChecker
+SpawnChecker2
 ============
+
+developing the new version.
 
 What is this?
 ---------------
@@ -10,16 +12,28 @@ Minecraft mod. Drawing monster spawn points, slime chunks, and the MobSpawner in
 Installation instructions.
 ---------------
 
-###Requirements
-*Minecraft
-*[FML](https://github.com/cpw/FML) or [Minecraft Forge](http://minecraftforge.net/) [(Forge Downloads)](http://files.minecraftforge.net/)
+### Requirements
+* [Minecraft](https://minecraft.net)
+* [Minecraft Forge](http://minecraftforge.net/) [(downloads)](http://files.minecraftforge.net/)
 
-###Installing
-1. Download and install FML (or Minecraft Forge) files into the minecraft.jar.
-FML (もしくは Minecraft Forge) をダウンロードし、minecraft.jar に導入します。
-2. Add this MOD's ZIP file into mods folder, and run Minecraft. ENJOY!
-このMODのZIPファイルを mods フォルダーに加え、マインクラフトを実行します。
+### Installation
+
+#### 1.
+Buy a Minecraft, and then Install.
+
+Minecraftを買ってインストールします。
+
+
+#### 2.
+Download and install Minecraft Forge.
+
+Minecraft Forge をダウンロードし、インストールします。
+
+#### 3.
+Add this MOD's ZIP file into mods folder, and run Minecraft. ENJOY!
+
+このMODのZIPファイルを mods フォルダーに追加し、マインクラフトを実行します。
 
 Downloads
 ---------------
-*[Downloads](http://goo.gl/Hkp2d)
+* [Downloads](http://goo.gl/Hkp2d)
