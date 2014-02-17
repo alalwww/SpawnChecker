@@ -25,6 +25,8 @@ import net.awairo.mcmod.spawnchecker.SpawnChecker;
 import net.awairo.mcmod.spawnchecker.client.common.Settings;
 
 /**
+ * 設定画面用GUIの抽象クラス.
+ * 
  * @author alalwww
  */
 abstract class ModGuiScreen extends AbstractGuiScreen

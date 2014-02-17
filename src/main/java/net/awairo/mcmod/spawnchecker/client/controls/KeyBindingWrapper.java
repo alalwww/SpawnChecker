@@ -17,6 +17,11 @@ import com.google.common.base.Objects;
 
 import net.minecraft.client.settings.KeyBinding;
 
+/**
+ * {@link KeyBinding} をラップしキーリピート管理の機能を追加したクラス.
+ * 
+ * @author alalwww
+ */
 class KeyBindingWrapper extends KeyBinding
 {
     private long lastPressTime = -1L;

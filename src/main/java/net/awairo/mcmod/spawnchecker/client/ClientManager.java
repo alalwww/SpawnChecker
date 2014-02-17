@@ -30,17 +30,29 @@ public abstract class ClientManager extends SpawnChecker.Manager
     static final Map<Class<? extends ClientManager>, ClientManager> managers = Maps.newConcurrentMap();
     static Settings settings;
 
+    /**
+     * マネージャーのインスタンスを取得.
+     * 
+     * @param keyClass マネージャーのクラス
+     * @return マネージャーのインスタンス
+     */
     @SuppressWarnings("unchecked")
     static <T extends ClientManager> T get(Class<T> keyClass)
     {
         return (T) managers.get(keyClass);
     }
 
+    /**
+     * Constructor.
+     */
     protected ClientManager()
     {
         managers.put(getClass(), this);
     }
 
+    /**
+     * @return 設定
+     */
     protected Settings settings()
     {
         return settings;

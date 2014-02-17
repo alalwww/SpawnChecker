@@ -17,14 +17,23 @@ import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.world.World;
 
 /**
+ * スライムの測定用エンティティ.
+ * 
  * @author alalwww
  */
 final class SlimeMeasure extends EntitySlime
 {
+    private static final int SMALLEST = 1;
+
+    /**
+     * Constructor.
+     * 
+     * @param world 現在のワールド
+     */
     SlimeMeasure(World world)
     {
         super(world);
-        setSlimeSize(1);
+        setSlimeSize(SMALLEST);
     }
 
     @Override

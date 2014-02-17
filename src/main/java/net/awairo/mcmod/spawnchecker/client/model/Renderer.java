@@ -20,5 +20,7 @@ package net.awairo.mcmod.spawnchecker.client.model;
  */
 public interface Renderer
 {
+    // TODO: 不要かも
+
     void doRender(long tickCount, float partialTick);
 }

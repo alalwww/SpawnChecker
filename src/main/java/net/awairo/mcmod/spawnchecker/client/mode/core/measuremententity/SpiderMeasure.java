@@ -17,11 +17,17 @@ import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.world.World;
 
 /**
- * @author alalwww
+ * スパイダーの測定用エンティティ.
  * 
+ * @author alalwww
  */
 final class SpiderMeasure extends EntitySpider
 {
+    /**
+     * Constructor.
+     * 
+     * @param world 現在のワールド
+     */
     SpiderMeasure(World world)
     {
         super(world);

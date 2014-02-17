@@ -30,32 +30,47 @@ import net.awairo.mcmod.spawnchecker.SpawnChecker;
 import net.awairo.mcmod.spawnchecker.client.mode.preset.SpawnCheckerMode;
 
 /**
- * 設定.
+ * 汎用的な設定.
  * 
  * @author alalwww
  */
 public class CommonConfig extends ConfigCategory
 {
     private final Logger logger = LogManager.getLogger(SpawnChecker.MOD_ID);
+
+    /** 設定の自動保存の試行間隔. */
     public final Prop saveInterval;
 
+    /** Modの有効無効フラグ. */
     public final Prop enable;
 
+    /** 状態情報の表示時間. */
     public final Prop informationDuration;
+    /** 状態情報のフェードアウト再生時間. */
     public final Prop informationFadeout;
+    /** 状態情報のX軸オフセット. */
     public final Prop informationOffsetX;
+    /** 状態情報のY軸オフセット. */
     public final Prop informationOffsetY;
+    /** アイコンの表示可否. */
     public final Prop showInformationIcon;
+    /** アイコン2倍サイズのフラグ. */
     public final Prop informationIconDoubleSize;
 
+    /** 選択しているモード. */
     public final Prop selectedMode;
 
+    /** 水平範囲. */
     public final Prop horizontalRange;
+    /** 垂直範囲. */
     public final Prop verticalRange;
+    /** 明るさ. */
     public final Prop brightness;
 
+    /** 更新の頻度(milliseconds). */
     public final Prop updateFrequency;
 
+    /** 有効にするアイテム. */
     private final Prop enablingItemsProp;
     private final Map<String, Block> enablingItemMap = Maps.newHashMap();
 
@@ -75,7 +90,8 @@ public class CommonConfig extends ConfigCategory
             saveInterval.set(3000);
 
         enable = config.getValueOf("enable", true)
-                .comment("");
+                .comment("enable/disable spawnchecker."
+                        + "\n(default: true)");
 
         // ----------
 

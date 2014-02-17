@@ -17,11 +17,17 @@ import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.world.World;
 
 /**
+ * エンダーマンの測定用エンティティ.
+ * 
  * @author alalwww
  */
 final class EndermanMeasure extends EntityEnderman
 {
-
+    /**
+     * Constructor.
+     * 
+     * @param world 現在のワールド
+     */
     EndermanMeasure(World world)
     {
         super(world);

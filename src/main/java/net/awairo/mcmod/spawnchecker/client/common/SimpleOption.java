@@ -29,21 +29,45 @@ import net.awairo.mcmod.spawnchecker.client.mode.Mode.Option;
  */
 public class SimpleOption implements Mode.Option
 {
-    private final String id;
-    private final String nameKey;
-    private final int ordinal;
-
+    /**
+     * 新しい{@link SimpleOption}を生成します.
+     * 
+     * @param id オプション識別子
+     * @param nameKey オプション名キー
+     * @return 新しいSimpleOption
+     */
     public static SimpleOption of(String id, String nameKey)
     {
         return of(id, nameKey, id.hashCode());
     }
 
+    /**
+     * 新しい{@link SimpleOption}を生成します.
+     * 
+     * @param id オプション識別子
+     * @param nameKey オプション名キー
+     * @param ordinal 順序
+     * @return 新しいSimpleOption
+     */
     public static SimpleOption of(String id, String nameKey, int ordinal)
     {
         return new SimpleOption(id, nameKey, ordinal);
     }
 
-    private SimpleOption(String id, String nameKey, int ordinal)
+    // ---------------------------------
+
+    private final String id;
+    private final String nameKey;
+    private final int ordinal;
+
+    /**
+     * Constructor.
+     * 
+     * @param id option id
+     * @param nameKey option name resource key
+     * @param ordinal ordinal
+     */
+    protected SimpleOption(String id, String nameKey, int ordinal)
     {
         this.id = checkNotNull(id, "id");
         this.nameKey = checkNotNull(nameKey, "nameKey");

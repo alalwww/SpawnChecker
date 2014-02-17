@@ -13,8 +13,6 @@
 
 package net.awairo.mcmod.spawnchecker.client.mode.core;
 
-import static com.google.common.base.Preconditions.*;
-
 import com.google.common.primitives.Floats;
 
 import net.minecraft.client.Minecraft;
@@ -35,11 +33,15 @@ public final class CopiedLogics
 {
     private final Minecraft game = Minecraft.getMinecraft();
 
-    private final ConstantsConfig config;
+    private final ConstantsConfig config = ConstantsConfig.instance();
 
-    CopiedLogics(ConstantsConfig config)
+    /**
+     * Constructor.
+     * 
+     * @param config
+     */
+    CopiedLogics()
     {
-        this.config = checkNotNull(config, "config");
     }
 
     /**

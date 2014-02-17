@@ -66,6 +66,8 @@ public final class SpawnPoint extends Marker<SpawnPoint> implements Renderer
     @Override
     public void doRender(long tickCount, float partialTick)
     {
+        // TODO: 最適位置にtranslateしてから描画してく感じになおしたい
+
         computeVertics();
 
         double oMaxX = outerMaxX - renderManager.viewerPosX;

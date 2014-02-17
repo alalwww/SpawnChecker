@@ -22,6 +22,8 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderManager;
 
 /**
+ * RenderingSupport.
+ * 
  * @author alalwww
  */
 public final class RenderingSupport
@@ -29,6 +31,9 @@ public final class RenderingSupport
     static final RenderManager renderManager = RenderManager.instance;
     static final Tessellator tessellator = Tessellator.instance;
 
+    /**
+     * 描画開始前のGL設定.
+     */
     public static void beginRendering()
     {
         GL11.glDisable(GL11.GL_TEXTURE_2D);
@@ -44,6 +49,9 @@ public final class RenderingSupport
                 GL11.GL_ONE, GL11.GL_ZERO);
     }
 
+    /**
+     * 描画終了時のGL設定.
+     */
     public static void endRendering()
     {
         GL11.glDisable(GL11.GL_BLEND);
@@ -55,31 +63,64 @@ public final class RenderingSupport
         GL11.glEnable(GL11.GL_TEXTURE_2D);
     }
 
+    /**
+     * 四角形の描画を開始します.
+     */
     public static void startDrawingQuads()
     {
         tessellator.startDrawingQuads();
     }
 
+    /**
+     * 線の描画を開始します.
+     */
     public static void startDrawingLines()
     {
         tessellator.startDrawing(GL11.GL_LINES);
     }
 
+    /**
+     * 頂点座標を追加.
+     * 
+     * @param x 座標
+     * @param y 座標
+     * @param z 座標
+     */
     public static void addVertex(double x, double y, double z)
     {
         tessellator.addVertex(x, y, z);
     }
 
+    /**
+     * テクスチャの頂点座標を追加.
+     * 
+     * @param x
+     * @param y
+     * @param z
+     * @param u
+     * @param v
+     */
     public static void addVertexWithUV(double x, double y, double z, double u, double v)
     {
         tessellator.addVertexWithUV(x, y, z, u, v);
     }
 
+    /**
+     * 描画します.
+     * 
+     * @return バッファインデックス？
+     */
     public static int draw()
     {
         return tessellator.draw();
     }
 
+    /**
+     * 色と明るさを設定します.
+     * 
+     * @param color 色
+     * @param brightness 明るさ
+     */
     // TODO: なんかうまくいかないのでこっち使わずGL11.glColor4ubで色に直接明るさ反映してる
     // brightnessの値はかなり大きな数値っぽいけど何を設定しても色に反映されてくれない…
     public static void setColorAndBrightness(Color color, int brightness)
@@ -88,6 +129,12 @@ public final class RenderingSupport
         tessellator.setColorRGBA(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
     }
 
+    /**
+     * 色と明るさを設定します.
+     * 
+     * @param color 色
+     * @param brightness 明るさ
+     */
     public static void setGLColorAndBrightness(Color color, int brightness)
     {
         // てっせれーたー使わない場合のブライトネス反映は、
@@ -102,16 +149,32 @@ public final class RenderingSupport
         setGLColor(r, g, b, color.getAlpha());
     }
 
+    /**
+     * 色を設定します.
+     * 
+     * @param c 色
+     */
     public static void setGLColor(Color c)
     {
         setGLColor(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha());
     }
 
+    /**
+     * 色を設定します.
+     * 
+     * @param r 赤
+     * @param g 緑
+     * @param b 青
+     * @param a 透明度
+     */
     public static void setGLColor(int r, int g, int b, int a)
     {
         GL11.glColor4ub((byte) r, (byte) g, (byte) b, (byte) a);
     }
 
+    /**
+     * Constructor.
+     */
     private RenderingSupport()
     {
         throw new InternalError();

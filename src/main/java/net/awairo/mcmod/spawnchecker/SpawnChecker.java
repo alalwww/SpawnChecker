@@ -149,7 +149,7 @@ public final class SpawnChecker
                 // null値送信もできちゃうので、switchで落とさないように
                 if (message.key == null)
                 {
-                    handleUnknownMode(message);
+                    handleUnknownMessageKey(message);
                     continue;
                 }
 
@@ -162,7 +162,7 @@ public final class SpawnChecker
             // nothing
         }
 
-        protected final void handleUnknownMode(IMCMessage msg)
+        protected final void handleUnknownMessageKey(IMCMessage msg)
         {
             // いえ、知らない子ですね・・・
             LOGGER.warn("unexpected key from {} (key:{})", msg.getSender(), msg.key);

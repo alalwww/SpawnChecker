@@ -17,29 +17,48 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.world.World;
 
 /**
- * 測定用エンティティ.
+ * 衝突判定に用いる測定用エンティティ.
  * 
  * @author alalwww
  */
 public final class MeasurementEntities
 {
+    /**
+     * 新しい測定用エンティティを生成します.
+     * 
+     * @param theWorld 現在のワールド
+     * @return 新しいインスタンス
+     */
     public static MeasurementEntities of(World theWorld)
     {
         return new MeasurementEntities(theWorld);
     }
 
+    /** 標準的な大きさのMobエンティティ. */
     public final EntityLiving standardSizeMob;
+    /** エンダーマン. */
     public final EntityLiving enderman;
+    /** スパイダー. */
     public final EntityLiving spider;
+    /** ケーブスパイダー. */
+    public final EntityLiving caveSpider;
+    /** スライム(最小サイズ). */
     public final EntityLiving slime;
+    /** シルバーフィッシュ. */
     public final EntityLiving silverFish;
 
+    /**
+     * Constructor.
+     * 
+     * @param world 現在のワールド
+     */
     private MeasurementEntities(World world)
     {
         standardSizeMob = new StandardSizeMobMeasure(world);
-        slime = new SlimeMeasure(world);
         enderman = new EndermanMeasure(world);
         spider = new SpiderMeasure(world);
+        caveSpider = new CaveSpiderMeasure(world);
+        slime = new SlimeMeasure(world);
         silverFish = new SilverfishMeasure(world);
     }
 

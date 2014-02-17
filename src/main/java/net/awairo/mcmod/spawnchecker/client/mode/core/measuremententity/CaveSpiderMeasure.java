@@ -17,11 +17,17 @@ import net.minecraft.entity.monster.EntityCaveSpider;
 import net.minecraft.world.World;
 
 /**
+ * ケーブスパイダー測定用エンティティ.
+ * 
  * @author alalwww
  */
 final class CaveSpiderMeasure extends EntityCaveSpider
 {
-
+    /**
+     * Constructor.
+     * 
+     * @param world 現在のワールド
+     */
     CaveSpiderMeasure(World world)
     {
         super(world);

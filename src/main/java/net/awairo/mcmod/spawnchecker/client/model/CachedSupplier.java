@@ -16,10 +16,16 @@ package net.awairo.mcmod.spawnchecker.client.model;
 import java.util.ArrayList;
 
 import com.google.common.base.Supplier;
-import com.google.common.primitives.Ints;
+
+import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
 
 /**
  * CachedSupplier.
+ * 
+ * <p>
+ * 毎フレームごとに使用する、マーカーインスタンスの生成コストを抑えるために、
+ * 作成済みのマーカーインスタンスを保持し再利用するための、プール機能を提供します。
+ * </p>
  * 
  * @author alalwww
  * 
@@ -27,12 +33,6 @@ import com.google.common.primitives.Ints;
  */
 public class CachedSupplier<T extends Marker<T>> implements Supplier<T>
 {
-    private static final int DEFAULT_CAPACITY = Ints.saturatedCast(5L + 500 + (500 / 10));
-    private final ArrayList<T> pool;
-    private final Supplier<T> factory;
-
-    private int usedMarker;
-
     /**
      * 新しい{@link CachedSupplier}を作成します.
      * 
@@ -41,13 +41,46 @@ public class CachedSupplier<T extends Marker<T>> implements Supplier<T>
      */
     public static <T extends Marker<T>> CachedSupplier<T> of(Supplier<T> factory)
     {
-        return new CachedSupplier<T>(factory, new ArrayList<T>(DEFAULT_CAPACITY));
+        return new CachedSupplier<T>(defaultSize(), factory);
     }
 
-    private CachedSupplier(Supplier<T> factory, ArrayList<T> pool)
+    /**
+     * 新しい{@link CachedSupplier}を作成します.
+     * 
+     * @param defaultSize プールの初期サイズ
+     * @param factory 新しいインスタンスを生成する処理
+     * @return インスタンス
+     */
+    public static <T extends Marker<T>> CachedSupplier<T> of(int defaultSize, Supplier<T> factory)
     {
+        return new CachedSupplier<T>(defaultSize, factory);
+    }
+
+    /** @return 初期サイズ */
+    private static int defaultSize()
+    {
+        return ConstantsConfig.instance().defaultCachedSupplierSize;
+    }
+
+    // ------------------------------------
+
+    private final int defaultSize;
+    private final ArrayList<T> pool;
+    private final Supplier<T> factory;
+
+    private int usedMarker;
+
+    /**
+     * Constructor.
+     * 
+     * @param factory 新しいマーカーの生成処理
+     * @param pool プール用のリスト
+     */
+    private CachedSupplier(int defaultSize, Supplier<T> factory)
+    {
+        this.defaultSize = defaultSize;
         this.factory = factory;
-        this.pool = pool;
+        this.pool = new ArrayList<T>(defaultSize);
     }
 
     @Override
@@ -71,12 +104,12 @@ public class CachedSupplier<T extends Marker<T>> implements Supplier<T>
     }
 
     /**
-     * キャッシュ済みのインスタンスを開放しキャッシュサイズをリセットします.
+     * キャッシュ済みのインスタンスを開放し、キャッシュサイズをリセットします.
      */
     public void clearAll()
     {
         pool.clear();
-        pool.ensureCapacity(DEFAULT_CAPACITY);
+        pool.ensureCapacity(defaultSize);
     }
 
 }

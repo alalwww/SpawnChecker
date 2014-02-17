@@ -35,6 +35,11 @@ public final class Settings
     private final State state;
     private final ConfigHolder holder;
 
+    /**
+     * Constructor.
+     * 
+     * @param configFile 設定ファイル
+     */
     public Settings(File configFile)
     {
         final Config config = Config.wrapOf(new Configuration(checkNotNull(configFile), true));
@@ -52,13 +57,7 @@ public final class Settings
                 .setInterval(3000L);
     }
 
-    /**
-     * @return 状態
-     */
-    public State state()
-    {
-        return state;
-    }
+    // ------------------------------
 
     /**
      * @return 設定ホルダー
@@ -68,16 +67,33 @@ public final class Settings
         return holder;
     }
 
+    /**
+     * @return 状態
+     */
+    public State state()
+    {
+        return state;
+    }
+
+    /**
+     * @return 汎用設定
+     */
     public CommonConfig common()
     {
         return holder.get(CommonConfig.class);
     }
 
+    /**
+     * @return キー設定
+     */
     public KeyConfig keyConfig()
     {
         return holder.get(KeyConfig.class);
     }
 
+    /**
+     * @return 色設定
+     */
     public ColorConfig color()
     {
         return holder.get(ColorConfig.class);

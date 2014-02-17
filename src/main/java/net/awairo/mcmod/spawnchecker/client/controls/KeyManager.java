@@ -36,10 +36,14 @@ public final class KeyManager extends ClientManager
     @SuppressWarnings("unused")
     private static final KeyManager instance = new KeyManager();
 
+    /** クラスロード用. */
     public static void load()
     {
     }
 
+    /**
+     * Constructor.
+     */
     private KeyManager()
     {
         ctrlKeys = ConstantsConfig.instance().ctrlKeyCodes.clone();
@@ -53,6 +57,11 @@ public final class KeyManager extends ClientManager
         return new Listener();
     }
 
+    /**
+     * イベントリスナー.
+     * 
+     * @author alalwww
+     */
     public class Listener
     {
         private Listener()
@@ -80,6 +89,12 @@ public final class KeyManager extends ClientManager
         }
     }
 
+    /**
+     * 指定キーコードのどれか1つでも押下されていればtrueを返します.
+     * 
+     * @param keys キー
+     * @return true は押下されている
+     */
     private boolean isKeysDown(int... keys)
     {
         for (int key : keys)

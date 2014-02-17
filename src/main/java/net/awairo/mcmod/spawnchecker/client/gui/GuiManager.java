@@ -19,16 +19,24 @@ import net.awairo.mcmod.spawnchecker.client.common.Settings;
 /**
  * GuiManager.
  * 
+ * <p>
+ * マネージャーとは名ばかりで何も管理してないただの設定へのあくせさ。( っ'ω'c)
+ * </p>
+ * 
  * @author alalwww
  */
 public final class GuiManager extends ClientManager
 {
     private static final GuiManager instance = new GuiManager();
 
+    /** クラスロード用. */
     public static void load()
     {
     }
 
+    /**
+     * Constructor.
+     */
     private GuiManager()
     {
     }

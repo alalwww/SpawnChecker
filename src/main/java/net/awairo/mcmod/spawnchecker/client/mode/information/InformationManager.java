@@ -53,6 +53,7 @@ public final class InformationManager extends ClientManager
         return instance;
     }
 
+    /** クラスロード用. */
     public static void load()
     {
     }

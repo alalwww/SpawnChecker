@@ -30,19 +30,36 @@ import net.awairo.mcmod.spawnchecker.client.mode.Mode;
  */
 public class ColorConfig extends ConfigCategory implements Mode.CommonColor
 {
+    /** 状態情報の文字色. */
     public final ColorSetting informationMessage;
+
+    /** エンダーマン用マーカー色. */
     public final ColorSetting enderman;
+    /** 一般的な大きさのMob用マーカー色. */
     public final ColorSetting standardSizeMob;
+    /** スパイダー用マーカー色. */
     public final ColorSetting spider;
+    /** スライム用マーカー色. */
     public final ColorSetting slime;
+    /** ガスト用マーカー色. */
     public final ColorSetting ghast;
+
+    /** スライムチャンクマーカーのライン色. */
     public final ColorSetting slimeChunk;
+
+    /** スポーナー強調枠のライン色. */
     public final ColorSetting spawnerBorder;
+    /** スポーナーの湧き範囲ライン色. */
     public final ColorSetting spawnerSpawnArea;
+    /** スポーナーの湧き数上限チェック範囲ライン色. */
     public final ColorSetting spawnerSpawnLimitArea;
+    /** スポーナーのスポーン可能マーカー色. */
     public final ColorSetting spawnerSpawnablePoint;
+    /** スポーナーのスポーン不可能マーカー色. */
     public final ColorSetting spawnerUnspawnablePoint;
+    /** スポーナーが起動する球体範囲マーカーの面の色. */
     public final ColorSetting spawnerActiveArea;
+    /** スポーナーが起動する球体範囲マーカーのライン色. */
     public final ColorSetting spawnerActiveAreaLine;
 
     /**
@@ -187,12 +204,17 @@ public class ColorConfig extends ConfigCategory implements Mode.CommonColor
         return spawnerActiveAreaLine.get();
     }
 
+    /**
+     * 色設定.
+     * 
+     * @author alalwww
+     */
     public final class ColorSetting
     {
-        final Prop prop;
-        Color color;
+        private final Prop prop;
+        private Color color;
 
-        ColorSetting(String key, String defaultValue)
+        private ColorSetting(String key, String defaultValue)
         {
             this.prop = config.getValueOf(key, defaultValue);
             final Optional<Color> c = Colors.fromString(prop.getString());
@@ -202,22 +224,33 @@ public class ColorConfig extends ConfigCategory implements Mode.CommonColor
                 return;
             }
 
+            // 設定がおかしいのでデフォ値
             color = Colors.fromString(defaultValue).get();
             prop.set(defaultValue);
         }
 
-        ColorSetting comment(String comment)
+        private ColorSetting comment(String comment)
         {
             prop.comment("information message color");
             return this;
         }
 
+        /**
+         * 新しい色を設定します.
+         * 
+         * @param color 色
+         */
         public void set(Color color)
         {
             this.color = color;
             prop.set(Colors.toString(color));
         }
 
+        /**
+         * 色を取得します.
+         * 
+         * @return 色
+         */
         public Color get()
         {
             return color;

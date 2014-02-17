@@ -32,6 +32,16 @@ import net.awairo.mcmod.spawnchecker.client.mode.Mode.CommonState;
  */
 public final class State implements CommonState
 {
+    /**
+     * key direction.
+     * 
+     * @author alalwww
+     */
+    public enum Direction
+    {
+        UP, DOWN;
+    }
+
     private final CommonConfig config;
 
     private World currentWorld;
@@ -47,15 +57,10 @@ public final class State implements CommonState
     private final LimitedNumber<Integer> brightness;
 
     /**
-     * key direction.
+     * Constructor.
      * 
-     * @author alalwww
+     * @param config 汎用的な設定
      */
-    public enum Direction
-    {
-        UP, DOWN;
-    }
-
     public State(CommonConfig config)
     {
         this.config = checkNotNull(config, "config");
@@ -88,11 +93,17 @@ public final class State implements CommonState
         return brightness;
     }
 
+    /**
+     * @return 現在のワールド
+     */
     public World currentWorld()
     {
         return currentWorld;
     }
 
+    /**
+     * @param newWorld 新しい現在のワールド
+     */
     public void setWorld(World newWorld)
     {
         currentWorld = newWorld;
@@ -114,13 +125,18 @@ public final class State implements CommonState
         return currentMode;
     }
 
+    /**
+     * 指定方向へのモード変更の計画を追加します.
+     * 
+     * @param direction モードの変更方向
+     */
     public void changeMode(Direction direction)
     {
         newModeDirections.add(checkNotNull(direction));
     }
 
     /**
-     * モード変更が計画されていた場合変更します.
+     * 予定されたモード変更計画を全て破棄し、指定のモードに変更します.
      */
     public void setNewMode(Mode newMode)
     {
@@ -129,11 +145,17 @@ public final class State implements CommonState
         config.selectedMode.set(currentMode.id());
     }
 
+    /**
+     * @return true はモード変更を予定している
+     */
     public boolean modeChangeScheduled()
     {
         return !newModeDirections.isEmpty();
     }
 
+    /**
+     * @return 計画されたモード変更方向
+     */
     public Iterable<Direction> directions()
     {
         return newModeDirections;

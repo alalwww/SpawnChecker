@@ -23,6 +23,11 @@ import net.minecraft.world.World;
  */
 final class StandardSizeMobMeasure extends EntityMob
 {
+    /**
+     * Constructor.
+     * 
+     * @param world 現在のワールド
+     */
     StandardSizeMobMeasure(World world)
     {
         super(world);

@@ -25,13 +25,14 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 
 /**
- * @since x
- * @version x
+ * Mod設定画面ファクトリ.
+ * 
  * @author alalwww
  */
 public class GuiScreenFactory implements IModGuiFactory
 {
 
+    // TODO: インゲーム設定画面がまともに動くようになったらちゃんと設定する
     //    private static final Set<RuntimeOptionCategoryElement> categories = ImmutableSet
     //            .of(new RuntimeOptionCategoryElement("PARENT", "CHILD"));
     private static final Set<RuntimeOptionCategoryElement> categories = ImmutableSet

@@ -17,8 +17,9 @@ import net.awairo.mcmod.spawnchecker.client.common.SimpleOption;
 import net.awairo.mcmod.spawnchecker.client.mode.Mode;
 
 /**
- * @author alalwww
+ * モードオプション
  * 
+ * @author alalwww
  */
 public final class Options
 {

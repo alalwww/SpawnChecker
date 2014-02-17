@@ -30,6 +30,9 @@ public class Marker<T extends Marker<T>>
 
     protected int brightness;
 
+    /**
+     * Constructor.
+     */
     protected Marker()
     {
         reset();

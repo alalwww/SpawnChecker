@@ -48,6 +48,8 @@ public final class ModeManager extends ClientManager
     private final Map<String, Mode> idToModeMap = Maps.newHashMap();
     private final List<Mode> sortedModeList = Lists.newArrayList();
 
+    private boolean initialized = false;
+
     private int selectedModeCursor;
 
     private long tickCount;
@@ -55,10 +57,14 @@ public final class ModeManager extends ClientManager
 
     private boolean beganMode;
 
+    /** クラスロード用. */
     public static void load()
     {
     }
 
+    /**
+     * Constructor.
+     */
     private ModeManager()
     {
     }
@@ -74,35 +80,50 @@ public final class ModeManager extends ClientManager
         return super.settings();
     }
 
+    /**
+     * モードを追加します.
+     * 
+     * @param mode 追加するモード
+     */
     public void addMode(Mode mode)
     {
+        checkState(!initialized, "initialized manager. ur too late!");
         checkArgument(!idToModeMap.containsKey(mode.id()), "mode id %s is duplicate.", mode.id());
 
         idToModeMap.put(mode.id(), mode);
         sortedModeList.add(mode);
     }
 
+    /**
+     * マネージャーの初期化と、各モードの初期化を行います.
+     */
     public void initialize()
     {
         Collections.sort(sortedModeList);
         selectedModeCursor = sortedModeList.indexOf(idToModeMap.get(settings().common().selectedMode.getString()));
-        if (selectedModeCursor < 0) selectedModeCursor = 0;
+        if (selectedModeCursor < 0)
+            selectedModeCursor = 0;
 
         for (Mode mode : sortedModeList)
             mode.initialize();
+
+        initialized = true;
     }
 
+    /** 現在のモードを更新. */
     private void updateMode()
     {
         final World wowld = Minecraft.getMinecraft().theWorld;
 
         resetIfWorldChanged(wowld);
 
-        if (wowld == null) return;
+        if (wowld == null)
+            return;
 
         tickCount++;
 
-        if (isNotUpdateTiming()) return;
+        if (isNotUpdateTiming())
+            return;
 
         setNewModeIfScheduled();
 
@@ -163,6 +184,7 @@ public final class ModeManager extends ClientManager
         beganMode = true;
     }
 
+    /***/
     private Mode getNewMode()
     {
         int newCursor = selectedModeCursor;
@@ -186,6 +208,7 @@ public final class ModeManager extends ClientManager
         return sortedModeList.get(selectedModeCursor);
     }
 
+    /** ワールド内にマーカーを描画. */
     private void renderMarker(float partialTick)
     {
         if (!beganMode) return;
@@ -195,6 +218,7 @@ public final class ModeManager extends ClientManager
         RenderingSupport.endRendering();
     }
 
+    /** 画面上に情報を描画. */
     private void renderGui(float partialTick)
     {
         if (!beganMode) return;

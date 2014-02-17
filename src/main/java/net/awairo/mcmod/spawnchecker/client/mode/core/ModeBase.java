@@ -29,7 +29,6 @@ import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
 
 import net.awairo.mcmod.spawnchecker.SpawnChecker;
-import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
 import net.awairo.mcmod.spawnchecker.client.common.OptionSet;
 import net.awairo.mcmod.spawnchecker.client.common.SimpleInformation;
 import net.awairo.mcmod.spawnchecker.client.mode.Mode;
@@ -52,7 +51,7 @@ public abstract class ModeBase<T extends ModeBase<T>> implements Mode
     private final List<OptionSet> optionSetList = Lists.newArrayList();
     private int cursor;
 
-    protected final CopiedLogics copiedLogics = new CopiedLogics(ConstantsConfig.instance());
+    protected final CopiedLogics copiedLogics = new CopiedLogics();
 
     /**
      * Constructor.

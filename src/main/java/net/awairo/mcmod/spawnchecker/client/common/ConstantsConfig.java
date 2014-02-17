@@ -30,46 +30,79 @@ public class ConstantsConfig extends ConfigCategory
 {
     private static ConstantsConfig instance;
 
-    public final boolean override;
+    /** 上書き有効化フラグ. */
+    private final boolean override;
 
+    /** ブロックのサイズ. */
     public final double blockSize;
+    /** ワールドのy座標の上限. */
     public final int worldHeightMax;
 
+    /** 検索範囲のY座標の上限. */
     public final int scanRangeLimitMaxY;
+    /** 検索範囲のY座標の下限. */
     public final int scanRangeLimitMinY;
 
+    /** スポーン可判定する明るさ.(15段階の明るさのやつ) */
     public final int spawnableLightLevel;
+    /** スポーン可判定する明るさ.(スポーナーの判定で使用してる実際の明るさとの比較用) */
     public final float spawnableMaxLightValue;
 
+    /** スライムスポーンチャンクのランダムシード. */
     public final long slimeRandomSeed;
+    /** チャンク生成用のシード値. */
     public final int chunkRandomSeedX1;
+    /** チャンク生成用のシード値. */
     public final int chunkRandomSeedX2;
+    /** チャンク生成用のシード値. */
     public final long chunkRandomSeedZ1;
+    /** チャンク生成用のシード値. */
     public final int chunkRandomSeedZ2;
 
+    /** スライムがスポーンする高さ上限. */
     public final double slimeSpawnLimitY;
 
-    public final int defaultMarkerListSize;
+    /** CachedSupplierのキャッシュサイズ初期値. */
+    public final int defaultCachedSupplierSize;
 
+    /** スポーンチェッカーモードのマーカーインスタンスのキャッシュサイズ初期値. */
+    public final int defaultSpawnCheckerMarkerListSize;
+
+    /** 状態情報のアイコンのMinU. */
     public final int iconTextureUMin;
+    /** 状態情報のアイコンのMaxU. */
     public final int iconTextureVMin;
+    /** 状態情報のアイコンのMinV. */
     public final int iconTextureUMax;
+    /** 状態情報のアイコンのMaxV. */
     public final int iconTextureVMax;
 
+    /** 状態情報アイコンの幅. */
     public final double iconWidth;
+    /** 状態情報アイコンの高さ. */
     public final double iconHeight;
 
+    /** アイコンとメッセージの間隔. */
     public final int spacerOfIconAndMessage;
 
+    /** 状態情報アイコンなどのZ座標. */
     public final double guiPosZ;
 
+    /** ブライトネスの基本値. */
     public final int baseBrightness;
+    /** ブライトネスの変化幅. */
     public final int brightnessRatio;
 
+    /** CTRLキーとみなすキーコード. */
     public final int[] ctrlKeyCodes;
+    /** SHIFTキーとみなすキーコード. */
     public final int[] shiftKeyCodes;
+    /** ALTキーとみなすキーコード. */
     public final int[] altKeyCodes;
 
+    /**
+     * @return 定数クラスのインスタンス
+     */
     public static ConstantsConfig instance()
     {
         return instance;
@@ -147,8 +180,12 @@ public class ConstantsConfig extends ConfigCategory
                 .comment("default: 40")
                 .getDouble();
 
+        defaultCachedSupplierSize = getValueOf("defaultCachedSupplierSize", 555)
+                .comment("default: 555")
+                .getInt();
+
         // SpawnChecker
-        defaultMarkerListSize = getValueOf("defaultMarkerListSize", 256)
+        defaultSpawnCheckerMarkerListSize = getValueOf("defaultSpawnCheckerMarkerListSize", 256)
                 .comment("default: 256")
                 .getInt();
 
@@ -203,6 +240,16 @@ public class ConstantsConfig extends ConfigCategory
                 .getIntList();
     }
 
+    // ---------------------------
+
+    @Override
+    protected String configurationCategory()
+    {
+        return "internal";
+    }
+
+    // ---------------------------
+
     @SuppressWarnings("unused")
     private Prop getValueOf(String key, boolean defaultValue)
     {
@@ -233,6 +280,8 @@ public class ConstantsConfig extends ConfigCategory
         return p;
     }
 
+    // ---------------------------
+
     @SuppressWarnings("unused")
     private Prop getListOf(String key, boolean... defaultValues)
     {
@@ -262,11 +311,5 @@ public class ConstantsConfig extends ConfigCategory
         final Prop p = config.getListOf(key, defaultValues);
         if (!override) p.setList(defaultValues);
         return p;
-    }
-
-    @Override
-    protected String configurationCategory()
-    {
-        return "internal";
     }
 }

@@ -16,6 +16,8 @@ package net.awairo.mcmod.spawnchecker.client.controls;
 import net.awairo.mcmod.spawnchecker.client.common.State;
 
 /**
+ * テンキー「－」キー操作ハンドラー.
+ * 
  * @author alalwww
  */
 final class MinusKeyHandler extends AbstractKeyHandler

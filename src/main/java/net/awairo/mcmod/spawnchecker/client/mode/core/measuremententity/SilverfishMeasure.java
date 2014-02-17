@@ -17,10 +17,17 @@ import net.minecraft.entity.monster.EntitySilverfish;
 import net.minecraft.world.World;
 
 /**
+ * シルバーフィッシュの測定用エンティティ.
+ * 
  * @author alalwww
  */
 final class SilverfishMeasure extends EntitySilverfish
 {
+    /**
+     * Constructor.
+     * 
+     * @param world 現在のワールド
+     */
     SilverfishMeasure(World world)
     {
         super(world);

@@ -57,6 +57,9 @@ public final class SpawnCheckerMode extends ModeBase<SpawnCheckerMode>
     private boolean guideline;
     private boolean force;
 
+    /**
+     * Constructor.
+     */
     public SpawnCheckerMode()
     {
         super(ID, 10);
@@ -86,7 +89,7 @@ public final class SpawnCheckerMode extends ModeBase<SpawnCheckerMode>
     public void start()
     {
         cache = CachedSupplier.of(SpawnPoint.supplier());
-        markers = Lists.newArrayListWithExpectedSize(consts.defaultMarkerListSize);
+        markers = Lists.newArrayListWithExpectedSize(consts.defaultSpawnCheckerMarkerListSize);
         currentWorld = game.theWorld;
         measureEntities = MeasurementEntities.of(currentWorld);
     }
@@ -111,7 +114,7 @@ public final class SpawnCheckerMode extends ModeBase<SpawnCheckerMode>
             currentWorld = game.theWorld;
             measureEntities = MeasurementEntities.of(currentWorld);
             cache.clearAll();
-            markers.ensureCapacity(consts.defaultMarkerListSize);
+            markers.ensureCapacity(consts.defaultSpawnCheckerMarkerListSize);
         }
 
         final OptionSet options = options();
@@ -161,13 +164,15 @@ public final class SpawnCheckerMode extends ModeBase<SpawnCheckerMode>
                 for (int y = fisstY; y >= lastY; y--)
                 {
                     check(x, y, z);
+
+                    // TODO: スライムチャンク判定の追加
                 }
             }
 
         }
-
     }
 
+    /** @return true は有効化するアイテムを持ってる */
     private boolean hasEnableItem()
     {
         final ItemStack stack = game.thePlayer.inventory.getCurrentItem();
@@ -177,7 +182,8 @@ public final class SpawnCheckerMode extends ModeBase<SpawnCheckerMode>
                 : false;
     }
 
-    // TODO: 判定の再確認
+    // TODO: 判定に問題がないか再確認
+    // TODO: ディメンション毎の判定処理の実装方針をきめる。対応する。
     private void check(int x, int y, int z)
     {
         if (!copiedLogics.canSpawnAtLocation(x, y, z)) return;

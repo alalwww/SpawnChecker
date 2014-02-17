@@ -17,6 +17,8 @@ import net.awairo.mcmod.spawnchecker.client.common.State;
 import net.awairo.mcmod.spawnchecker.client.common.State.Direction;
 
 /**
+ * 「上」キー操作ハンドラー.
+ * 
  * @author alalwww
  */
 final class UpKeyHandler extends AbstractKeyHandler

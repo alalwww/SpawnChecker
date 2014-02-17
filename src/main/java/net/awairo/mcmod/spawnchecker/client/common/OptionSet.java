@@ -27,11 +27,8 @@ public class OptionSet extends LinkedHashSet<Mode.Option>
 {
     public static OptionSet of(final Mode.Option... options)
     {
-        return new OptionSet()
-        {
-            {
-                addAll(Arrays.asList(options));
-            }
-        };
+        final OptionSet set = new OptionSet();
+        set.addAll(Arrays.asList(options));
+        return set;
     }
 }

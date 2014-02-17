@@ -88,7 +88,7 @@ public final class ClientSideProxy extends SpawnChecker.Proxy
                 break;
 
             default:
-                handleUnknownMode(msg);
+                handleUnknownMessageKey(msg);
                 break;
         }
     }

@@ -64,7 +64,7 @@ public class PresetMode
         final Properties prop = event.getVersionProperties();
 
         // バージョンは本体と同期
-        // version.propertiesにこっちのmodidを足してもいけるけど、汎用的にしておきたいのでコードで対応
+        // version.propertiesにこっちのmodidを足してもいけるけど、生成処理は汎用的にしておきたいのでコードで対応
         event.getModMetadata().version = prop.getProperty(SpawnChecker.MOD_ID + ".version");
 
         color = ((ClientSideProxy) SpawnChecker.sideProxy).settings().color();
