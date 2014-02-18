@@ -231,7 +231,7 @@ public class ColorConfig extends ConfigCategory implements Mode.CommonColor
 
         private ColorSetting comment(String comment)
         {
-            prop.comment("information message color");
+            prop.comment(comment);
             return this;
         }
 
