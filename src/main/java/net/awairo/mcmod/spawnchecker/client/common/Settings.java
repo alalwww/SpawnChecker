@@ -32,6 +32,7 @@ import net.awairo.mcmod.spawnchecker.client.controls.KeyConfig;
  */
 public final class Settings extends ConfigHolder
 {
+    private final Config config;
     private final State state;
 
     /**
@@ -43,7 +44,7 @@ public final class Settings extends ConfigHolder
     {
         super(LogManager.getLogger(SpawnChecker.MOD_ID));
 
-        final Config config = Config.wrapOf(new Configuration(checkNotNull(configFile), true));
+        config = Config.wrapOf(new Configuration(checkNotNull(configFile), true));
         add(new ConstantsConfig(config));
         add(new CommonConfig(config));
         add(new KeyConfig(config));
@@ -55,6 +56,14 @@ public final class Settings extends ConfigHolder
     }
 
     // ------------------------------
+
+    /**
+     * @return 設定
+     */
+    public Config config()
+    {
+        return config;
+    }
 
     /**
      * @return 状態

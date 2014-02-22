@@ -116,13 +116,12 @@ public class ConstantsConfig extends ConfigCategory
     public ConstantsConfig(Config config)
     {
         super(config);
+        setCategoryComment("internal constant settings.\n *** DO NOT CHANGE IF YOU DO NOT NEED! ***");
 
         checkState(instance == null);
         instance = this;
 
-        config.addCategoryComment("internal constant settings.\n *** DO NOT CHANGE IF YOU DO NOT NEED! ***");
-
-        override = config.getValueOf("override", false)
+        override = getValueOf("override", false)
                 .comment("default: false")
                 .getBoolean();
 
@@ -250,65 +249,68 @@ public class ConstantsConfig extends ConfigCategory
 
     // ---------------------------
 
-    @SuppressWarnings("unused")
-    private Prop getValueOf(String key, boolean defaultValue)
+    @Override
+    protected Prop getValueOf(String key, boolean defaultValue)
     {
-        final Prop p = config.getValueOf(key, defaultValue);
+        final Prop p = super.getValueOf(key, defaultValue);
         if (!override) p.set(defaultValue);
         return p;
     }
 
-    private Prop getValueOf(String key, int defaultValue)
+    @Override
+    protected Prop getValueOf(String key, int defaultValue)
     {
-        final Prop p = config.getValueOf(key, defaultValue);
+        final Prop p = super.getValueOf(key, defaultValue);
         if (!override) p.set(defaultValue);
         return p;
     }
 
-    private Prop getValueOf(String key, double defaultValue)
+    @Override
+    protected Prop getValueOf(String key, double defaultValue)
     {
-        final Prop p = config.getValueOf(key, defaultValue);
+        final Prop p = super.getValueOf(key, defaultValue);
         if (!override) p.set(defaultValue);
         return p;
     }
 
-    @SuppressWarnings("unused")
-    private Prop getValueOf(String key, String defaultValue)
+    @Override
+    protected Prop getValueOf(String key, String defaultValue)
     {
-        final Prop p = config.getValueOf(key, defaultValue);
+        final Prop p = super.getValueOf(key, defaultValue);
         if (!override) p.set(defaultValue);
         return p;
     }
 
     // ---------------------------
 
-    @SuppressWarnings("unused")
-    private Prop getListOf(String key, boolean... defaultValues)
+    @Override
+    protected Prop getListOf(String key, boolean... defaultValues)
     {
-        final Prop p = config.getListOf(key, defaultValues);
+        final Prop p = super.getListOf(key, defaultValues);
         if (!override) p.setList(defaultValues);
         return p;
     }
 
-    private Prop getListOf(String key, int... defaultValues)
+    @Override
+    protected Prop getListOf(String key, int... defaultValues)
     {
-        final Prop p = config.getListOf(key, defaultValues);
+        final Prop p = super.getListOf(key, defaultValues);
         if (!override) p.setList(defaultValues);
         return p;
     }
 
-    @SuppressWarnings("unused")
-    private Prop getListOf(String key, double... defaultValues)
+    @Override
+    protected Prop getListOf(String key, double... defaultValues)
     {
-        final Prop p = config.getListOf(key, defaultValues);
+        final Prop p = super.getListOf(key, defaultValues);
         if (!override) p.setList(defaultValues);
         return p;
     }
 
-    @SuppressWarnings("unused")
-    private Prop getListOf(String key, String... defaultValues)
+    @Override
+    protected Prop getListOf(String key, String... defaultValues)
     {
-        final Prop p = config.getListOf(key, defaultValues);
+        final Prop p = super.getListOf(key, defaultValues);
         if (!override) p.setList(defaultValues);
         return p;
     }

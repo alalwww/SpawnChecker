@@ -51,20 +51,19 @@ public final class KeyConfig extends ConfigCategory
      * Constructor.
      * 
      * @param config 設定
-     * @param state キー操作で変更する状態
      */
     public KeyConfig(Config config)
     {
         super(config);
-        config.addCategoryComment(
-                "Key control settings.\n"
-                        + "Please go over options controls screen to register the control keys.");
 
-        repeatDelay = config.getValueOf("repeat_delay", 500)
+        setCategoryComment("Key control settings.\n"
+                + "Please go over options controls screen to register the control keys.");
+
+        repeatDelay = getValueOf("repeat_delay", 500)
                 .comment("key repeat delay of milliseconds.\n(min: 1, default: 500)");
         if (repeatDelay.getInt() < 1) repeatDelay.set(500);
 
-        repeatRate = config.getValueOf("key_repeat_rate", 100)
+        repeatRate = getValueOf("key_repeat_rate", 100)
                 .comment("key repeat rate of milliseconds.\n(min: 1, default: 100)");
         if (repeatRate.getInt() < 1) repeatRate.set(500);
 

@@ -80,34 +80,35 @@ public class CommonConfig extends ConfigCategory
     public CommonConfig(Config config)
     {
         super(config);
+        setCategoryComment(""); // TODO: 
 
         // ----------
 
-        saveInterval = config.getValueOf("save_interval", "3000")
+        saveInterval = getValueOf("save_interval", "3000")
                 .comment("interval time of saving configuration.\n"
                         + "(min: 0(realtime), default: 3000)");
         if (saveInterval.getInt() < 0)
             saveInterval.set(3000);
 
-        enable = config.getValueOf("enable", true)
+        enable = getValueOf("enable", true)
                 .comment("enable/disable spawnchecker."
                         + "\n(default: true)");
 
         // ----------
 
-        informationDuration = config.getValueOf("information.duration", 5000)
+        informationDuration = getValueOf("information.duration", 5000)
                 .comment("duration time of information message millisecond.\n"
                         + "(min: 0(disable), default: 5000)");
         if (informationDuration.getInt() < 0)
             informationDuration.set(5000);
 
-        informationFadeout = config.getValueOf("information.fadeout", 500)
+        informationFadeout = getValueOf("information.fadeout", 500)
                 .comment("duration time of information duration time of fadeout animation millisecond.\n"
                         + "(min: 0(disable), default: 500)");
         if (informationFadeout.getInt() < 0)
             informationFadeout.set(500);
 
-        informationOffsetX = config.getValueOf("information.offset_x", 5)
+        informationOffsetX = getValueOf("information.offset_x", 5)
                 .comment("information message horizontal offset.\n"
                         + "(min: 0, max: 1000, default: 5)");
         if (informationOffsetX.getInt() < 0)
@@ -115,7 +116,7 @@ public class CommonConfig extends ConfigCategory
         if (informationOffsetX.getInt() > 1000)
             informationOffsetX.set(30);
 
-        informationOffsetY = config.getValueOf("information.offset_y", -50)
+        informationOffsetY = getValueOf("information.offset_y", -50)
                 .comment("information message vertical percent offset. 0 is middle. \n"
                         + "(min: -100, max: 100, default: -50)");
         if (informationOffsetY.getInt() < -100)
@@ -123,22 +124,22 @@ public class CommonConfig extends ConfigCategory
         if (informationOffsetY.getInt() > 100)
             informationOffsetY.set(-50);
 
-        showInformationIcon = config.getValueOf("information.show_icon", true)
+        showInformationIcon = getValueOf("information.show_icon", true)
                 .comment("show icon on information message\n"
                         + "(default: true)");
 
-        informationIconDoubleSize = config.getValueOf("information.icon_double_size", false)
+        informationIconDoubleSize = getValueOf("information.icon_double_size", false)
                 .comment("double size information icon size\n"
                         + "(default: false)");
 
         // ----------
 
-        selectedMode = config.getValueOf("selected_mode", SpawnCheckerMode.ID)
+        selectedMode = getValueOf("selected_mode", SpawnCheckerMode.ID)
                 .comment("last selected mode.");
 
         // ----------
 
-        horizontalRange = config.getValueOf("scanrange.horizontal", 10)
+        horizontalRange = getValueOf("scanrange.horizontal", 10)
                 .comment("scan range of horizontal.\n"
                         + "(min: 1, max: 32, default: 10)");
         if (horizontalRange.getInt() < -1)
@@ -146,7 +147,7 @@ public class CommonConfig extends ConfigCategory
         if (horizontalRange.getInt() > 32)
             horizontalRange.set(10);
 
-        verticalRange = config.getValueOf("scanrange.vertical", 5)
+        verticalRange = getValueOf("scanrange.vertical", 5)
                 .comment("scan range of vertical.\n"
                         + "(min: 1, max: 32, default: 10)");
         if (verticalRange.getInt() < -1)
@@ -154,7 +155,7 @@ public class CommonConfig extends ConfigCategory
         if (verticalRange.getInt() > 32)
             verticalRange.set(10);
 
-        brightness = config.getValueOf("marker_brightness", 0)
+        brightness = getValueOf("marker_brightness", 0)
                 .comment("marker brightness.\n"
                         + "(min -5, max+5, default: 0)");
         if (brightness.getInt() < -5)
@@ -164,7 +165,7 @@ public class CommonConfig extends ConfigCategory
 
         // ----------
 
-        updateFrequency = config.getValueOf("update_frequency", 200)
+        updateFrequency = getValueOf("update_frequency", 200)
                 .comment("minimum time of update frequency millisecond.\n"
                         + "(min: 1, default: 200)");
         if (updateFrequency.getInt() < 1)
@@ -172,7 +173,7 @@ public class CommonConfig extends ConfigCategory
 
         // ----------
 
-        enablingItemsProp = config.getListOf("enabling_item", "torch", "lit_pumpkin")
+        enablingItemsProp = getListOf("enabling_item", "torch", "lit_pumpkin")
                 .comment("item id list.\n"
                         + "(default: torch, lit_pumpkin)");
     }

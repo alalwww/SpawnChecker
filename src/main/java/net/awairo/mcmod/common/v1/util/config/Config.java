@@ -15,8 +15,9 @@ package net.awairo.mcmod.common.v1.util.config;
 
 import static com.google.common.base.Preconditions.*;
 
+import java.io.File;
+
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.Property;
 
 /**
  * {@link Configuration} の機能を制限するラッパークラス.
@@ -27,9 +28,36 @@ import net.minecraftforge.common.config.Property;
 public final class Config
 {
     final Configuration forgeConfig;
-    ConfigCategory settings;
-    String category;
 
+    /**
+     * 新しい設定ラッパーを取得します.
+     * 
+     * @param congigurationFile 設定ファイル
+     * @return 設定
+     */
+    public static Config wrapOf(File congigurationFile)
+    {
+        return wrapOf(congigurationFile, true);
+    }
+
+    /**
+     * 新しい設定ラッパーを取得します.
+     * 
+     * @param congigurationFile 設定ファイル
+     * @param caseSensitiveCustomCategories trueはカテゴリ名の大文字小文字を無視しません
+     * @return 設定
+     */
+    public static Config wrapOf(File congigurationFile, boolean caseSensitiveCustomCategories)
+    {
+        return wrapOf(new Configuration(checkNotNull(congigurationFile), caseSensitiveCustomCategories));
+    }
+
+    /**
+     * 新しい設定ラッパーを取得します.
+     * 
+     * @param forgeCongiguration
+     * @return 設定
+     */
     public static Config wrapOf(Configuration forgeCongiguration)
     {
         return new Config(checkNotNull(forgeCongiguration));
@@ -39,55 +67,5 @@ public final class Config
     {
         this.forgeConfig = forgeConfig;
         forgeConfig.load();
-    }
-
-    public void addCategoryComment(String comment)
-    {
-        forgeConfig.addCustomCategoryComment(category, comment);
-    }
-
-    public Prop getValueOf(String key, boolean defaultValue)
-    {
-        return wrap(forgeConfig.get(category, key, defaultValue));
-    }
-
-    public Prop getListOf(String key, boolean... defaultValue)
-    {
-        return wrap(forgeConfig.get(category, key, defaultValue));
-    }
-
-    public Prop getValueOf(String key, int defaultValue)
-    {
-        return wrap(forgeConfig.get(category, key, defaultValue));
-    }
-
-    public Prop getListOf(String key, int... defaultValue)
-    {
-        return wrap(forgeConfig.get(category, key, defaultValue));
-    }
-
-    public Prop getValueOf(String key, double defaultValue)
-    {
-        return wrap(forgeConfig.get(category, key, defaultValue));
-    }
-
-    public Prop getListOf(String key, double... defaultValue)
-    {
-        return wrap(forgeConfig.get(category, key, defaultValue));
-    }
-
-    public Prop getValueOf(String key, String defaultValue)
-    {
-        return wrap(forgeConfig.get(category, key, defaultValue));
-    }
-
-    public Prop getListOf(String key, String... defaultValue)
-    {
-        return wrap(forgeConfig.get(category, key, defaultValue));
-    }
-
-    private Prop wrap(Property property)
-    {
-        return new Prop(property, settings);
     }
 }

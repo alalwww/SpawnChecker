@@ -136,12 +136,12 @@ public class ConfigHolder
     protected void saveConfigIfChanged()
     {
         // 変更チェック
-        for (ConfigCategory settings : holder.values())
+        for (ConfigCategory category : holder.values())
         {
-            if (settings.isSettingChanged())
+            if (category.isSettingChanged())
             {
-                forgeConfigSetTemp.add(settings.config.forgeConfig);
-                settings.clearChangedFlag();
+                forgeConfigSetTemp.add(category.config.forgeConfig);
+                category.clearChangedFlag();
             }
         }
 

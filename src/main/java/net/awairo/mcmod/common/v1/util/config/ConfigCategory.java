@@ -13,6 +13,8 @@ package net.awairo.mcmod.common.v1.util.config;
 
 import static com.google.common.base.Preconditions.*;
 
+import net.minecraftforge.common.config.Property;
+
 /**
  * 設定カテゴリを抽象化したクラス.
  * 
@@ -21,10 +23,10 @@ import static com.google.common.base.Preconditions.*;
  */
 public abstract class ConfigCategory
 {
-    /** configuration. */
-    protected final Config config;
+    final Config config;
+    protected final String categoryName;
 
-    // 初回は変更されてる前提で保存対象にするため
+    // 初回は変更されてる前提で保存対象にするためtrue
     private boolean changed = true;
 
     /**
@@ -35,21 +37,22 @@ public abstract class ConfigCategory
     protected ConfigCategory(Config config)
     {
         this.config = checkNotNull(config, "config");
-        config.settings = this;
-        config.category = checkNotNull(configurationCategory());
-    }
-
-    protected void setChangedFlag()
-    {
-        changed = true;
+        categoryName = checkNotNull(configurationCategory());
     }
 
     /**
-     * @return true はこのカテゴリの設定が変更されている事を意味する
+     * カテゴリ名を取得します.
+     * 
+     * @return カテゴリ名
      */
-    protected boolean isSettingChanged()
+    protected abstract String configurationCategory();
+
+    /**
+     * 設定変更済みフラグをたてます.
+     */
+    protected void setChangedFlag()
     {
-        return changed;
+        changed = true;
     }
 
     /**
@@ -61,7 +64,123 @@ public abstract class ConfigCategory
     }
 
     /**
-     * @return category name
+     * 設定変更済みフラグ値を取得します.
+     * 
+     * @return true はこのカテゴリの設定が変更されている事を意味する
      */
-    protected abstract String configurationCategory();
+    protected boolean isSettingChanged()
+    {
+        return changed;
+    }
+
+    /**
+     * カテゴリコメントを設定します
+     * 
+     * @param comment カテゴリコメント
+     */
+    protected final void setCategoryComment(String comment)
+    {
+        config.forgeConfig.addCustomCategoryComment(categoryName, comment);
+    }
+
+    /**
+     * 真偽値型の設定値を取得します.
+     * 
+     * @param key 設定キー
+     * @param defaultValue 初期値
+     * @return 設定値
+     */
+    protected Prop getValueOf(String key, boolean defaultValue)
+    {
+        return wrap(config.forgeConfig.get(categoryName, key, defaultValue));
+    }
+
+    /**
+     * 真偽値リスト型の設定値を取得します.
+     * 
+     * @param key 設定キー
+     * @param defaultValues 初期値
+     * @return 設定値
+     */
+    protected Prop getListOf(String key, boolean... defaultValues)
+    {
+        return wrap(config.forgeConfig.get(categoryName, key, defaultValues));
+    }
+
+    /**
+     * 32bit整数値型の設定値を取得します.
+     * 
+     * @param key 設定キー
+     * @param defaultValue 初期値
+     * @return 設定値
+     */
+    protected Prop getValueOf(String key, int defaultValue)
+    {
+        return wrap(config.forgeConfig.get(categoryName, key, defaultValue));
+    }
+
+    /**
+     * 32bit整数値リスト型の設定値を取得します.
+     * 
+     * @param key 設定キー
+     * @param defaultValues 初期値
+     * @return 設定値
+     */
+    protected Prop getListOf(String key, int... defaultValues)
+    {
+        return wrap(config.forgeConfig.get(categoryName, key, defaultValues));
+    }
+
+    /**
+     * 64bit浮動小数点値型の設定値を取得します.
+     * 
+     * @param key 設定キー
+     * @param defaultValue 初期値
+     * @return 設定値
+     */
+    protected Prop getValueOf(String key, double defaultValue)
+    {
+        return wrap(config.forgeConfig.get(categoryName, key, defaultValue));
+    }
+
+    /**
+     * 64bit浮動小数点値リスト型の設定値を取得します.
+     * 
+     * @param key 設定キー
+     * @param defaultValues 初期値
+     * @return 設定値
+     */
+    protected Prop getListOf(String key, double... defaultValues)
+    {
+        return wrap(config.forgeConfig.get(categoryName, key, defaultValues));
+    }
+
+    /**
+     * 文字列値型の設定値を取得します.
+     * 
+     * @param key 設定キー
+     * @param defaultValue 初期値
+     * @return 設定値
+     */
+    protected Prop getValueOf(String key, String defaultValue)
+    {
+        return wrap(config.forgeConfig.get(categoryName, key, defaultValue));
+    }
+
+    /**
+     * 文字列値リスト型の設定値を取得します.
+     * 
+     * @param key 設定キー
+     * @param defaultValues 初期値
+     * @return 設定値
+     */
+    protected Prop getListOf(String key, String... defaultValues)
+    {
+        return wrap(config.forgeConfig.get(categoryName, key, defaultValues));
+    }
+
+    private Prop wrap(Property property)
+    {
+        return new Prop(property, this);
+    }
 }

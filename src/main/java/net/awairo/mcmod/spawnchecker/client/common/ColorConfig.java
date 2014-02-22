@@ -68,7 +68,7 @@ public class ColorConfig extends ConfigCategory implements Mode.CommonColor
     public ColorConfig(Config config)
     {
         super(config);
-        config.addCategoryComment("color settings");
+        setCategoryComment("color settings");
 
         informationMessage = new ColorSetting("information", "#FFFFFF")
                 .comment("information message color");
@@ -216,7 +216,7 @@ public class ColorConfig extends ConfigCategory implements Mode.CommonColor
 
         private ColorSetting(String key, String defaultValue)
         {
-            this.prop = config.getValueOf(key, defaultValue);
+            this.prop = getValueOf(key, defaultValue);
             final Optional<Color> c = Colors.fromString(prop.getString());
             if (c.isPresent())
             {
