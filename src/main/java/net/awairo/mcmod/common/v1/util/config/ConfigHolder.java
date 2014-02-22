@@ -43,31 +43,40 @@ import net.minecraftforge.common.config.Configuration;
  */
 public class ConfigHolder
 {
+    /** 各カテゴリ毎の設定を保存するマップ. */
+    protected final ConcurrentMap<Class<? extends ConfigCategory>, ConfigCategory> holder;
+    /** 保存時にSaveを実行するForgeのConfigurationを一時保管する場所. */
+    protected final Set<Configuration> forgeConfigSetTemp;
+
     private Logger logger;
     private long interval = 3000L;
 
-    private final ConcurrentMap<Class<? extends ConfigCategory>, ConfigCategory> holder;
+    /**
+     * Constructor.
+     */
+    protected ConfigHolder()
+    {
+        holder = Maps.newConcurrentMap();
+        forgeConfigSetTemp = Sets.newHashSet();
+    }
 
     /**
      * Constructor.
      * 
-     * @param configCategories 設定カテゴリ
+     * @param logger ロガー
      */
-    public ConfigHolder(ConfigCategory... configCategories)
+    protected ConfigHolder(Logger logger)
     {
-        checkArgument(checkNotNull(configCategories, "settings").length > 0);
-
-        holder = Maps.newConcurrentMap();
-        for (ConfigCategory category : configCategories)
-            holder.put(category.getClass(), category);
+        this();
+        setLogger(logger);
     }
 
     /**
-     * 保持している設定マップを取得します.
+     * 保持している設定マップのコピーを取得します.
      * 
      * @return 設定マップ
      */
-    public ImmutableMap<Class<? extends ConfigCategory>, ConfigCategory> holder()
+    public ImmutableMap<Class<? extends ConfigCategory>, ConfigCategory> copy()
     {
         return ImmutableMap.copyOf(holder);
     }
@@ -89,31 +98,6 @@ public class ConfigHolder
     }
 
     /**
-     * 保存する必要があるか確認を行う間隔を設定します.
-     * 
-     * @param interval 間隔
-     * @return このインスタンス
-     */
-    public ConfigHolder setInterval(long interval)
-    {
-        checkArgument(interval > 0, "%s is negative value.", interval);
-        this.interval = interval;
-        return this;
-    }
-
-    /**
-     * ロガーを設定します.
-     * 
-     * @param logger ロガー
-     * @return このインスタンス
-     */
-    public ConfigHolder setLogger(Logger logger)
-    {
-        this.logger = checkNotNull(logger, "logger");
-        return this;
-    }
-
-    /**
      * 指定した{@link ConfigCategory}のインスタンスを取得.
      * 
      * @param keyClass {@link ConfigCategory}クラス
@@ -126,6 +110,58 @@ public class ConfigHolder
     }
 
     /**
+     * 保存する必要があるか確認を行う間隔を設定します.
+     * 
+     * @param interval 間隔
+     */
+    protected void setInterval(long interval)
+    {
+        checkArgument(interval > 0, "%s is negative value.", interval);
+        this.interval = interval;
+    }
+
+    /**
+     * ロガーを設定します.
+     * 
+     * @param logger ロガー
+     */
+    protected void setLogger(Logger logger)
+    {
+        this.logger = checkNotNull(logger, "logger");
+    }
+
+    /**
+     * 変更されている設定があれば保存します.
+     */
+    protected void saveConfigIfChanged()
+    {
+        // 変更チェック
+        for (ConfigCategory settings : holder.values())
+        {
+            if (settings.isSettingChanged())
+            {
+                forgeConfigSetTemp.add(settings.config.forgeConfig);
+                settings.clearChangedFlag();
+            }
+        }
+
+        // 変更ないため何もしない
+        if (forgeConfigSetTemp.isEmpty()) return;
+
+        // ロガーが設定されていれば保存ログ
+        if (logger != null)
+            logger.info("saving configuration.");
+
+        // 全ての変更されている設定を保存
+        for (Configuration forgeConfig : forgeConfigSetTemp)
+            forgeConfig.save();
+
+        forgeConfigSetTemp.clear();
+    }
+
+    // ------------------------------------------------
+
+    /**
      * 自動保存を行うTickイベントリスナを取得.
      * 
      * @return リスナー
@@ -133,28 +169,6 @@ public class ConfigHolder
     public Object newTickEventListener()
     {
         return new TickEventListener();
-    }
-
-    private final Set<Configuration> forgeConfigSetTemp = Sets.newHashSet();
-
-    private void saveConfigIfChanged()
-    {
-        for (ConfigCategory settings : holder.values())
-            if (settings.isSettingChanged())
-            {
-                forgeConfigSetTemp.add(settings.config.forgeConfig);
-                settings.clearChangedFlag();
-            }
-
-        if (forgeConfigSetTemp.isEmpty()) return;
-
-        if (logger != null)
-            logger.info("saving configuration.");
-
-        for (Configuration forgeConfig : forgeConfigSetTemp)
-            forgeConfig.save();
-
-        forgeConfigSetTemp.clear();
     }
 
     /**
@@ -202,6 +216,7 @@ public class ConfigHolder
             {
                 if (world != null)
                     saveConfigIfChanged();
+
                 world = Minecraft.getMinecraft().theWorld;
                 return;
             }

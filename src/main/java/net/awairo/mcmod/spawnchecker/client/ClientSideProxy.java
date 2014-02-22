@@ -59,7 +59,7 @@ public final class ClientSideProxy extends SpawnChecker.Proxy
         for (KeyBinding key : settings().keyConfig().keys())
             ClientRegistry.registerKeyBinding(key);
 
-        registerFMLEventListener(settings().holder().newTickEventListener());
+        registerFMLEventListener(settings().newTickEventListener());
 
         KeyManager.load();
         GuiManager.load();

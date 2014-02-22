@@ -30,10 +30,9 @@ import net.awairo.mcmod.spawnchecker.client.controls.KeyConfig;
  * 
  * @author alalwww
  */
-public final class Settings
+public final class Settings extends ConfigHolder
 {
     private final State state;
-    private final ConfigHolder holder;
 
     /**
      * Constructor.
@@ -42,30 +41,20 @@ public final class Settings
      */
     public Settings(File configFile)
     {
+        super(LogManager.getLogger(SpawnChecker.MOD_ID));
+
         final Config config = Config.wrapOf(new Configuration(checkNotNull(configFile), true));
+        add(new ConstantsConfig(config));
+        add(new CommonConfig(config));
+        add(new KeyConfig(config));
+        add(new ColorConfig(config));
 
-        final ConstantsConfig consts = new ConstantsConfig(config);
-        final CommonConfig common = new CommonConfig(config);
-        state = new State(common);
+        setInterval(common().saveInterval.getInt());
 
-        final KeyConfig key = new KeyConfig(config);
-
-        final ColorConfig color = new ColorConfig(config);
-
-        holder = new ConfigHolder(consts, common, key, color)
-                .setLogger(LogManager.getLogger(SpawnChecker.MOD_ID))
-                .setInterval(3000L);
+        state = new State(common());
     }
 
     // ------------------------------
-
-    /**
-     * @return 設定ホルダー
-     */
-    public ConfigHolder holder()
-    {
-        return holder;
-    }
 
     /**
      * @return 状態
@@ -80,7 +69,7 @@ public final class Settings
      */
     public CommonConfig common()
     {
-        return holder.get(CommonConfig.class);
+        return get(CommonConfig.class);
     }
 
     /**
@@ -88,7 +77,7 @@ public final class Settings
      */
     public KeyConfig keyConfig()
     {
-        return holder.get(KeyConfig.class);
+        return get(KeyConfig.class);
     }
 
     /**
@@ -96,6 +85,6 @@ public final class Settings
      */
     public ColorConfig color()
     {
-        return holder.get(ColorConfig.class);
+        return get(ColorConfig.class);
     }
 }
