@@ -13,6 +13,9 @@ package net.awairo.mcmod.common.v1.util.config;
 
 import static com.google.common.base.Preconditions.*;
 
+import com.google.common.base.Strings;
+
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
 /**
@@ -23,6 +26,7 @@ import net.minecraftforge.common.config.Property;
  */
 public abstract class ConfigCategory
 {
+    private static final String JOIN_FORMAT = "%s" + Configuration.CATEGORY_SPLITTER + "%s";
     final Config config;
     protected final String categoryName;
 
@@ -36,8 +40,25 @@ public abstract class ConfigCategory
      */
     protected ConfigCategory(Config config)
     {
+        this(config, null);
+    }
+
+    /**
+     * Constructor.
+     * 
+     * @param parent 親カテゴリ
+     */
+    protected ConfigCategory(ConfigCategory parent)
+    {
+        this(parent.config, parent.categoryName);
+    }
+
+    private ConfigCategory(Config config, String parentCategory)
+    {
         this.config = checkNotNull(config, "config");
-        categoryName = checkNotNull(configurationCategory());
+        this.categoryName = Strings.isNullOrEmpty(parentCategory)
+                ? checkNotNull(configurationCategory())
+                : String.format(JOIN_FORMAT, parentCategory, checkNotNull(configurationCategory()));
     }
 
     /**
