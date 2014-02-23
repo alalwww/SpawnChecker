@@ -28,8 +28,9 @@ import cpw.mods.fml.relauncher.Side;
 
 import net.awairo.mcmod.common.v1.util.Fingerprint;
 import net.awairo.mcmod.spawnchecker.client.ClientSideProxy;
-import net.awairo.mcmod.spawnchecker.client.common.ColorConfig;
+import net.awairo.mcmod.spawnchecker.client.common.Settings;
 import net.awairo.mcmod.spawnchecker.client.mode.Mode;
+import net.awairo.mcmod.spawnchecker.client.mode.preset.PresetModeConfigs;
 import net.awairo.mcmod.spawnchecker.client.mode.preset.SpawnCheckerMode;
 
 /**
@@ -48,8 +49,6 @@ public class PresetMode
     /** logger of the SpawnChecker. */
     private static final Logger logger = LogManager.getLogger(PresetMode.MOD_ID);
 
-    ColorConfig color;
-
     @Mod.EventHandler
     private void handleModEvent(FMLFingerprintViolationEvent event)
     {
@@ -67,7 +66,10 @@ public class PresetMode
         // version.propertiesにこっちのmodidを足してもいけるけど、生成処理は汎用的にしておきたいのでコードで対応
         event.getModMetadata().version = prop.getProperty(SpawnChecker.MOD_ID + ".version");
 
-        color = ((ClientSideProxy) SpawnChecker.sideProxy).settings().color();
+        // 本体の設定ファイルを使ってプリセットモード用の設定も生成
+        final Settings settings = ((ClientSideProxy) SpawnChecker.sideProxy).settings();
+        final PresetModeConfigs modeConfigs = new PresetModeConfigs(settings.mode());
+        settings.add(modeConfigs.spawnCheckerMode);
     }
 
     @Mod.EventHandler

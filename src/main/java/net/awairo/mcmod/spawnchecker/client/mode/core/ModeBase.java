@@ -22,7 +22,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.common.base.Objects;
-import com.google.common.collect.Lists;
 import com.google.common.primitives.Ints;
 
 import net.minecraft.block.Block;
@@ -44,11 +43,13 @@ public abstract class ModeBase<T extends ModeBase<T>> implements Mode
 {
     private static final Logger LOG = LogManager.getLogger(SpawnChecker.MOD_ID);
 
+    private ModeConfigChild modeConfig;
+
     private final String id;
     private final int ordinal;
     private String nameKey;
 
-    private final List<OptionSet> optionSetList = Lists.newArrayList();
+    private List<OptionSet> optionSetList;
     private int cursor;
 
     protected final CopiedLogics copiedLogics = new CopiedLogics();
@@ -141,11 +142,16 @@ public abstract class ModeBase<T extends ModeBase<T>> implements Mode
     @Override
     public void onUpKeyPress(boolean shift, boolean alt)
     {
+        if (optionSetList == null)
+            return;
+
         // TODO: オプションのループ設定
         if (cursor == 0)
             return;
 
         cursor--;
+
+        modeConfig().setSelectedOptionSet(options());
 
         resetInformationForModeChange();
     }
@@ -156,11 +162,16 @@ public abstract class ModeBase<T extends ModeBase<T>> implements Mode
     @Override
     public void onDownKeyPress(boolean shift, boolean alt)
     {
+        if (optionSetList == null)
+            return;
+
         // TODO: オプションのループ設定
         if (cursor + 1 >= optionSetList.size())
             return;
 
         cursor++;
+
+        modeConfig().setSelectedOptionSet(options());
 
         resetInformationForModeChange();
     }
@@ -248,14 +259,25 @@ public abstract class ModeBase<T extends ModeBase<T>> implements Mode
         this.nameKey = checkNotNull(nameKey, "nameKey");
     }
 
-    protected void addOptionSet(OptionSet optionSet)
+    /**
+     * モードの設定を設定します.
+     * 
+     * @param config モードの設定
+     */
+    protected void setModeConfig(ModeConfigChild config)
     {
-        optionSetList.add(optionSet);
+        modeConfig = config;
+        optionSetList = config.getOptionSetList();
+        cursor = optionSetList.indexOf(config.selectedOptionSet());
     }
 
-    protected void setSelectedOption(int cursor)
+    /**
+     * @return このモードの設定またはnull(設定を保存していない場合)
+     */
+    @SuppressWarnings("unchecked")
+    protected <C extends ModeConfigChild> C modeConfig()
     {
-        this.cursor = cursor;
+        return (C) modeConfig;
     }
 
     /**

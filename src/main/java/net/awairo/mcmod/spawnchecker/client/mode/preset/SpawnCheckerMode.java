@@ -75,14 +75,7 @@ public final class SpawnCheckerMode extends ModeBase<SpawnCheckerMode>
     @Override
     public void initialize()
     {
-        // 無効オプションは固定値
-        addOptionSet(OptionSet.of(Options.DISABLED));
-
-        // TODO:組み合わせは設定から読み込みたい
-        addOptionSet(OptionSet.of(Options.MARKER));
-        addOptionSet(OptionSet.of(Options.MARKER, Options.GUIDELINE));
-        addOptionSet(OptionSet.of(Options.MARKER, Options.FORCE));
-        addOptionSet(OptionSet.of(Options.MARKER, Options.GUIDELINE, Options.FORCE));
+        setModeConfig(PresetModeConfigs.instance().spawnCheckerMode);
     }
 
     @Override

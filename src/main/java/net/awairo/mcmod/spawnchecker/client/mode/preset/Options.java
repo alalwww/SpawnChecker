@@ -13,6 +13,8 @@
 
 package net.awairo.mcmod.spawnchecker.client.mode.preset;
 
+import com.google.common.collect.ImmutableMap;
+
 import net.awairo.mcmod.spawnchecker.client.common.SimpleOption;
 import net.awairo.mcmod.spawnchecker.client.mode.Mode;
 
@@ -29,6 +31,15 @@ public final class Options
     public static final Mode.Option SLIME = SimpleOption.of("slime", "spawnchecker.option.slime");
     public static final Mode.Option GHAST = SimpleOption.of("ghast", "spawnchecker.option.ghast");
     public static final Mode.Option FORCE = SimpleOption.of("force", "spawnchecker.option.force");
+
+    public static final ImmutableMap<String, Mode.Option> MAP = ImmutableMap.<String, Mode.Option> builder()
+            .put(DISABLED.id(), DISABLED)
+            .put(MARKER.id(), MARKER)
+            .put(GUIDELINE.id(), GUIDELINE)
+            .put(SLIME.id(), SLIME)
+            .put(GHAST.id(), GHAST)
+            .put(FORCE.id(), FORCE)
+            .build();
 
     private Options()
     {

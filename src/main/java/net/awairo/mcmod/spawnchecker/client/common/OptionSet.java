@@ -18,8 +18,10 @@ import static com.google.common.base.Preconditions.*;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashSet;
+import java.util.Set;
 
 import com.google.common.collect.Iterators;
+import com.google.common.collect.Sets;
 import com.google.common.collect.UnmodifiableIterator;
 
 import net.awairo.mcmod.spawnchecker.client.mode.Mode;
@@ -40,14 +42,25 @@ public final class OptionSet extends LinkedHashSet<Mode.Option>
      * @param options オプションの一覧 重複を含む場合はその要素は無視される
      * @return オプションセット
      */
-    public static OptionSet of(final Mode.Option... options)
+    public static OptionSet of(Mode.Option... options)
     {
-        checkArgument(options.length > 0, "empty");
+        return copyOf(Arrays.asList(options));
+    }
 
+    public static OptionSet copyOf(Iterable<Mode.Option> options)
+    {
         final OptionSet set = new OptionSet();
-        set.addAll(Arrays.asList(options));
+
+        for (Mode.Option option : options)
+            set.add(option);
+
         set.freeze = true;
         return set;
+    }
+
+    public static Builder builder()
+    {
+        return new Builder();
     }
 
     /**
@@ -117,5 +130,83 @@ public final class OptionSet extends LinkedHashSet<Mode.Option>
     public UnmodifiableIterator<Option> iterator()
     {
         return Iterators.unmodifiableIterator(super.iterator());
+    }
+
+    /**
+     * OptionSetビルダー.
+     * 
+     * @author alalwww
+     */
+    public static class Builder
+    {
+        private final Set<Mode.Option> set = Sets.newLinkedHashSet();
+
+        private Builder()
+        {
+        }
+
+        /**
+         * オプションを追加します.
+         * 
+         * @param e モードオプション
+         * @return ビルダー
+         */
+        public Builder add(Mode.Option e)
+        {
+            set.add(checkNotNull(e, "e is null"));
+            return this;
+        }
+
+        /**
+         * オプションを追加します.
+         * 
+         * @param c モードオプション
+         * @return ビルダー
+         */
+        public Builder addAll(Collection<Mode.Option> c)
+        {
+            checkArgument(!checkNotNull(c, "c is null").isEmpty(), "empty");
+            set.addAll(c);
+            return this;
+        }
+
+        /**
+         * オプションを追加します.
+         * 
+         * @param ite モードオプション
+         * @return ビルダー
+         */
+        public Builder addAll(Iterable<Mode.Option> ite)
+        {
+            boolean empty = true;
+
+            for (Mode.Option option : checkNotNull(ite, "ite is null"))
+            {
+                add(option);
+                empty = false;
+            }
+
+            checkArgument(!empty, "empty");
+
+            return this;
+        }
+
+        /**
+         * オプションを追加します.
+         * 
+         * @param a モードオプション
+         * @return ビルダー
+         */
+        public Builder addAll(Mode.Option... a)
+        {
+            checkArgument(checkNotNull(a, "a is null").length > 0, "empty");
+            return addAll(Arrays.asList(a));
+        }
+
+        public OptionSet build()
+        {
+            checkState(!set.isEmpty(), "empty");
+            return copyOf(set);
+        }
     }
 }
