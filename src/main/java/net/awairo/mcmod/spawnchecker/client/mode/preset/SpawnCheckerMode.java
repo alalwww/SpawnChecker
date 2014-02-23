@@ -13,9 +13,6 @@
 
 package net.awairo.mcmod.spawnchecker.client.mode.preset;
 
-import java.util.ArrayList;
-
-import com.google.common.collect.Lists;
 import com.google.common.primitives.Ints;
 
 import net.minecraft.block.Block;
@@ -23,13 +20,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
-import net.minecraft.world.World;
 
 import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
-import net.awairo.mcmod.spawnchecker.client.common.OptionSet;
 import net.awairo.mcmod.spawnchecker.client.mode.core.ModeBase;
-import net.awairo.mcmod.spawnchecker.client.mode.core.measuremententity.MeasurementEntities;
-import net.awairo.mcmod.spawnchecker.client.model.CachedSupplier;
 import net.awairo.mcmod.spawnchecker.client.model.SpawnPoint;
 
 /**
@@ -44,18 +37,7 @@ public final class SpawnCheckerMode extends ModeBase<SpawnCheckerMode>
     private final Minecraft game = Minecraft.getMinecraft();
     private final ConstantsConfig consts = ConstantsConfig.instance();
 
-    private CachedSupplier<SpawnPoint> cache;
-    private ArrayList<SpawnPoint> markers;
-
-    private MeasurementEntities measureEntities;
-
-    private World currentWorld;
-
-    private int computedBrightness;
-
-    private boolean marker;
-    private boolean guideline;
-    private boolean force;
+    private SpawnCheck surfaceCheck;
 
     /**
      * Constructor.
@@ -81,46 +63,31 @@ public final class SpawnCheckerMode extends ModeBase<SpawnCheckerMode>
     @Override
     public void start()
     {
-        cache = CachedSupplier.of(SpawnPoint.supplier());
-        markers = Lists.newArrayListWithExpectedSize(consts.defaultSpawnCheckerMarkerListSize);
-        currentWorld = game.theWorld;
-        measureEntities = MeasurementEntities.of(currentWorld);
+        // TODO: ディメンションごとの切り替え
+        surfaceCheck = new SpawnCheck.Surface();
+        surfaceCheck.color = commonColor();
     }
 
     @Override
     public void stop()
     {
-        cache = null;
-        markers = null;
-        currentWorld = null;
-        measureEntities = null;
+        surfaceCheck = null;
     }
 
     @Override
     public void onUpdate()
     {
-        cache.recycle();
-        markers.clear();
+        surfaceCheck.reset();
+        surfaceCheck.setOptionSet(options());
 
-        if (currentWorld != game.theWorld)
-        {
-            currentWorld = game.theWorld;
-            measureEntities = MeasurementEntities.of(currentWorld);
-            cache.clearAll();
-            markers.ensureCapacity(consts.defaultSpawnCheckerMarkerListSize);
-        }
+        // 無効が混じってたらチェックしない
+        if (surfaceCheck.disabled) return;
+        // 強制表示か有効化アイテム持ちではない場合チェックしない
+        if (!surfaceCheck.force && !hasEnableItem()) return;
+        // マーカーかガイドラインが有効でないと表示しない
+        if (!surfaceCheck.marker && !surfaceCheck.guideline) return;
 
-        final OptionSet options = options();
-
-        // 無効は排他
-        if (options.contains(Options.DISABLED)) return;
-
-        marker = options.contains(Options.MARKER);
-        guideline = options.contains(Options.GUIDELINE);
-        force = options.contains(Options.FORCE);
-
-        if (!force && !hasEnableItem()) return;
-        if (!marker && !guideline) return;
+        surfaceCheck.setBrightness(commonState().brightness().current());
 
         // TODO: このあたりのリファクタリング、したい
 
@@ -148,20 +115,16 @@ public final class SpawnCheckerMode extends ModeBase<SpawnCheckerMode>
                 Ints.saturatedCast((long) py - (long) yRange),
                 consts.scanRangeLimitMinY);
 
-        computedBrightness = consts.baseBrightness + commonState().brightness().current() * consts.brightnessRatio;
-
         for (int x = firstX; x <= lastX; x++)
         {
             for (int z = firstZ; z <= lastZ; z++)
             {
                 for (int y = fisstY; y >= lastY; y--)
                 {
-                    check(x, y, z);
-
-                    // TODO: スライムチャンク判定の追加
+                    surfaceCheck.checkMainTarget(x, y, z);
+                    surfaceCheck.checkSubTarget(x, y, z);
                 }
             }
-
         }
     }
 
@@ -175,49 +138,10 @@ public final class SpawnCheckerMode extends ModeBase<SpawnCheckerMode>
                 : false;
     }
 
-    // TODO: 判定に問題がないか再確認
-    // TODO: ディメンション毎の判定処理の実装方針をきめる。対応する。
-    private void check(int x, int y, int z)
-    {
-        if (!copiedLogics.canSpawnAtLocation(x, y, z)) return;
-
-        if (!copiedLogics.canSpawnByLightLevel(x, y, z, 8)) return;
-
-        if (!copiedLogics.isColliding(x, y, z, measureEntities.enderman))
-        {
-            markers.add(cache.get()
-                    .setPoint(x, y, z)
-                    .showGuideline(guideline)
-                    .setBrightness(computedBrightness)
-                    .setColor(commonColor().enderman()));
-            return;
-        }
-
-        if (!copiedLogics.isColliding(x, y, z, measureEntities.standardSizeMob))
-        {
-            markers.add(cache.get()
-                    .setPoint(x, y, z)
-                    .showGuideline(guideline)
-                    .setBrightness(computedBrightness)
-                    .setColor(commonColor().standardSizeMob()));
-            return;
-        }
-
-        if (!copiedLogics.isColliding(x, y, z, measureEntities.spider))
-        {
-            markers.add(cache.get()
-                    .setPoint(x, y, z)
-                    .showGuideline(guideline)
-                    .setBrightness(computedBrightness)
-                    .setColor(commonColor().spider()));
-            return;
-        }
-    }
-
     @Override
     public void renderIngame(long tickCount, float partialTick)
     {
-        for (SpawnPoint marker : markers)
+        for (SpawnPoint marker : surfaceCheck.markers)
         {
             marker.doRender(tickCount, partialTick);
         }

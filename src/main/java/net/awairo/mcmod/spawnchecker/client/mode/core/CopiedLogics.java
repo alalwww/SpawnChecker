@@ -29,8 +29,10 @@ import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
  * 
  * @author alalwww
  */
-public final class CopiedLogics
+public enum CopiedLogics
 {
+    INSTANCE;
+
     private final Minecraft game = Minecraft.getMinecraft();
 
     private final ConstantsConfig config = ConstantsConfig.instance();

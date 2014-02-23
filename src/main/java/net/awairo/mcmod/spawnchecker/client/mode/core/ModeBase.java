@@ -52,7 +52,7 @@ public abstract class ModeBase<T extends ModeBase<T>> implements Mode
     private List<OptionSet> optionSetList;
     private int cursor;
 
-    protected final CopiedLogics copiedLogics = new CopiedLogics();
+    protected final CopiedLogics copiedLogics = CopiedLogics.INSTANCE;
 
     /**
      * Constructor.
