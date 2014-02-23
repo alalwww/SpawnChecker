@@ -50,7 +50,7 @@ public class CommonConfig extends ConfigCategory
     public CommonConfig(Config config)
     {
         super(config);
-        setCategoryComment(""); // TODO: 
+        setCategoryComment("common configurations.");
 
         // ----------
 

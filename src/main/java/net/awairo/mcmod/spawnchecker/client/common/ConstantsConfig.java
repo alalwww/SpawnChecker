@@ -116,7 +116,10 @@ public class ConstantsConfig extends ConfigCategory
     public ConstantsConfig(Config config)
     {
         super(config);
-        setCategoryComment("internal constant settings.\n *** DO NOT CHANGE IF YOU DO NOT NEED! ***");
+        setCategoryComment("internal constant settings.\n"
+                + "*****************************************\n"
+                + "*** DO NOT CHANGE IF YOU DO NOT NEED! ***\n"
+                + "*****************************************");
 
         checkState(instance == null);
         instance = this;
