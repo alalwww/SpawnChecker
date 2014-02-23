@@ -316,7 +316,7 @@ public abstract class ModeBase<T extends ModeBase<T>> implements Mode
 
     protected static final Collection<Block> enablingItems()
     {
-        return ModeManager.instance().settings().common().enablingItems();
+        return ModeManager.instance().settings().mode().enablingItems();
     }
 
     protected static final Mode.CommonState commonState()

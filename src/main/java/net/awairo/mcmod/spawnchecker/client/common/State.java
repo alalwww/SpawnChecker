@@ -42,7 +42,7 @@ public final class State implements CommonState
         UP, DOWN;
     }
 
-    private final CommonConfig config;
+    private final ModeConfig config;
 
     private World currentWorld;
 
@@ -59,9 +59,9 @@ public final class State implements CommonState
     /**
      * Constructor.
      * 
-     * @param config 汎用的な設定
+     * @param config モードの設定
      */
-    public State(CommonConfig config)
+    public State(ModeConfig config)
     {
         this.config = checkNotNull(config, "config");
 

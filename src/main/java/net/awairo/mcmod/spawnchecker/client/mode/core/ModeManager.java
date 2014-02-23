@@ -100,7 +100,7 @@ public final class ModeManager extends ClientManager
     public void initialize()
     {
         Collections.sort(sortedModeList);
-        selectedModeCursor = sortedModeList.indexOf(idToModeMap.get(settings().common().selectedMode.getString()));
+        selectedModeCursor = sortedModeList.indexOf(idToModeMap.get(settings().mode().selectedMode.getString()));
         if (selectedModeCursor < 0)
             selectedModeCursor = 0;
 
@@ -135,7 +135,7 @@ public final class ModeManager extends ClientManager
     /** @return true は更新タイミングではない */
     private boolean isNotUpdateTiming()
     {
-        return Minecraft.getSystemTime() - lastUpdateTime < settings().common().updateFrequency.getInt();
+        return Minecraft.getSystemTime() - lastUpdateTime < settings().mode().updateFrequency.getInt();
     }
 
     /** ワールドが変わっていて、モードがすでに初期化されている場合、モードリセット . */

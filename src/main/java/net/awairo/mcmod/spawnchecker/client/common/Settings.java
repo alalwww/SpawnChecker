@@ -47,12 +47,13 @@ public final class Settings extends ConfigHolder
         config = Config.wrapOf(new Configuration(checkNotNull(configFile), true));
         add(new ConstantsConfig(config));
         add(new CommonConfig(config));
+        add(new ModeConfig(config));
         add(new KeyConfig(config));
         add(new ColorConfig(config));
 
         setInterval(common().saveInterval.getInt());
 
-        state = new State(common());
+        state = new State(mode());
     }
 
     // ------------------------------
@@ -79,6 +80,14 @@ public final class Settings extends ConfigHolder
     public CommonConfig common()
     {
         return get(CommonConfig.class);
+    }
+
+    /**
+     * @return 汎用設定
+     */
+    public ModeConfig mode()
+    {
+        return get(ModeConfig.class);
     }
 
     /**
