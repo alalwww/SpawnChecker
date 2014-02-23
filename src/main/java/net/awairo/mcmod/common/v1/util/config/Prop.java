@@ -20,7 +20,6 @@ import java.util.Arrays;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.google.common.base.Function;
 import com.google.common.base.Objects;
 
 import net.minecraftforge.common.config.Property;
@@ -228,21 +227,7 @@ public final class Prop
         settings.setChangedFlag();
 
         if (LOG.isDebugEnabled())
-        {
-            LOG.debug("changed %s", toString());
-        }
-    }
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    private static String[] toStrings(Object[] values, Function transformer)
-    {
-
-        final String[] strings = new String[values.length];
-
-        for (int i = 0; i < values.length; i++)
-            strings[i] = (String) transformer.apply(values[i]);
-
-        return strings;
+            LOG.debug("changed {}", toString());
     }
 
     @Override
