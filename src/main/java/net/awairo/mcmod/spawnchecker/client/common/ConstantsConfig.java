@@ -38,6 +38,9 @@ public class ConstantsConfig extends ConfigCategory
     /** ワールドのy座標の上限. */
     public final int worldHeightMax;
 
+    /** 感圧板の高さ. */
+    public final Double pressurePlateOffset;
+
     /** 検索範囲のY座標の上限. */
     public final int scanRangeLimitMaxY;
     /** 検索範囲のY座標の下限. */
@@ -135,6 +138,10 @@ public class ConstantsConfig extends ConfigCategory
         worldHeightMax = getValueOf("worldHeightMax", 255)
                 .comment("default: 255")
                 .getInt();
+
+        pressurePlateOffset = getValueOf("pressurePlateOffset", 0.0625d)
+                .comment("default: 0.0625d")
+                .getDouble();
 
         scanRangeLimitMaxY = getValueOf("scanRangeLimitMaxY", 255)
                 .comment("default: 255")

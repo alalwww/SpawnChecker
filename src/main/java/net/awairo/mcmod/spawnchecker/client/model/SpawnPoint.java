@@ -57,8 +57,6 @@ public final class SpawnPoint extends Marker<SpawnPoint> implements Renderer
     double guidelineBottomY;
     double guidelineBottomZ;
 
-    double topOffset;
-
     double innerOffsetX;
     double innerOffsetY;
     double innerOffsetZ;
@@ -154,18 +152,6 @@ public final class SpawnPoint extends Marker<SpawnPoint> implements Renderer
     }
 
     /**
-     * 上面マーカーを浮かせます.
-     * 
-     * @param topOffset 上部マーカーのオフセット
-     * @return このインスタンス
-     */
-    public SpawnPoint setTopMarkerOffset(double topOffset)
-    {
-        this.topOffset = topOffset;
-        return this;
-    }
-
-    /**
      * マーカーの描画位置を中心からずらします.
      * 
      * @param offsetX x軸の移動距離
@@ -201,8 +187,6 @@ public final class SpawnPoint extends Marker<SpawnPoint> implements Renderer
         computed = false;
         showGuideline = false;
 
-        topOffset = 0;
-
         innerOffsetX = 0;
         innerOffsetY = 0;
         innerOffsetZ = 0;
@@ -228,10 +212,10 @@ public final class SpawnPoint extends Marker<SpawnPoint> implements Renderer
         final double thickness = 0.01d;
 
         outerMinX = minX - thickness;
-        outerMinY = minY - thickness + topOffset;
+        outerMinY = minY - thickness;
         outerMinZ = minZ - thickness;
         outerMaxX = maxX + thickness;
-        outerMaxY = maxY + thickness;
+        outerMaxY = maxY + thickness + YOffsetHelper.getYOffset(x, y, z);
         outerMaxZ = maxZ + thickness;
 
         innerMinX = minX + innerBoxSizeOffset + innerOffsetX;
