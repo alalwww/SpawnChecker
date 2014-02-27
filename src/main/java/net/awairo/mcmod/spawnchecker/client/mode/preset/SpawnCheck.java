@@ -160,6 +160,8 @@ public abstract class SpawnCheck
      */
     public static final class Surface extends SpawnCheck
     {
+        private final SlimeSpawnChecker slimeSpawnChecker = SlimeSpawnChecker.newCheckerOfCurrentWorld();
+
         /** オプション:マーカー. */
         public boolean marker;
         /** オプション:ガイドライン. */
@@ -258,7 +260,23 @@ public abstract class SpawnCheck
         {
             if (!slime) return;
 
-            // TODO: スライムのスポーン判定
+            // スポーン可能？
+            if (!slimeSpawnChecker.isSpawnable(x, y, z)) return;
+
+            // 接触しないならスポーン可能
+            if (!copiedLogics.isColliding(x, y, z, measureEntities.slime))
+            {
+                final double offset = consts.slimeMarkerOffset;
+
+                markers.add(cache.get()
+                        .setPoint(x, y, z)
+                        .showMarker(slime)
+                        .showGuideline(guideline)
+                        .setBrightness(computedBrightness)
+                        .setInnerBoxOffset(offset, offset, offset)
+                        .setColor(color.slime()));
+            }
+
         }
 
         /** @return true は有効化するアイテムを持ってる */

@@ -51,6 +51,9 @@ public class ConstantsConfig extends ConfigCategory
     /** スポーン可判定する明るさ.(スポーナーの判定で使用してる実際の明るさとの比較用) */
     public final float spawnableMaxLightValue;
 
+    /** スライムスポーンマーカーを中心からずらす距離. */
+    public final double slimeMarkerOffset;
+
     /** スライムスポーンチャンクのランダムシード. */
     public final long slimeRandomSeed;
     /** チャンク生成用のシード値. */
@@ -63,7 +66,14 @@ public class ConstantsConfig extends ConfigCategory
     public final int chunkRandomSeedZ2;
 
     /** スライムがスポーンする高さ上限. */
-    public final double slimeSpawnLimitY;
+    public final int slimeSpawnLimitMaxY;
+    /** 湿地でスライムがスポーンする高さ下限. */
+    public final int slimeSpawnLimitMinYOnSwampland;
+    /** 湿地でスライムがスポーンする高さ上限. */
+    public final int slimeSpawnLimitMaxYOnSwampland;
+
+    /** スライムチャンク判定結果のキャシュ上限. */
+    public final int slimeChunkCacheSize;
 
     /** CachedSupplierのキャッシュサイズ初期値. */
     public final int defaultCachedSupplierSize;
@@ -185,9 +195,26 @@ public class ConstantsConfig extends ConfigCategory
                 .comment("default: 389711")
                 .getInt();
 
-        slimeSpawnLimitY = getValueOf("slimeSpawnLimitY", 40)
+        slimeSpawnLimitMaxY = getValueOf("slimeSpawnLimitMaxY", 40)
                 .comment("default: 40")
+                .getInt();
+
+        slimeSpawnLimitMinYOnSwampland = getValueOf("slimeSpawnLimitMinYOnSwampland", 50)
+                .comment("default: 50")
+                .getInt();
+
+        slimeSpawnLimitMaxYOnSwampland = getValueOf("slimeSpawnLimitMaxYOnSwampland", 70)
+                .comment("default: 70")
+                .getInt();
+
+        // スライムスポーン判定処理関連の定数
+        slimeMarkerOffset = getValueOf("slimeMarkerOffset", 0.15d)
+                .comment("default: 0.15d")
                 .getDouble();
+
+        slimeChunkCacheSize = getValueOf("slimeChunkCacheSize", 16)
+                .comment("default: 16")
+                .getInt();
 
         defaultCachedSupplierSize = getValueOf("defaultCachedSupplierSize", 555)
                 .comment("default: 555")
