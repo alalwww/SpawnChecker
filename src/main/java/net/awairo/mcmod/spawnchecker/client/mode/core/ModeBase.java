@@ -336,22 +336,44 @@ public abstract class ModeBase<T extends ModeBase<T>> implements Mode
 
     // --------------------------------------------------
 
-    protected static final Collection<Block> enablingItems()
+    /**
+     * 有効化アイテム一覧の設定値を取得します.
+     * 
+     * @return 有効化アイテムの設定
+     */
+    public final Collection<Block> enablingItems()
     {
         return ModeManager.instance().settings().mode().enablingItems();
     }
 
-    protected static final Mode.CommonState commonState()
+    /**
+     * モードで使用できる共通の状態値を取得します.
+     * 
+     * @return 共通ステート
+     */
+    public final Mode.CommonState commonState()
     {
         return ModeManager.instance().settings().state();
     }
 
-    protected static final Mode.CommonColor commonColor()
+    /**
+     * モードで使用できる共通の色設定を取得します.
+     * 
+     * @return 共通の色設定
+     */
+    public final Mode.CommonColor commonColor()
     {
         return ModeManager.instance().settings().color();
     }
 
-    protected static final InformationManager information()
+    /**
+     * 画面に表示する情報の管理オブジェクトを取得します.
+     * 
+     * <p>このメソッドは{@code InformationManager.instance()}のシンタックスシュガーです。</p>
+     * 
+     * @return 情報表示マネージャ
+     */
+    public final InformationManager information()
     {
         return InformationManager.instance();
     }
