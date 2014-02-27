@@ -274,6 +274,7 @@ public abstract class SpawnCheck
                         .showGuideline(guideline)
                         .setBrightness(computedBrightness)
                         .setInnerBoxOffset(offset, offset, offset)
+                        .setSize(0.2) // TODO: 見直し サイズ設定のメソッド自体もっかい見直しが必要カモ
                         .setColor(color.slime()));
             }
 
