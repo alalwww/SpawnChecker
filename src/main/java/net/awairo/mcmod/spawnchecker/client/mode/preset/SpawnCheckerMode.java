@@ -77,8 +77,7 @@ public final class SpawnCheckerMode extends ModeBase<SpawnCheckerMode>
     @Override
     public void onUpdate()
     {
-        surfaceCheck.reset();
-        surfaceCheck.setOptionSet(options());
+        surfaceCheck.reset(options());
 
         // 無効が混じってたらチェックしない
         if (surfaceCheck.disabled) return;

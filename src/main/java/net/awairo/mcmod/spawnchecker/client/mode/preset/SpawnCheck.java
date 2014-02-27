@@ -84,8 +84,10 @@ public abstract class SpawnCheck
      * マーカーキャッシュと描画予定のマーカー一覧をリセットします。
      * ワールドが変更されていた場合、インスタンスキャッシュのリサイズ、
      * マーカー保持用リストのりサイズ、測定用エンティティの再生成も行います。
+     * 
+     * @param options オプションセット
      */
-    public void reset()
+    public void reset(OptionSet options)
     {
         cache.recycle();
         markers.clear();
@@ -98,14 +100,15 @@ public abstract class SpawnCheck
             cache.clearAll();
             markers.ensureCapacity(consts.defaultSpawnCheckerMarkerListSize);
         }
+
+        setOptionSet(options);
     }
 
     /**
      * 現在のモードオプションを設定します.
      * 
-     * @param options オプションセット
      */
-    public void setOptionSet(OptionSet options)
+    protected void setOptionSet(OptionSet options)
     {
         disabled = options.contains(Options.DISABLED);
         marker = options.contains(Options.MARKER);
@@ -151,7 +154,7 @@ public abstract class SpawnCheck
         private boolean slime;
 
         @Override
-        public void setOptionSet(OptionSet options)
+        protected void setOptionSet(OptionSet options)
         {
             super.setOptionSet(options);
             slime = options.contains(Options.SLIME);
