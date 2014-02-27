@@ -25,12 +25,12 @@ import net.awairo.mcmod.spawnchecker.client.mode.Mode;
  */
 public final class Options
 {
-    public static final Mode.Option DISABLED = SimpleOption.of("disable", "spawnchecker.option.disabled");
-    public static final Mode.Option MARKER = SimpleOption.of("marker", "spawnchecker.option.marker");
-    public static final Mode.Option GUIDELINE = SimpleOption.of("guideline", "spawnchecker.option.guideline");
-    public static final Mode.Option SLIME = SimpleOption.of("slime", "spawnchecker.option.slime");
-    public static final Mode.Option GHAST = SimpleOption.of("ghast", "spawnchecker.option.ghast");
-    public static final Mode.Option FORCE = SimpleOption.of("force", "spawnchecker.option.force");
+    public static final Mode.Option DISABLED = SimpleOption.of("disable", "spawnchecker.option.disabled", 0);
+    public static final Mode.Option MARKER = SimpleOption.of("marker", "spawnchecker.option.marker", 10);
+    public static final Mode.Option GUIDELINE = SimpleOption.of("guideline", "spawnchecker.option.guideline", 20);
+    public static final Mode.Option SLIME = SimpleOption.of("slime", "spawnchecker.option.slime", 30);
+    public static final Mode.Option GHAST = SimpleOption.of("ghast", "spawnchecker.option.ghast", 40);
+    public static final Mode.Option FORCE = SimpleOption.of("force", "spawnchecker.option.force", 50);
 
     public static final ImmutableMap<String, Mode.Option> MAP = ImmutableMap.<String, Mode.Option> builder()
             .put(DISABLED.id(), DISABLED)
