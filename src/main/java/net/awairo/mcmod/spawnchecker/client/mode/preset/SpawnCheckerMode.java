@@ -15,10 +15,8 @@ package net.awairo.mcmod.spawnchecker.client.mode.preset;
 
 import com.google.common.primitives.Ints;
 
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 
 import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
@@ -64,7 +62,7 @@ public final class SpawnCheckerMode extends ModeBase<SpawnCheckerMode>
     public void start()
     {
         // TODO: ディメンションごとの切り替え
-        surfaceCheck = new SpawnCheck.Surface();
+        surfaceCheck = new SpawnCheck.Surface(this);
         surfaceCheck.color = commonColor();
     }
 
@@ -79,12 +77,8 @@ public final class SpawnCheckerMode extends ModeBase<SpawnCheckerMode>
     {
         surfaceCheck.reset(options());
 
-        // 無効が混じってたらチェックしない
-        if (surfaceCheck.disabled) return;
-        // 強制表示か有効化アイテム持ちではない場合チェックしない
-        if (!surfaceCheck.force && !hasEnableItem()) return;
-        // マーカーかガイドラインが有効でないと表示しない
-        if (!surfaceCheck.marker && !surfaceCheck.guideline) return;
+        if (!surfaceCheck.enable())
+            return;
 
         surfaceCheck.setBrightness(commonState().brightness().current());
 
@@ -125,16 +119,6 @@ public final class SpawnCheckerMode extends ModeBase<SpawnCheckerMode>
                 }
             }
         }
-    }
-
-    /** @return true は有効化するアイテムを持ってる */
-    private boolean hasEnableItem()
-    {
-        final ItemStack stack = game.thePlayer.inventory.getCurrentItem();
-
-        return stack != null
-                ? enablingItems().contains(Block.getBlockFromItem(stack.getItem()))
-                : false;
     }
 
     @Override

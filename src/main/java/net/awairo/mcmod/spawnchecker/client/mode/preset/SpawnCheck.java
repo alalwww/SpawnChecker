@@ -17,13 +17,16 @@ import java.util.ArrayList;
 
 import com.google.common.collect.Lists;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
 import net.awairo.mcmod.spawnchecker.client.common.OptionSet;
 import net.awairo.mcmod.spawnchecker.client.mode.Mode;
 import net.awairo.mcmod.spawnchecker.client.mode.core.CopiedLogics;
+import net.awairo.mcmod.spawnchecker.client.mode.core.ModeBase;
 import net.awairo.mcmod.spawnchecker.client.mode.core.measuremententity.MeasurementEntities;
 import net.awairo.mcmod.spawnchecker.client.model.CachedSupplier;
 import net.awairo.mcmod.spawnchecker.client.model.SpawnPoint;
@@ -35,8 +38,11 @@ import net.awairo.mcmod.spawnchecker.client.model.SpawnPoint;
  */
 public abstract class SpawnCheck
 {
-    private final Minecraft game = Minecraft.getMinecraft();
-    private final ConstantsConfig consts = ConstantsConfig.instance();
+    protected final Minecraft game = Minecraft.getMinecraft();
+    protected final ConstantsConfig consts = ConstantsConfig.instance();
+
+    /** このチェック処理を保持するモード. */
+    protected final ModeBase<?> mode;
 
     /** コピーしてきたチェック処理. */
     protected final CopiedLogics copiedLogics = CopiedLogics.INSTANCE;
@@ -46,12 +52,6 @@ public abstract class SpawnCheck
 
     /** オプション:無効. */
     public boolean disabled;
-    /** オプション:マーカー. */
-    public boolean marker;
-    /** オプション:ガイドライン. */
-    public boolean guideline;
-    /** オプション:常に表示. */
-    public boolean force;
 
     /** 計算した明るさの値. */
     protected int computedBrightness;
@@ -70,8 +70,9 @@ public abstract class SpawnCheck
     /**
      * Constructor.
      */
-    public SpawnCheck()
+    public SpawnCheck(ModeBase<?> mode)
     {
+        this.mode = mode;
         cache = CachedSupplier.of(SpawnPoint.supplier());
         markers = Lists.newArrayListWithExpectedSize(consts.defaultSpawnCheckerMarkerListSize);
         currentWorld = game.theWorld;
@@ -111,9 +112,17 @@ public abstract class SpawnCheck
     protected void setOptionSet(OptionSet options)
     {
         disabled = options.contains(Options.DISABLED);
-        marker = options.contains(Options.MARKER);
-        guideline = options.contains(Options.GUIDELINE);
-        force = options.contains(Options.FORCE);
+    }
+
+    /**
+     * このチェック処理が実施可能かを判定します
+     * 
+     * @return trueはこのチェック処理が有効である事を示す
+     */
+    public boolean enable()
+    {
+        // 無効が混じってたらチェックしない
+        return !disabled;
     }
 
     /**
@@ -151,18 +160,55 @@ public abstract class SpawnCheck
      */
     public static final class Surface extends SpawnCheck
     {
+        /** オプション:マーカー. */
+        public boolean marker;
+        /** オプション:ガイドライン. */
+        public boolean guideline;
+        /** オプション:常に表示. */
+        public boolean force;
         private boolean slime;
+
+        /**
+         * Constructor.
+         * 
+         * @param mode モード
+         */
+        public Surface(ModeBase<?> mode)
+        {
+            super(mode);
+        }
 
         @Override
         protected void setOptionSet(OptionSet options)
         {
             super.setOptionSet(options);
+            marker = options.contains(Options.MARKER);
+            guideline = options.contains(Options.GUIDELINE);
+            force = options.contains(Options.FORCE);
             slime = options.contains(Options.SLIME);
+        }
+
+        @Override
+        public boolean enable()
+        {
+            if (super.enable())
+            {
+                // 強制表示か有効化アイテム持ちではない場合チェックしない
+                if (!force && !hasEnableItem())
+                    return false;
+
+                // マーカー、スライムスポーンマーカー、ガイドラインのどれかが有効なら判定する
+                return marker || guideline || slime;
+            }
+
+            return false;
         }
 
         @Override
         public void checkMainTarget(int x, int y, int z)
         {
+            if (!marker) return;
+
             // この場所スポーンできるかな？
             if (!copiedLogics.canSpawnAtLocation(x, y, z)) return;
 
@@ -215,5 +261,14 @@ public abstract class SpawnCheck
             // TODO: スライムのスポーン判定
         }
 
+        /** @return true は有効化するアイテムを持ってる */
+        private boolean hasEnableItem()
+        {
+            final ItemStack stack = game.thePlayer.inventory.getCurrentItem();
+
+            return stack != null
+                    ? mode.enablingItems().contains(Block.getBlockFromItem(stack.getItem()))
+                    : false;
+        }
     }
 }
