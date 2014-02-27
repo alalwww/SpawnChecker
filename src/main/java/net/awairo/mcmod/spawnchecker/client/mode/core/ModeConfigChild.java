@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,6 +33,7 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 import net.awairo.mcmod.common.v1.util.config.ConfigCategory;
 import net.awairo.mcmod.common.v1.util.config.Prop;
@@ -85,7 +87,8 @@ public abstract class ModeConfigChild extends ConfigCategory
         // 設定ロード
         optionSetListProp = getListOf("optionSetList", defStrArray)
                 .comment("quoted and comma separated value of mode.option ID set.\n"
-                        + String.format("(default: %s)", Arrays.toString(defStrArray)));
+                        + String.format("(elements: %s)\n", Arrays.toString(optionSetElements(defaultOptionSetList())))
+                        + String.format("(default: <\n\t%s\n>)", Joiner.on("\n\t").join(defStrArray)));
 
         selectedOptionProp = getValueOf("selectedOption", selectedIndexDef)
                 .comment("last selected option set list index.\n"
@@ -330,4 +333,12 @@ public abstract class ModeConfigChild extends ConfigCategory
         return ImmutableList.copyOf(Splitter.on(SEPARATOR).split(m.group(1)));
     }
 
+    /** @return オプションセットの重複のない要素の一覧. */
+    private static Mode.Option[] optionSetElements(List<OptionSet> list)
+    {
+        final Set<Mode.Option> set = Sets.newTreeSet();
+        for (OptionSet options : list)
+            set.addAll(options);
+        return set.toArray(new Mode.Option[set.size()]);
+    }
 }
