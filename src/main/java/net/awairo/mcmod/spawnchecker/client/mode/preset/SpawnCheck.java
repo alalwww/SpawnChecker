@@ -171,6 +171,7 @@ public abstract class SpawnCheck
             {
                 markers.add(cache.get()
                         .setPoint(x, y, z)
+                        .showMarker(marker)
                         .showGuideline(guideline)
                         .setBrightness(computedBrightness)
                         .setColor(color.enderman()));
@@ -182,6 +183,7 @@ public abstract class SpawnCheck
             {
                 markers.add(cache.get()
                         .setPoint(x, y, z)
+                        .showMarker(marker)
                         .showGuideline(guideline)
                         .setBrightness(computedBrightness)
                         .setColor(color.standardSizeMob()));
@@ -193,6 +195,7 @@ public abstract class SpawnCheck
             {
                 markers.add(cache.get()
                         .setPoint(x, y, z)
+                        .showMarker(marker)
                         .showGuideline(guideline)
                         .setBrightness(computedBrightness)
                         .setColor(color.spider()));

@@ -31,6 +31,7 @@ public final class SpawnPoint extends Marker<SpawnPoint> implements Renderer
 
     double innerBoxSizeOffset;
     boolean computed;
+    boolean showMarker;
     boolean showGuideline;
 
     double outerMinX;
@@ -68,54 +69,57 @@ public final class SpawnPoint extends Marker<SpawnPoint> implements Renderer
 
         computeVertics();
 
-        double oMaxX = outerMaxX - renderManager.viewerPosX;
-        double oMaxY = outerMaxY - renderManager.viewerPosY;
-        double oMaxZ = outerMaxZ - renderManager.viewerPosZ;
-        double oMinX = outerMinX - renderManager.viewerPosX;
-        double oMinY = outerMinY - renderManager.viewerPosY;
-        double oMinZ = outerMinZ - renderManager.viewerPosZ;
-        double iMaxX = innerMaxX - renderManager.viewerPosX;
-        double iMaxY = innerMaxY - renderManager.viewerPosY;
-        double iMaxZ = innerMaxZ - renderManager.viewerPosZ;
-        double iMinX = innerMinX - renderManager.viewerPosX;
-        double iMinY = innerMinY - renderManager.viewerPosY;
-        double iMinZ = innerMinZ - renderManager.viewerPosZ;
+        if (showMarker)
+        {
+            double oMaxX = outerMaxX - renderManager.viewerPosX;
+            double oMaxY = outerMaxY - renderManager.viewerPosY;
+            double oMaxZ = outerMaxZ - renderManager.viewerPosZ;
+            double oMinX = outerMinX - renderManager.viewerPosX;
+            double oMinY = outerMinY - renderManager.viewerPosY;
+            double oMinZ = outerMinZ - renderManager.viewerPosZ;
+            double iMaxX = innerMaxX - renderManager.viewerPosX;
+            double iMaxY = innerMaxY - renderManager.viewerPosY;
+            double iMaxZ = innerMaxZ - renderManager.viewerPosZ;
+            double iMinX = innerMinX - renderManager.viewerPosX;
+            double iMinY = innerMinY - renderManager.viewerPosY;
+            double iMinZ = innerMinZ - renderManager.viewerPosZ;
 
-        startDrawingQuads();
-        setGLColorAndBrightness(color, brightness);
+            startDrawingQuads();
+            setGLColorAndBrightness(color, brightness);
 
-        // top
-        addVertex(iMinX, oMaxY, iMinZ);
-        addVertex(iMinX, oMaxY, iMaxZ);
-        addVertex(iMaxX, oMaxY, iMaxZ);
-        addVertex(iMaxX, oMaxY, iMinZ);
-        // bottom
-        addVertex(iMinX, oMinY, iMinZ);
-        addVertex(iMaxX, oMinY, iMinZ);
-        addVertex(iMaxX, oMinY, iMaxZ);
-        addVertex(iMinX, oMinY, iMaxZ);
-        // east
-        addVertex(iMinX, iMinY, oMinZ);
-        addVertex(iMinX, iMaxY, oMinZ);
-        addVertex(iMaxX, iMaxY, oMinZ);
-        addVertex(iMaxX, iMinY, oMinZ);
-        // west
-        addVertex(iMinX, iMinY, oMaxZ);
-        addVertex(iMaxX, iMinY, oMaxZ);
-        addVertex(iMaxX, iMaxY, oMaxZ);
-        addVertex(iMinX, iMaxY, oMaxZ);
-        // north
-        addVertex(oMinX, iMinY, iMinZ);
-        addVertex(oMinX, iMinY, iMaxZ);
-        addVertex(oMinX, iMaxY, iMaxZ);
-        addVertex(oMinX, iMaxY, iMinZ);
-        // south
-        addVertex(oMaxX, iMinY, iMinZ);
-        addVertex(oMaxX, iMaxY, iMinZ);
-        addVertex(oMaxX, iMaxY, iMaxZ);
-        addVertex(oMaxX, iMinY, iMaxZ);
+            // top
+            addVertex(iMinX, oMaxY, iMinZ);
+            addVertex(iMinX, oMaxY, iMaxZ);
+            addVertex(iMaxX, oMaxY, iMaxZ);
+            addVertex(iMaxX, oMaxY, iMinZ);
+            // bottom
+            addVertex(iMinX, oMinY, iMinZ);
+            addVertex(iMaxX, oMinY, iMinZ);
+            addVertex(iMaxX, oMinY, iMaxZ);
+            addVertex(iMinX, oMinY, iMaxZ);
+            // east
+            addVertex(iMinX, iMinY, oMinZ);
+            addVertex(iMinX, iMaxY, oMinZ);
+            addVertex(iMaxX, iMaxY, oMinZ);
+            addVertex(iMaxX, iMinY, oMinZ);
+            // west
+            addVertex(iMinX, iMinY, oMaxZ);
+            addVertex(iMaxX, iMinY, oMaxZ);
+            addVertex(iMaxX, iMaxY, oMaxZ);
+            addVertex(iMinX, iMaxY, oMaxZ);
+            // north
+            addVertex(oMinX, iMinY, iMinZ);
+            addVertex(oMinX, iMinY, iMaxZ);
+            addVertex(oMinX, iMaxY, iMaxZ);
+            addVertex(oMinX, iMaxY, iMinZ);
+            // south
+            addVertex(oMaxX, iMinY, iMinZ);
+            addVertex(oMaxX, iMaxY, iMinZ);
+            addVertex(oMaxX, iMaxY, iMaxZ);
+            addVertex(oMaxX, iMinY, iMaxZ);
 
-        draw();
+            draw();
+        }
 
         if (showGuideline)
         {
@@ -169,6 +173,17 @@ public final class SpawnPoint extends Marker<SpawnPoint> implements Renderer
     }
 
     /**
+     * マーカーを表示します.
+     * 
+     * @return このインスタンス
+     */
+    public SpawnPoint showMarker(boolean showMarker)
+    {
+        this.showMarker = showMarker;
+        return this;
+    }
+
+    /**
      * ガイドラインを表示します.
      * 
      * @return このインスタンス
@@ -185,6 +200,7 @@ public final class SpawnPoint extends Marker<SpawnPoint> implements Renderer
         super.reset();
 
         computed = false;
+        showMarker = false;
         showGuideline = false;
 
         innerOffsetX = 0;
