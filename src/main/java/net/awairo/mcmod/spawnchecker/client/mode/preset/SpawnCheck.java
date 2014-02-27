@@ -167,7 +167,7 @@ public abstract class SpawnCheck
             if (!copiedLogics.canSpawnAtLocation(x, y, z)) return;
 
             // ここに光はあるのかな？
-            if (!copiedLogics.canSpawnByLightLevel(x, y, z, 8)) return;
+            if (!copiedLogics.canSpawnByLightLevel(x, y, z, consts.spawnableLightLevel)) return;
 
             // エンダーさんは入るかな？
             if (!copiedLogics.isColliding(x, y, z, measureEntities.enderman))
