@@ -75,6 +75,9 @@ public class ConstantsConfig extends ConfigCategory
     /** スライムチャンク判定結果のキャシュ上限. */
     public final int slimeChunkCacheSize;
 
+    /** WorldClient#sendQueue のsrg-name. */
+    public final String sendQueueSrgName;
+
     /** CachedSupplierのキャッシュサイズ初期値. */
     public final int defaultCachedSupplierSize;
 
@@ -215,6 +218,10 @@ public class ConstantsConfig extends ConfigCategory
         slimeChunkCacheSize = getValueOf("slimeChunkCacheSize", 32)
                 .comment("default: 32")
                 .getInt();
+
+        sendQueueSrgName = getValueOf("sendQueueSrgName", "field_73035_a")
+                .comment("default: field_73035_a (for mc 1.7.2)")
+                .getString();
 
         defaultCachedSupplierSize = getValueOf("defaultCachedSupplierSize", 555)
                 .comment("default: 555")

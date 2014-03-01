@@ -50,6 +50,7 @@ public final class Settings extends ConfigHolder
         add(new ModeConfig(config));
         add(new KeyConfig(config));
         add(new ColorConfig(config));
+        add(new MultiServerWorldSeedConfig(config));
 
         setInterval(common().saveInterval.getInt());
 
