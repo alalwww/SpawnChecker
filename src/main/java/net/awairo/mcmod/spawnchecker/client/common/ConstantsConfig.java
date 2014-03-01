@@ -212,8 +212,8 @@ public class ConstantsConfig extends ConfigCategory
                 .comment("default: 0.15d")
                 .getDouble();
 
-        slimeChunkCacheSize = getValueOf("slimeChunkCacheSize", 16)
-                .comment("default: 16")
+        slimeChunkCacheSize = getValueOf("slimeChunkCacheSize", 32)
+                .comment("default: 32")
                 .getInt();
 
         defaultCachedSupplierSize = getValueOf("defaultCachedSupplierSize", 555)
