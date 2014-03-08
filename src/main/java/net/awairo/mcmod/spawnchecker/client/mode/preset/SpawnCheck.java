@@ -162,13 +162,14 @@ public abstract class SpawnCheck
     {
         private final SlimeSpawnChecker slimeSpawnChecker = SlimeSpawnChecker.newCheckerOfCurrentWorld();
 
-        /** オプション:マーカー. */
-        public boolean marker;
-        /** オプション:ガイドライン. */
-        public boolean guideline;
-        /** オプション:常に表示. */
-        public boolean force;
+        private boolean marker;
+        private boolean guideline;
+        private boolean force;
+        private boolean forceMarker;
+        private boolean forceGuideline;
         private boolean slime;
+
+        private boolean hasEnableItem;
 
         /**
          * Constructor.
@@ -184,10 +185,16 @@ public abstract class SpawnCheck
         protected void setOptionSet(OptionSet options)
         {
             super.setOptionSet(options);
-            marker = options.contains(Options.MARKER);
-            guideline = options.contains(Options.GUIDELINE);
             force = options.contains(Options.FORCE);
+            forceMarker = options.contains(Options.FORCE_MARKER);
+            forceGuideline = options.contains(Options.FORCE_GUIDELINE);
+
+            marker = force || forceMarker || options.contains(Options.MARKER);
+            guideline = force || forceGuideline || options.contains(Options.GUIDELINE);
+
             slime = options.contains(Options.SLIME);
+
+            hasEnableItem = hasEnableItem();
         }
 
         @Override
@@ -195,12 +202,12 @@ public abstract class SpawnCheck
         {
             if (super.enable())
             {
-                // 強制表示か有効化アイテム持ちではない場合チェックしない
-                if (!force && !hasEnableItem())
-                    return false;
+                // 強制表示中か有効化アイテム持ちで
+                if (force || forceMarker || forceGuideline || hasEnableItem)
 
-                // マーカー、スライムスポーンマーカー、ガイドラインのどれかが有効なら判定する
-                return marker || guideline || slime;
+                    // マーカー、スライムスポーンマーカー、ガイドラインのどれかが有効なら判定する
+                    return marker || guideline || slime;
+
             }
 
             return false;
@@ -209,8 +216,6 @@ public abstract class SpawnCheck
         @Override
         public void checkMainTarget(int x, int y, int z)
         {
-            if (!marker) return;
-
             // この場所スポーンできるかな？
             if (!copiedLogics.canSpawnAtLocation(x, y, z)) return;
 
@@ -222,8 +227,8 @@ public abstract class SpawnCheck
             {
                 markers.add(cache.get()
                         .setPoint(x, y, z)
-                        .showMarker(marker)
-                        .showGuideline(guideline)
+                        .showMarker(force || forceMarker || (hasEnableItem && marker))
+                        .showGuideline(force || forceGuideline || (hasEnableItem && guideline))
                         .setBrightness(computedBrightness)
                         .setColor(color.enderman()));
                 return;
@@ -234,8 +239,8 @@ public abstract class SpawnCheck
             {
                 markers.add(cache.get()
                         .setPoint(x, y, z)
-                        .showMarker(marker)
-                        .showGuideline(guideline)
+                        .showMarker(force || forceMarker || (hasEnableItem && marker))
+                        .showGuideline(force || forceGuideline || (hasEnableItem && guideline))
                         .setBrightness(computedBrightness)
                         .setColor(color.standardSizeMob()));
                 return;
@@ -246,8 +251,8 @@ public abstract class SpawnCheck
             {
                 markers.add(cache.get()
                         .setPoint(x, y, z)
-                        .showMarker(marker)
-                        .showGuideline(guideline)
+                        .showMarker(force || forceMarker || (hasEnableItem && marker))
+                        .showGuideline(force || forceGuideline || (hasEnableItem && guideline))
                         .setBrightness(computedBrightness)
                         .setColor(color.spider()));
                 return;
@@ -270,8 +275,8 @@ public abstract class SpawnCheck
 
                 markers.add(cache.get()
                         .setPoint(x, y, z)
-                        .showMarker(slime)
-                        .showGuideline(guideline)
+                        .showMarker(force || forceMarker || (hasEnableItem && marker))
+                        .showGuideline(force || forceGuideline || (hasEnableItem && guideline))
                         .setBrightness(computedBrightness)
                         .setInnerBoxOffset(offset, offset, offset)
                         .setSize(0.2) // TODO: 見直し サイズ設定のメソッド自体もっかい見直しが必要カモ

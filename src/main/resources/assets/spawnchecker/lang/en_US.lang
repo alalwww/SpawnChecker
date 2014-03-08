@@ -17,10 +17,12 @@ spawnchecker.info.brightness=Brightness: %+d
 spawnchecker.info.horizontal_range=H Range: %2d
 spawnchecker.info.vertical_range=V Range: %2d
 
-spawnchecker.option.disabled= - Disabled
+spawnchecker.option.disable= - Disabled
 spawnchecker.option.marker= - Marker
 spawnchecker.option.guideline= - Guideline
 spawnchecker.option.force= - Force
+spawnchecker.option.force_marker= - Force(Marker)
+spawnchecker.option.force_guideline= - Force(Guideline)
 spawnchecker.option.slime= - Slime marker
 spawnchecker.option.ghast= - Ghast marker
 

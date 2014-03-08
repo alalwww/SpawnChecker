@@ -17,10 +17,12 @@ spawnchecker.info.brightness=マーカー明るさ: %+d
 spawnchecker.info.horizontal_range=水平範囲: %2d
 spawnchecker.info.vertical_range=垂直範囲: %2d
 
-spawnchecker.option.disabled= - 無効
+spawnchecker.option.disable= - 無効
 spawnchecker.option.marker= - マーカー
 spawnchecker.option.guideline= - ガイドライン
 spawnchecker.option.force= - 常に表示
+spawnchecker.option.force_marker= - 常に表示(マーカー)
+spawnchecker.option.force_guideline= - 常に表示(ガイドライン)
 spawnchecker.option.slime= - スライムマーカー
 spawnchecker.option.ghast= - ガストマーカー
 

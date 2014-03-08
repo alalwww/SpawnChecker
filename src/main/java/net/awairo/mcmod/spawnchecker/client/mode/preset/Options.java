@@ -13,7 +13,11 @@
 
 package net.awairo.mcmod.spawnchecker.client.mode.preset;
 
+import java.util.Map;
+
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 
 import net.awairo.mcmod.spawnchecker.client.common.SimpleOption;
 import net.awairo.mcmod.spawnchecker.client.mode.Mode;
@@ -25,21 +29,53 @@ import net.awairo.mcmod.spawnchecker.client.mode.Mode;
  */
 public final class Options
 {
-    public static final Mode.Option DISABLED = SimpleOption.of("disable", "spawnchecker.option.disabled", 0);
-    public static final Mode.Option MARKER = SimpleOption.of("marker", "spawnchecker.option.marker", 10);
-    public static final Mode.Option GUIDELINE = SimpleOption.of("guideline", "spawnchecker.option.guideline", 20);
-    public static final Mode.Option SLIME = SimpleOption.of("slime", "spawnchecker.option.slime", 30);
-    public static final Mode.Option GHAST = SimpleOption.of("ghast", "spawnchecker.option.ghast", 40);
-    public static final Mode.Option FORCE = SimpleOption.of("force", "spawnchecker.option.force", 50);
+    /** 無効. */
+    public static final Mode.Option DISABLED;
+    /** マーカー. */
+    public static final Mode.Option MARKER;
+    /** ガイドライン. */
+    public static final Mode.Option GUIDELINE;
+    /** スライム. */
+    public static final Mode.Option SLIME;
+    /** ガスト. */
+    public static final Mode.Option GHAST;
+    /** 強制. */
+    public static final Mode.Option FORCE;
+    /** マーカー強制. */
+    public static final Mode.Option FORCE_MARKER;
+    /** ガイドライン強制. */
+    public static final Mode.Option FORCE_GUIDELINE;
 
-    public static final ImmutableMap<String, Mode.Option> MAP = ImmutableMap.<String, Mode.Option> builder()
-            .put(DISABLED.id(), DISABLED)
-            .put(MARKER.id(), MARKER)
-            .put(GUIDELINE.id(), GUIDELINE)
-            .put(SLIME.id(), SLIME)
-            .put(GHAST.id(), GHAST)
-            .put(FORCE.id(), FORCE)
-            .build();
+    /** IDからオプションを取得するためのマップ. */
+    public static final ImmutableMap<String, Optional<Mode.Option>> MAP;
+
+    static
+    {
+        final Map<String, Optional<Mode.Option>> map = Maps.newHashMap();
+        DISABLED = appendTo(map, "disable", 0);
+        MARKER = appendTo(map, "marker", 10);
+        GUIDELINE = appendTo(map, "guideline", 20);
+        SLIME = appendTo(map, "slime", 30);
+        GHAST = appendTo(map, "ghast", 40);
+        FORCE = appendTo(map, "force", 50);
+        FORCE_MARKER = appendTo(map, "force_marker", 60);
+        FORCE_GUIDELINE = appendTo(map, "force_guideline", 70);
+
+        MAP = ImmutableMap.copyOf(map);
+    }
+
+    public static Optional<Mode.Option> valueOf(String id)
+    {
+        final Optional<Mode.Option> value = MAP.get(id);
+        return value != null ? value : Optional.<Mode.Option> absent();
+    }
+
+    private static Mode.Option appendTo(Map<String, Optional<Mode.Option>> map, String id, int ordinal)
+    {
+        final Mode.Option option = SimpleOption.of(id, "spawnchecker.option." + id, ordinal);
+        map.put(option.id(), Optional.of(option));
+        return option;
+    }
 
     private Options()
     {
