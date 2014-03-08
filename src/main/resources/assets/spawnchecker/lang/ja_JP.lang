@@ -21,8 +21,8 @@ spawnchecker.option.disable= - 無効
 spawnchecker.option.marker= - マーカー
 spawnchecker.option.guideline= - ガイドライン
 spawnchecker.option.force= - 常に表示
-spawnchecker.option.force_marker= - 常に表示(マーカー)
-spawnchecker.option.force_guideline= - 常に表示(ガイドライン)
+spawnchecker.option.force_marker= - マーカー(常に表示)
+spawnchecker.option.force_guideline= - ガイドライン(常に表示)
 spawnchecker.option.slime= - スライムマーカー
 spawnchecker.option.ghast= - ガストマーカー
 
