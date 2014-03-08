@@ -17,9 +17,11 @@ import static com.google.common.base.Preconditions.*;
 import static net.awairo.mcmod.spawnchecker.client.mode.preset.Options.*;
 
 import java.util.List;
+import java.util.Set;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 
 import net.awairo.mcmod.spawnchecker.client.common.ModeConfig;
 import net.awairo.mcmod.spawnchecker.client.common.OptionSet;
@@ -88,6 +90,20 @@ public class PresetModeConfigs
                     OptionSet.of(MARKER, SLIME, GUIDELINE),
                     OptionSet.of(FORCE_MARKER, SLIME, GUIDELINE),
                     OptionSet.of(MARKER, SLIME, GUIDELINE, FORCE));
+        }
+
+        @Override
+        protected Set<Mode.Option> allOptions()
+        {
+            return ImmutableSet.of(
+                    DISABLED,
+                    MARKER,
+                    GUIDELINE,
+                    SLIME,
+                    FORCE,
+                    FORCE_MARKER,
+                    FORCE_GUIDELINE
+                    );
         }
 
         @Override
