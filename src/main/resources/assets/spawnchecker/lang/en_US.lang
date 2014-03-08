@@ -20,10 +20,11 @@ spawnchecker.info.vertical_range=V Range: %2d
 spawnchecker.option.disable= - Disabled
 spawnchecker.option.marker= - Marker
 spawnchecker.option.guideline= - Guideline
+spawnchecker.option.slime= - Slime marker
+spawnchecker.option.ghast= - Ghast marker
 spawnchecker.option.force= - Force
 spawnchecker.option.force_marker= - Marker(Force)
 spawnchecker.option.force_guideline= - Guideline(Force)
-spawnchecker.option.slime= - Slime marker
-spawnchecker.option.ghast= - Ghast marker
+spawnchecker.option.force_slime= - Slime marker(Force)
 
 spawnchecker.fingerprint_violation=fingerprint violation: This mod may have been hacked. (modid: %s)

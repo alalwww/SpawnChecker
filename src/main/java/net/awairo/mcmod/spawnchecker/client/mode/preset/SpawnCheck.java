@@ -163,11 +163,12 @@ public abstract class SpawnCheck
         private final SlimeSpawnChecker slimeSpawnChecker = SlimeSpawnChecker.newCheckerOfCurrentWorld();
 
         private boolean marker;
+        private boolean slime;
         private boolean guideline;
         private boolean force;
         private boolean forceMarker;
         private boolean forceGuideline;
-        private boolean slime;
+        private boolean forceSlime;
 
         private boolean hasEnableItem;
 
@@ -188,11 +189,12 @@ public abstract class SpawnCheck
             force = options.contains(Options.FORCE);
             forceMarker = options.contains(Options.FORCE_MARKER);
             forceGuideline = options.contains(Options.FORCE_GUIDELINE);
+            forceSlime = options.contains(Options.FORCE_SLIME);
 
             marker = force || forceMarker || options.contains(Options.MARKER);
             guideline = force || forceGuideline || options.contains(Options.GUIDELINE);
 
-            slime = options.contains(Options.SLIME);
+            slime = forceSlime || options.contains(Options.SLIME);
 
             hasEnableItem = hasEnableItem();
         }
@@ -203,7 +205,7 @@ public abstract class SpawnCheck
             if (super.enable())
             {
                 // 強制表示中か有効化アイテム持ちで
-                if (force || forceMarker || forceGuideline || hasEnableItem)
+                if (force || forceMarker || forceSlime || forceGuideline || hasEnableItem)
 
                     // マーカー、スライムスポーンマーカー、ガイドラインのどれかが有効なら判定する
                     return marker || guideline || slime;
@@ -275,7 +277,7 @@ public abstract class SpawnCheck
 
                 markers.add(cache.get()
                         .setPoint(x, y, z)
-                        .showMarker(force || forceMarker || (hasEnableItem && marker))
+                        .showMarker(force || forceSlime || (hasEnableItem && slime))
                         .showGuideline(force || forceGuideline || (hasEnableItem && guideline))
                         .setBrightness(computedBrightness)
                         .setInnerBoxOffset(offset, offset, offset)

@@ -45,6 +45,8 @@ public final class Options
     public static final Mode.Option FORCE_MARKER;
     /** ガイドライン強制. */
     public static final Mode.Option FORCE_GUIDELINE;
+    /** スライムマーカー強制. */
+    public static final Mode.Option FORCE_SLIME;
 
     /** IDからオプションを取得するためのマップ. */
     public static final ImmutableMap<String, Optional<Mode.Option>> MAP;
@@ -60,6 +62,7 @@ public final class Options
         FORCE = appendTo(map, "force", 50);
         FORCE_MARKER = appendTo(map, "force_marker", 60);
         FORCE_GUIDELINE = appendTo(map, "force_guideline", 70);
+        FORCE_SLIME = appendTo(map, "force_slime", 80);
 
         MAP = ImmutableMap.copyOf(map);
     }

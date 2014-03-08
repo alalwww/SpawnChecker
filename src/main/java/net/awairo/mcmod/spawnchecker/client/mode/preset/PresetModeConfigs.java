@@ -87,9 +87,12 @@ public class PresetModeConfigs
                     OptionSet.of(MARKER, GUIDELINE, FORCE),
                     OptionSet.of(MARKER, SLIME),
                     OptionSet.of(FORCE_MARKER, SLIME),
+                    OptionSet.of(MARKER, FORCE_SLIME),
                     OptionSet.of(MARKER, SLIME, GUIDELINE),
                     OptionSet.of(FORCE_MARKER, SLIME, GUIDELINE),
-                    OptionSet.of(MARKER, SLIME, GUIDELINE, FORCE));
+                    OptionSet.of(MARKER, FORCE_SLIME, GUIDELINE),
+                    OptionSet.of(MARKER, SLIME, GUIDELINE, FORCE)
+                    );
         }
 
         @Override
@@ -102,6 +105,7 @@ public class PresetModeConfigs
                     SLIME,
                     FORCE,
                     FORCE_MARKER,
+                    FORCE_SLIME,
                     FORCE_GUIDELINE
                     );
         }
