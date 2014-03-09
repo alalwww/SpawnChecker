@@ -258,6 +258,7 @@ public final class ModeManager extends ClientManager
         {
             if (event.phase != Phase.START) return;
 
+            // tick.SpawnChecker
             profiler().startSection("SpawnChecker");
             updateMode();
             profiler().endSection();
@@ -270,8 +271,13 @@ public final class ModeManager extends ClientManager
                     || event.phase != Phase.END)
                 return;
 
+            // gameRenderer.gui.SpawnChecker
+            profiler().startSection("gameRenderer");
+            profiler().startSection("gui");
             profiler().startSection("SpawnChecker");
             renderGui(event.renderTickTime);
+            profiler().endSection();
+            profiler().endSection();
             profiler().endSection();
 
         }
@@ -294,9 +300,10 @@ public final class ModeManager extends ClientManager
             if (Minecraft.getMinecraft().theWorld == null)
                 return;
 
-            profiler().startSection("SpawnChecker");
+            // gameRenderer.level.SpawnChecker
+            profiler().endStartSection("SpawnChecker");
             renderMarker(event.partialTicks);
-            profiler().endSection();
+            profiler().endStartSection("FRenderLast");
         }
     }
 
