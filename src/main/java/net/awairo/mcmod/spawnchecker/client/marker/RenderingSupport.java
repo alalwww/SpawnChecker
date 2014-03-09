@@ -47,6 +47,7 @@ public final class RenderingSupport
         GL11.glEnable(GL11.GL_BLEND);
         OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA,
                 GL11.GL_ONE, GL11.GL_ZERO);
+        GL11.glAlphaFunc(GL11.GL_GREATER, 0.1F);
     }
 
     /**
@@ -80,11 +81,23 @@ public final class RenderingSupport
     }
 
     /**
+     * オフセットを設定します.
+     * 
+     * @param xOffset オフセット値
+     * @param yOffset オフセット値
+     * @param zOffset オフセット値
+     */
+    public static void setTranslation(double xOffset, double yOffset, double zOffset)
+    {
+        tessellator.setTranslation(xOffset, yOffset, zOffset);
+    }
+
+    /**
      * 頂点座標を追加.
      * 
-     * @param x 座標
-     * @param y 座標
-     * @param z 座標
+     * @param x x
+     * @param y y
+     * @param z z
      */
     public static void addVertex(double x, double y, double z)
     {
@@ -94,11 +107,11 @@ public final class RenderingSupport
     /**
      * テクスチャの頂点座標を追加.
      * 
-     * @param x
-     * @param y
-     * @param z
-     * @param u
-     * @param v
+     * @param x x
+     * @param y y
+     * @param z z
+     * @param u u
+     * @param v v
      */
     public static void addVertexWithUV(double x, double y, double z, double u, double v)
     {
@@ -112,7 +125,14 @@ public final class RenderingSupport
      */
     public static int draw()
     {
-        return tessellator.draw();
+        try
+        {
+            return tessellator.draw();
+        }
+        finally
+        {
+            setTranslation(0, 0, 0);
+        }
     }
 
     /**

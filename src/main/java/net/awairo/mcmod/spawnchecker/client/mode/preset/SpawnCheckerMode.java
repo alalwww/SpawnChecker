@@ -20,7 +20,7 @@ import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.util.MathHelper;
 
 import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
-import net.awairo.mcmod.spawnchecker.client.marker.SpawnPoint;
+import net.awairo.mcmod.spawnchecker.client.marker.SpawnPointMarker;
 import net.awairo.mcmod.spawnchecker.client.mode.core.ModeBase;
 
 /**
@@ -124,7 +124,7 @@ public final class SpawnCheckerMode extends ModeBase<SpawnCheckerMode>
     @Override
     public void renderIngame(long tickCount, float partialTick)
     {
-        for (SpawnPoint marker : surfaceCheck.markers)
+        for (SpawnPointMarker marker : surfaceCheck.markers)
         {
             marker.doRender(tickCount, partialTick);
         }

@@ -25,7 +25,8 @@ import net.minecraft.world.World;
 import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
 import net.awairo.mcmod.spawnchecker.client.common.OptionSet;
 import net.awairo.mcmod.spawnchecker.client.marker.CachedSupplier;
-import net.awairo.mcmod.spawnchecker.client.marker.SpawnPoint;
+import net.awairo.mcmod.spawnchecker.client.marker.SpawnPointMarker;
+import net.awairo.mcmod.spawnchecker.client.marker.model.MarkerModels;
 import net.awairo.mcmod.spawnchecker.client.mode.Mode;
 import net.awairo.mcmod.spawnchecker.client.mode.core.CopiedLogics;
 import net.awairo.mcmod.spawnchecker.client.mode.core.ModeBase;
@@ -60,9 +61,9 @@ public abstract class SpawnCheck
     protected MeasurementEntities measureEntities;
 
     /** マーカーインスタンスのキャッシュ. */
-    public final CachedSupplier<SpawnPoint> cache;
+    public final CachedSupplier<SpawnPointMarker> cache;
     /** 次に描画するマーカーたち. */
-    public final ArrayList<SpawnPoint> markers;
+    public final ArrayList<SpawnPointMarker> markers;
 
     /** ワールド変更検出用の現在のワールド. */
     private World currentWorld;
@@ -73,7 +74,7 @@ public abstract class SpawnCheck
     public SpawnCheck(ModeBase<?> mode)
     {
         this.mode = mode;
-        cache = CachedSupplier.of(SpawnPoint.supplier());
+        cache = CachedSupplier.of(SpawnPointMarker.supplier());
         markers = Lists.newArrayListWithExpectedSize(consts.defaultSpawnCheckerMarkerListSize);
         currentWorld = game.theWorld;
         measureEntities = MeasurementEntities.of(currentWorld);
@@ -228,6 +229,7 @@ public abstract class SpawnCheck
             if (!copiedLogics.isColliding(x, y, z, measureEntities.enderman))
             {
                 markers.add(cache.get()
+                        .setModel(MarkerModels.SPAWN_POINT)
                         .setPoint(x, y, z)
                         .showMarker(force || forceMarker || (hasEnableItem && marker))
                         .showGuideline(force || forceGuideline || (hasEnableItem && guideline))
@@ -240,6 +242,7 @@ public abstract class SpawnCheck
             if (!copiedLogics.isColliding(x, y, z, measureEntities.standardSizeMob))
             {
                 markers.add(cache.get()
+                        .setModel(MarkerModels.SPAWN_POINT)
                         .setPoint(x, y, z)
                         .showMarker(force || forceMarker || (hasEnableItem && marker))
                         .showGuideline(force || forceGuideline || (hasEnableItem && guideline))
@@ -252,6 +255,7 @@ public abstract class SpawnCheck
             if (!copiedLogics.isColliding(x, y, z, measureEntities.spider))
             {
                 markers.add(cache.get()
+                        .setModel(MarkerModels.SPAWN_POINT)
                         .setPoint(x, y, z)
                         .showMarker(force || forceMarker || (hasEnableItem && marker))
                         .showGuideline(force || forceGuideline || (hasEnableItem && guideline))
@@ -273,15 +277,12 @@ public abstract class SpawnCheck
             // 接触しないならスポーン可能
             if (!copiedLogics.isColliding(x, y, z, measureEntities.slime))
             {
-                final double offset = consts.slimeMarkerOffset;
-
                 markers.add(cache.get()
+                        .setModel(MarkerModels.SLIME_SPAWN_POINT)
                         .setPoint(x, y, z)
                         .showMarker(force || forceSlime || (hasEnableItem && slime))
                         .showGuideline(force || forceGuideline || (hasEnableItem && guideline))
                         .setBrightness(computedBrightness)
-                        .setInnerBoxOffset(offset, offset, offset)
-                        .setSize(0.2) // TODO: 見直し サイズ設定のメソッド自体もっかい見直しが必要カモ
                         .setColor(color.slime()));
             }
 

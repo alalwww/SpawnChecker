@@ -13,88 +13,15 @@
 
 package net.awairo.mcmod.spawnchecker.client.marker;
 
-import java.awt.Color;
-
 /**
  * マーカー.
  * 
  * @author alalwww
  */
-public class Marker<T extends Marker<T>>
+public interface Marker<T extends Marker<T>>
 {
-    protected double x;
-    protected double y;
-    protected double z;
-
-    protected Color color;
-
-    protected int brightness;
-
     /**
-     * Constructor.
+     * 状態をリセットします.
      */
-    protected Marker()
-    {
-        reset();
-    }
-
-    public double x()
-    {
-        return x;
-    }
-
-    public double y()
-    {
-        return y;
-    }
-
-    public double z()
-    {
-        return z;
-    }
-
-    public T setPoint(double x, double y, double z)
-    {
-        return setX(x).setY(y).setZ(z);
-    }
-
-    @SuppressWarnings("unchecked")
-    public T setX(double x)
-    {
-        this.x = x;
-        return (T) this;
-    }
-
-    @SuppressWarnings("unchecked")
-    public T setY(double y)
-    {
-        this.y = y;
-        return (T) this;
-    }
-
-    @SuppressWarnings("unchecked")
-    public T setZ(double z)
-    {
-        this.z = z;
-        return (T) this;
-    }
-
-    @SuppressWarnings("unchecked")
-    public T setColor(Color color)
-    {
-        this.color = color;
-        return (T) this;
-    }
-
-    @SuppressWarnings("unchecked")
-    public T setBrightness(int brightness)
-    {
-        this.brightness = brightness;
-        return (T) this;
-    }
-
-    public T reset()
-    {
-        return setPoint(0, 0, 0);
-    }
+    T reset();
 }
