@@ -24,12 +24,12 @@ import net.minecraft.world.World;
 
 import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
 import net.awairo.mcmod.spawnchecker.client.common.OptionSet;
+import net.awairo.mcmod.spawnchecker.client.marker.CachedSupplier;
+import net.awairo.mcmod.spawnchecker.client.marker.SpawnPoint;
 import net.awairo.mcmod.spawnchecker.client.mode.Mode;
 import net.awairo.mcmod.spawnchecker.client.mode.core.CopiedLogics;
 import net.awairo.mcmod.spawnchecker.client.mode.core.ModeBase;
 import net.awairo.mcmod.spawnchecker.client.mode.core.measuremententity.MeasurementEntities;
-import net.awairo.mcmod.spawnchecker.client.model.CachedSupplier;
-import net.awairo.mcmod.spawnchecker.client.model.SpawnPoint;
 
 /**
  * スポーンチェック処理.

@@ -20,8 +20,8 @@ import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.util.MathHelper;
 
 import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
+import net.awairo.mcmod.spawnchecker.client.marker.SpawnPoint;
 import net.awairo.mcmod.spawnchecker.client.mode.core.ModeBase;
-import net.awairo.mcmod.spawnchecker.client.model.SpawnPoint;
 
 /**
  * スポーンチェッカーモード.

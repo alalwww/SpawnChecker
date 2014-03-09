@@ -11,7 +11,7 @@
  * ライセンスの内容は次のサイトを確認してください。 http://www.mod-buildcraft.com/MMPL-1.0.txt
  */
 
-package net.awairo.mcmod.spawnchecker.client.model;
+package net.awairo.mcmod.spawnchecker.client.marker;
 
 import java.util.Arrays;
 

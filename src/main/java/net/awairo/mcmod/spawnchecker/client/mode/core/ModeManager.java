@@ -33,8 +33,8 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.awairo.mcmod.spawnchecker.client.ClientManager;
 import net.awairo.mcmod.spawnchecker.client.common.Settings;
 import net.awairo.mcmod.spawnchecker.client.common.State.Direction;
+import net.awairo.mcmod.spawnchecker.client.marker.RenderingSupport;
 import net.awairo.mcmod.spawnchecker.client.mode.Mode;
-import net.awairo.mcmod.spawnchecker.client.model.RenderingSupport;
 
 /**
  * イベントを契機にモードの状態管理などを行います.

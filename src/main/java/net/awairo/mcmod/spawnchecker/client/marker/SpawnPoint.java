@@ -11,9 +11,9 @@
  * ライセンスの内容は次のサイトを確認してください。 http://www.mod-buildcraft.com/MMPL-1.0.txt
  */
 
-package net.awairo.mcmod.spawnchecker.client.model;
+package net.awairo.mcmod.spawnchecker.client.marker;
 
-import static net.awairo.mcmod.spawnchecker.client.model.RenderingSupport.*;
+import static net.awairo.mcmod.spawnchecker.client.marker.RenderingSupport.*;
 
 import com.google.common.base.Supplier;
 
@@ -24,7 +24,7 @@ import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
  * 
  * @author alalwww
  */
-public final class SpawnPoint extends Marker<SpawnPoint> implements Renderer
+public final class SpawnPoint extends Marker<SpawnPoint>
 {
     static final double GUIDELINE_LENGTH = 64d;
     static final double DEFAULT_MARKER_SIZE = 0.35d;
@@ -62,7 +62,6 @@ public final class SpawnPoint extends Marker<SpawnPoint> implements Renderer
     double innerOffsetY;
     double innerOffsetZ;
 
-    @Override
     public void doRender(long tickCount, float partialTick)
     {
         // TODO: 最適位置にtranslateしてから描画してく感じになおしたい
