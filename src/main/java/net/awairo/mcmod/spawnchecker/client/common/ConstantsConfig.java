@@ -51,6 +51,14 @@ public class ConstantsConfig extends ConfigCategory
     /** スポーン可判定する明るさ.(スポーナーの判定で使用してる実際の明るさとの比較用) */
     public final float spawnableMaxLightValue;
 
+    /** スポーンマーカーの厚さ(ブロック表面から離す距離). */
+    public final double spawnPointMarkerThickness;
+
+    /** スポーンマーカーの大きさ. */
+    public final double spawnPointMarkerSize;
+    /** スライムスポーンマーカーの大きさ. */
+    public final double slimeSpawnPointMarkerSize;
+
     /** スライムスポーンマーカーを中心からずらす距離. */
     public final double slimeMarkerOffset;
 
@@ -172,6 +180,18 @@ public class ConstantsConfig extends ConfigCategory
         // net.minecraft.entity.monster.EntityMob#getBlockPathWeight(int, int, int)
         spawnableMaxLightValue = (float) getValueOf("spawnableMaxLightValue", 0.5)
                 .comment("default: 0.5")
+                .getDouble();
+
+        spawnPointMarkerThickness = getValueOf("spawnPointMarkerThickness", 0.01d)
+                .comment("default: 0.01d")
+                .getDouble();
+
+        spawnPointMarkerSize = getValueOf("spawnPointMarkerSize", 0.35d)
+                .comment("default: 0.35d")
+                .getDouble();
+
+        slimeSpawnPointMarkerSize = getValueOf("slimeSpawnPointMarkerSize", 0.2d)
+                .comment("default: 0.2d")
                 .getDouble();
 
         // スライムスポーン判定周りの定数
