@@ -45,7 +45,7 @@ public enum YOffsetHelper
 
         map = ImmutableMap.<Block, YOffsetFunction> builder()
                 .put(Blocks.lever, new LeverOffset())
-                .put(Blocks.snow_layer, fixedValueFunction(Blocks.snow_layer.getBlockBoundsMaxY()))
+                .put(Blocks.snow_layer, new SnowOffset())
                 .put(Blocks.carpet, fixedValueFunction(Blocks.carpet.getBlockBoundsMaxY()))
                 .put(Blocks.rail, fixedValueFunction(Blocks.rail.getBlockBoundsMaxY()))
                 .put(Blocks.detector_rail, fixedValueFunction(Blocks.detector_rail.getBlockBoundsMaxY()))
@@ -122,12 +122,13 @@ public enum YOffsetHelper
     }
 
     /**
-     * レバーの高さ.
+     * レバーの高さ取得関数.
      * 
      * @author alalwww
      */
     private static class LeverOffset implements YOffsetFunction
     {
+        // TODO: 定数化
         private static final double OFFSET = 0.18d;
         private static final int[] ON_BLOCK = { 5, 6, 13, 14 };
 
@@ -136,5 +137,21 @@ public enum YOffsetHelper
         {
             return Arrays.binarySearch(ON_BLOCK, world.getBlockMetadata(x, y, z)) >= 0 ? OFFSET : 0;
         }
+    }
+
+    /**
+     * (降り積もる方の)雪の高さ取得関数.
+     * 
+     * @author alalwww
+     */
+    private static class SnowOffset implements YOffsetFunction
+    {
+        @Override
+        public double apply(WorldClient world, int x, int y, int z)
+        {
+            Blocks.snow_layer.setBlockBoundsBasedOnState(world, x, y, z);
+            return Blocks.snow_layer.getBlockBoundsMaxY();
+        }
+
     }
 }
