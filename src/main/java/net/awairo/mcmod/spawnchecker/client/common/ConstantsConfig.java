@@ -39,7 +39,7 @@ public class ConstantsConfig extends ConfigCategory
     public final int worldHeightMax;
 
     /** 感圧板の高さ. */
-    public final Double pressurePlateOffset;
+    public final double pressurePlateOffset;
 
     /** 検索範囲のY座標の上限. */
     public final int scanRangeLimitMaxY;
