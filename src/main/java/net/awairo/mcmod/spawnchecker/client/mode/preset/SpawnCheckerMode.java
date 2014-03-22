@@ -22,6 +22,7 @@ import net.minecraft.util.MathHelper;
 import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
 import net.awairo.mcmod.spawnchecker.client.marker.SpawnPointMarker;
 import net.awairo.mcmod.spawnchecker.client.mode.core.ModeBase;
+import net.awairo.mcmod.spawnchecker.client.mode.preset.PresetModeConfigs.SpawnCheckerConfig;
 
 /**
  * スポーンチェッカーモード.
@@ -53,9 +54,9 @@ public final class SpawnCheckerMode extends ModeBase<SpawnCheckerMode>
     }
 
     @Override
-    public void initialize()
+    protected SpawnCheckerConfig config()
     {
-        setModeConfig(PresetModeConfigs.instance().spawnCheckerMode);
+        return PresetModeConfigs.instance().spawnCheckerMode;
     }
 
     @Override

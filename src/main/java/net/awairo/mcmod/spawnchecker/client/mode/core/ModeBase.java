@@ -43,8 +43,6 @@ public abstract class ModeBase<T extends ModeBase<T>> implements Mode
 {
     private static final Logger LOG = LogManager.getLogger(SpawnChecker.MOD_ID);
 
-    private ModeConfigChild modeConfig;
-
     private final String id;
     private final int ordinal;
     private String nameKey;
@@ -65,6 +63,11 @@ public abstract class ModeBase<T extends ModeBase<T>> implements Mode
         this.id = id;
         this.ordinal = ordinal;
     }
+
+    /**
+     * @return モードのコンフィグレーション.
+     */
+    protected abstract ModeConfigChild config();
 
     /**
      * @see Mode#begin()
@@ -112,6 +115,13 @@ public abstract class ModeBase<T extends ModeBase<T>> implements Mode
     }
 
     @Override
+    public void initialize()
+    {
+        optionSetList = config().getOptionSetList();
+        cursor = optionSetList.indexOf(config().selectedOptionSet());
+    }
+
+    @Override
     public void begin()
     {
         resetInformationForModeChange();
@@ -151,7 +161,7 @@ public abstract class ModeBase<T extends ModeBase<T>> implements Mode
 
         cursor--;
 
-        modeConfig().setSelectedOptionSet(options());
+        config().setSelectedOptionSet(options());
 
         resetInformationForModeChange();
     }
@@ -171,7 +181,7 @@ public abstract class ModeBase<T extends ModeBase<T>> implements Mode
 
         cursor++;
 
-        modeConfig().setSelectedOptionSet(options());
+        config().setSelectedOptionSet(options());
 
         resetInformationForModeChange();
     }
@@ -257,27 +267,6 @@ public abstract class ModeBase<T extends ModeBase<T>> implements Mode
     protected void setNameKey(String nameKey)
     {
         this.nameKey = checkNotNull(nameKey, "nameKey");
-    }
-
-    /**
-     * モードの設定を設定します.
-     * 
-     * @param config モードの設定
-     */
-    protected void setModeConfig(ModeConfigChild config)
-    {
-        modeConfig = config;
-        optionSetList = config.getOptionSetList();
-        cursor = optionSetList.indexOf(config.selectedOptionSet());
-    }
-
-    /**
-     * @return このモードの設定またはnull(設定を保存していない場合)
-     */
-    @SuppressWarnings("unchecked")
-    protected <C extends ModeConfigChild> C modeConfig()
-    {
-        return (C) modeConfig;
     }
 
     /**
