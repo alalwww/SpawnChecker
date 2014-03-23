@@ -17,8 +17,6 @@ import static net.awairo.mcmod.spawnchecker.client.marker.RenderingSupport.*;
 
 import java.awt.Color;
 
-import org.lwjgl.opengl.GL11;
-
 import net.awairo.mcmod.spawnchecker.client.marker.model.MarkerModel;
 
 /**
@@ -28,9 +26,9 @@ import net.awairo.mcmod.spawnchecker.client.marker.model.MarkerModel;
  */
 public abstract class SkeletalMarker<T extends SkeletalMarker<T>> implements Marker<T>
 {
-    protected double x;
-    protected double y;
-    protected double z;
+    protected double posX;
+    protected double posY;
+    protected double posZ;
 
     protected Color color;
 
@@ -44,47 +42,67 @@ public abstract class SkeletalMarker<T extends SkeletalMarker<T>> implements Mar
         reset();
     }
 
-    public double x()
+    /**
+     * 座標を設定.
+     * 
+     * @param posX x
+     * @param posY y
+     * @param posZ z
+     * @return this instance
+     */
+    @Override
+    public T setPoint(double posX, double posY, double posZ)
     {
-        return x;
+        return setPosX(posX).setPosY(posY).setPosZ(posZ);
     }
 
-    public double y()
-    {
-        return y;
-    }
-
-    public double z()
-    {
-        return z;
-    }
-
-    public T setPoint(double x, double y, double z)
-    {
-        return setX(x).setY(y).setZ(z);
-    }
-
+    /**
+     * 座標を設定.
+     * 
+     * @param posX x
+     * @return this instance
+     */
+    @Override
     @SuppressWarnings("unchecked")
-    public T setX(double x)
+    public T setPosX(double posX)
     {
-        this.x = x;
+        this.posX = posX;
         return (T) this;
     }
 
+    /**
+     * 座標を設定.
+     * 
+     * @param posY y
+     * @return this instance
+     */
+    @Override
     @SuppressWarnings("unchecked")
-    public T setY(double y)
+    public T setPosY(double posY)
     {
-        this.y = y;
+        this.posY = posY;
         return (T) this;
     }
 
+    /**
+     * 座標を設定.
+     * 
+     * @param posZ z
+     * @return this instance
+     */
+    @Override
     @SuppressWarnings("unchecked")
-    public T setZ(double z)
+    public T setPosZ(double posZ)
     {
-        this.z = z;
+        this.posZ = posZ;
         return (T) this;
     }
 
+    /**
+     * @param color color
+     * @return this instance
+     */
+    @Override
     @SuppressWarnings("unchecked")
     public T setColor(Color color)
     {
@@ -92,6 +110,11 @@ public abstract class SkeletalMarker<T extends SkeletalMarker<T>> implements Mar
         return (T) this;
     }
 
+    /**
+     * @param brightness brightness
+     * @return this instance
+     */
+    @Override
     @SuppressWarnings("unchecked")
     public T setBrightness(int brightness)
     {
@@ -105,15 +128,22 @@ public abstract class SkeletalMarker<T extends SkeletalMarker<T>> implements Mar
         return setPoint(0, 0, 0);
     }
 
+    /**
+     * 指定したモデルをこのマーカーの位置に描画します.
+     * 
+     * @param model
+     * @param tickCount
+     * @param partialTick
+     */
     protected void render(MarkerModel model, long tickCount, float partialTick)
     {
         model.setColor(color);
         model.setBrightness(brightness);
 
         setTranslation(
-                x - renderManager.viewerPosX,
-                y - renderManager.viewerPosY,
-                z - renderManager.viewerPosZ);
+                posX - renderManager.viewerPosX,
+                posY - renderManager.viewerPosY,
+                posZ - renderManager.viewerPosZ);
 
         model.render(tickCount, partialTick);
 

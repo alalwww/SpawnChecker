@@ -123,10 +123,10 @@ public final class SpawnPointMarker extends SkeletalMarker<SpawnPointMarker>
         if (computed) return;
 
         if (showMarker)
-            topOffset = YOffsetHelper.getYOffset(x, y, z);
+            topOffset = YOffsetHelper.getYOffset(posX, posY, posZ);
 
         if (showGuideline)
-            guidelineLength = Math.min(y + GUIDELINE_LENGTH, ConstantsConfig.instance().worldHeightMax);
+            guidelineLength = Math.min(posY + GUIDELINE_LENGTH, ConstantsConfig.instance().worldHeightMax);
 
         computed = true;
     }
