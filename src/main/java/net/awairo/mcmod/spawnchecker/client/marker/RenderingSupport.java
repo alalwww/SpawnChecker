@@ -125,14 +125,7 @@ public final class RenderingSupport
      */
     public static int draw()
     {
-        try
-        {
-            return tessellator.draw();
-        }
-        finally
-        {
-            setTranslation(0, 0, 0);
-        }
+        return tessellator.draw();
     }
 
     /**

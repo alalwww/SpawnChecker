@@ -110,15 +110,13 @@ public abstract class SkeletalMarker<T extends SkeletalMarker<T>> implements Mar
         model.setColor(color);
         model.setBrightness(brightness);
 
-        GL11.glPushMatrix();
-        {
-            setTranslation(
-                    x - renderManager.viewerPosX,
-                    y - renderManager.viewerPosY,
-                    z - renderManager.viewerPosZ);
+        setTranslation(
+                x - renderManager.viewerPosX,
+                y - renderManager.viewerPosY,
+                z - renderManager.viewerPosZ);
 
-            model.render(tickCount, partialTick);
-        }
-        GL11.glPopMatrix();
+        model.render(tickCount, partialTick);
+
+        setTranslation(0, 0, 0);
     }
 }
