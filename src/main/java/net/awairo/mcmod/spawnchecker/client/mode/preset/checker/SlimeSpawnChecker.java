@@ -11,7 +11,7 @@
  * ライセンスの内容は次のサイトを確認してください。 http://www.mod-buildcraft.com/MMPL-1.0.txt
  */
 
-package net.awairo.mcmod.spawnchecker.client.mode.preset;
+package net.awairo.mcmod.spawnchecker.client.mode.preset.checker;
 
 import java.net.InetSocketAddress;
 import java.util.LinkedHashMap;

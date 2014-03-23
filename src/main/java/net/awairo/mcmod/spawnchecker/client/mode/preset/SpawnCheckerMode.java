@@ -19,24 +19,26 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.util.MathHelper;
 
+import net.awairo.mcmod.spawnchecker.PresetModes.PresetMode;
 import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
 import net.awairo.mcmod.spawnchecker.client.marker.SpawnPointMarker;
-import net.awairo.mcmod.spawnchecker.client.mode.core.ModeBase;
-import net.awairo.mcmod.spawnchecker.client.mode.preset.PresetModeConfigs.SpawnCheckerConfig;
+import net.awairo.mcmod.spawnchecker.client.mode.preset.checker.SpawnCheck;
+import net.awairo.mcmod.spawnchecker.client.mode.preset.checker.SurfaceSpawnCheck;
+import net.awairo.mcmod.spawnchecker.client.mode.preset.config.SpawnCheckerConfig;
 
 /**
  * スポーンチェッカーモード.
  * 
  * @author alalwww
  */
-public final class SpawnCheckerMode extends ModeBase<SpawnCheckerMode>
+public final class SpawnCheckerMode extends PresetMode<SpawnCheckerMode>
 {
     public static final String ID = "spawnchecker";
 
     private final Minecraft game = Minecraft.getMinecraft();
     private final ConstantsConfig consts = ConstantsConfig.instance();
 
-    private SpawnCheck surfaceCheck;
+    private SpawnCheck spawnCheck;
 
     /**
      * Constructor.
@@ -56,32 +58,31 @@ public final class SpawnCheckerMode extends ModeBase<SpawnCheckerMode>
     @Override
     protected SpawnCheckerConfig config()
     {
-        return PresetModeConfigs.instance().spawnCheckerMode;
+        return configs().spawnCheckerMode;
     }
 
     @Override
     public void start()
     {
         // TODO: ディメンションごとの切り替え
-        surfaceCheck = new SpawnCheck.Surface(this);
-        surfaceCheck.color = commonColor();
+        spawnCheck = new SurfaceSpawnCheck(this);
     }
 
     @Override
     public void stop()
     {
-        surfaceCheck = null;
+        spawnCheck = null;
     }
 
     @Override
     public void onUpdate()
     {
-        surfaceCheck.reset(options());
+        spawnCheck.reset(options());
 
-        if (!surfaceCheck.enable())
+        if (!spawnCheck.enable())
             return;
 
-        surfaceCheck.setBrightness(commonState().brightness().current());
+        spawnCheck.setBrightness(commonState().brightness().current());
 
         // TODO: このあたりのリファクタリング、したい
 
@@ -115,8 +116,7 @@ public final class SpawnCheckerMode extends ModeBase<SpawnCheckerMode>
             {
                 for (int y = fisstY; y >= lastY; y--)
                 {
-                    surfaceCheck.checkMainTarget(x, y, z);
-                    surfaceCheck.checkSubTarget(x, y, z);
+                    spawnCheck.check(x, y, z);
                 }
             }
         }
@@ -125,7 +125,7 @@ public final class SpawnCheckerMode extends ModeBase<SpawnCheckerMode>
     @Override
     public void renderIngame(long tickCount, float partialTick)
     {
-        for (SpawnPointMarker marker : surfaceCheck.markers)
+        for (SpawnPointMarker marker : spawnCheck.markers())
         {
             marker.doRender(tickCount, partialTick);
         }

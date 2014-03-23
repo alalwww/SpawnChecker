@@ -30,8 +30,9 @@ import net.awairo.mcmod.common.v1.util.Fingerprint;
 import net.awairo.mcmod.spawnchecker.client.ClientSideProxy;
 import net.awairo.mcmod.spawnchecker.client.common.Settings;
 import net.awairo.mcmod.spawnchecker.client.mode.Mode;
-import net.awairo.mcmod.spawnchecker.client.mode.preset.PresetModeConfigs;
+import net.awairo.mcmod.spawnchecker.client.mode.core.ModeBase;
 import net.awairo.mcmod.spawnchecker.client.mode.preset.SpawnCheckerMode;
+import net.awairo.mcmod.spawnchecker.client.mode.preset.config.PresetModeConfigs;
 
 /**
  * SpawnChecker preset mode.
@@ -39,15 +40,15 @@ import net.awairo.mcmod.spawnchecker.client.mode.preset.SpawnCheckerMode;
  * @author alalwww
  */
 @Mod(
-        modid = PresetMode.MOD_ID,
+        modid = PresetModes.MOD_ID,
         certificateFingerprint = Fingerprint.VALUE)
-public class PresetMode
+public class PresetModes
 {
     /** mod id. */
     public static final String MOD_ID = SpawnChecker.MOD_ID + ".presetmode";
 
     /** logger of the SpawnChecker. */
-    private static final Logger logger = LogManager.getLogger(PresetMode.MOD_ID);
+    private static final Logger logger = LogManager.getLogger(PresetModes.MOD_ID);
 
     @Mod.EventHandler
     private void handleModEvent(FMLFingerprintViolationEvent event)
@@ -68,8 +69,8 @@ public class PresetMode
 
         // 本体の設定ファイルを使ってプリセットモード用の設定も生成
         final Settings settings = ((ClientSideProxy) SpawnChecker.sideProxy).settings();
-        final PresetModeConfigs modeConfigs = new PresetModeConfigs(settings.mode());
-        settings.add(modeConfigs.spawnCheckerMode);
+        PresetMode.configs = new PresetModeConfigs(settings.mode());
+        settings.add(PresetMode.configs.spawnCheckerMode);
     }
 
     @Mod.EventHandler
@@ -96,5 +97,17 @@ public class PresetMode
     private static boolean isNotClient(FMLStateEvent event)
     {
         return event.getSide() != Side.CLIENT;
+    }
+
+    public static abstract class PresetMode<M extends PresetMode<M>> extends ModeBase<M> {
+        private static PresetModeConfigs configs;
+
+        protected static PresetModeConfigs configs() {
+            return configs;
+        }
+        protected PresetMode(String id, int ordinal)
+        {
+            super(id, ordinal);
+        }
     }
 }
