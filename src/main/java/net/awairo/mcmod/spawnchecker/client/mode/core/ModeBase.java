@@ -67,7 +67,7 @@ public abstract class ModeBase<T extends ModeBase<T>> implements Mode
     /**
      * @return モードのコンフィグレーション.
      */
-    protected abstract ModeConfigChild config();
+    protected abstract ModeConfig.SubCategory config();
 
     /**
      * @see Mode#begin()

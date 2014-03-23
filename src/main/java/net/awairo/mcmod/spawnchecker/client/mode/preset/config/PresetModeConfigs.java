@@ -13,7 +13,7 @@
 
 package net.awairo.mcmod.spawnchecker.client.mode.preset.config;
 
-import net.awairo.mcmod.spawnchecker.client.common.ModeConfig;
+import net.awairo.mcmod.spawnchecker.client.mode.core.ModeConfig;
 
 /**
  * プリセットモードの設定.

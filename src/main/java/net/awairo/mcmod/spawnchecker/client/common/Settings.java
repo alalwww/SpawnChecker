@@ -24,6 +24,7 @@ import net.awairo.mcmod.common.v1.util.config.Config;
 import net.awairo.mcmod.common.v1.util.config.ConfigHolder;
 import net.awairo.mcmod.spawnchecker.SpawnChecker;
 import net.awairo.mcmod.spawnchecker.client.controls.KeyConfig;
+import net.awairo.mcmod.spawnchecker.client.mode.core.ModeConfig;
 
 /**
  * spawn checker all settings.

@@ -18,15 +18,12 @@ import static net.awairo.mcmod.spawnchecker.client.mode.preset.Options.*;
 import java.util.List;
 import java.util.Set;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 
-import net.awairo.mcmod.spawnchecker.client.common.ModeConfig;
 import net.awairo.mcmod.spawnchecker.client.common.OptionSet;
 import net.awairo.mcmod.spawnchecker.client.mode.Mode;
-import net.awairo.mcmod.spawnchecker.client.mode.core.ModeConfigChild;
-import net.awairo.mcmod.spawnchecker.client.mode.preset.Options;
+import net.awairo.mcmod.spawnchecker.client.mode.core.ModeConfig;
 import net.awairo.mcmod.spawnchecker.client.mode.preset.SpawnCheckerMode;
 
 /**
@@ -34,7 +31,7 @@ import net.awairo.mcmod.spawnchecker.client.mode.preset.SpawnCheckerMode;
  * 
  * @author alalwww
  */
-public final class SpawnCheckerConfig extends ModeConfigChild
+public final class SpawnCheckerConfig extends SkeletalConfig
 {
     public SpawnCheckerConfig(ModeConfig config)
     {
@@ -90,18 +87,4 @@ public final class SpawnCheckerConfig extends ModeConfigChild
         return OptionSet.of(MARKER);
     }
 
-    @Override
-    protected OptionSet createOptionSetBy(ImmutableList<String> ids)
-    {
-        final OptionSet.Builder builder = OptionSet.builder();
-
-        for (String id : ids)
-        {
-            final Optional<Mode.Option> option = Options.valueOf(id);
-            if (option.isPresent())
-                builder.add(option.get());
-        }
-
-        return builder.build();
-    }
 }

@@ -24,6 +24,7 @@ import net.minecraft.world.World;
 import net.awairo.mcmod.common.v1.util.LimitedNumber;
 import net.awairo.mcmod.spawnchecker.client.mode.Mode;
 import net.awairo.mcmod.spawnchecker.client.mode.Mode.CommonState;
+import net.awairo.mcmod.spawnchecker.client.mode.core.ModeConfig;
 
 /**
  * SpawnCheckerのいろいろな状態とか.
