@@ -34,6 +34,7 @@ import net.minecraft.world.biome.BiomeGenBase;
 
 import net.awairo.mcmod.spawnchecker.SpawnChecker;
 import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
+import net.awairo.mcmod.spawnchecker.client.common.CoordHelper;
 import net.awairo.mcmod.spawnchecker.client.common.MultiServerWorldSeedConfig;
 import net.awairo.mcmod.spawnchecker.client.common.Refrection;
 import net.awairo.mcmod.spawnchecker.client.mode.core.CopiedLogics;
@@ -124,13 +125,13 @@ public class SlimeSpawnChecker
         if (!worldSeed.isPresent())
             return false;
 
-        final Integer chunkX = toChunkCoord(x);
-        final Integer chunkZ = toChunkCoord(z);
+        final Integer chunkX = CoordHelper.toChunkCoord(x);
+        final Integer chunkZ = CoordHelper.toChunkCoord(z);
 
         Boolean slimeChunk = keyTable.get(chunkX, chunkZ);
 
         if (slimeChunk != null)
-            return slimeChunk;
+            return slimeChunk.booleanValue();
 
         slimeChunk = isSlimeChunk(getSlimeChunkSeed(worldSeed.get(), chunkX, chunkZ));
         keyTable.put(chunkX, chunkZ, slimeChunk);
@@ -220,11 +221,6 @@ public class SlimeSpawnChecker
     }
 
     // ------------------
-
-    private static Integer toChunkCoord(final int worldCoord)
-    {
-        return Integer.valueOf(worldCoord >> 4);
-    }
 
     private static Table<Integer, Integer, Boolean> createKeytable()
     {

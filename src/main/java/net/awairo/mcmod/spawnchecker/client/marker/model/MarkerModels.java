@@ -28,6 +28,8 @@ public final class MarkerModels
     /** スポーン可能場所に表示するガイドラインのモデル. */
     public static final Guideline GUIDELINE = new Guideline();
 
+    public static final ChunkMarkerModel CHUNK = new ChunkMarkerModel();
+
     private MarkerModels()
     {
         throw new InternalError();

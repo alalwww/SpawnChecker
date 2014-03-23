@@ -27,4 +27,6 @@ spawnchecker.option.force_marker= - Marker(Force)
 spawnchecker.option.force_guideline= - Guideline(Force)
 spawnchecker.option.force_slime= - Slime marker(Force)
 
+spawnchecker.option.slime_chunk= - Slime spawnable chunk
+
 spawnchecker.fingerprint_violation=fingerprint violation: This mod may have been hacked. (modid: %s)

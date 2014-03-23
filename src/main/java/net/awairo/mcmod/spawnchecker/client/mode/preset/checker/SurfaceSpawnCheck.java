@@ -86,11 +86,18 @@ public class SurfaceSpawnCheck extends SkeletalSpawnCheck
     @Override
     public void check(int x, int y, int z)
     {
-        checkMainTarget(x, y, z);
-        checkSubTarget(x, y, z);
+        spawnCheckAt(x, y, z);
+        slimeSpawnCheckAt(x, y, z);
     }
 
-    private void checkMainTarget(int x, int y, int z)
+    /**
+     * スポーンチェック.
+     * 
+     * @param x
+     * @param y
+     * @param z
+     */
+    public void spawnCheckAt(int x, int y, int z)
     {
         // この場所スポーンできるかな？
         if (!copiedLogics.canSpawnAtLocation(x, y, z)) return;
@@ -139,7 +146,7 @@ public class SurfaceSpawnCheck extends SkeletalSpawnCheck
 
     }
 
-    private void checkSubTarget(int x, int y, int z)
+    public void slimeSpawnCheckAt(int x, int y, int z)
     {
         if (!slime) return;
 

@@ -48,6 +48,9 @@ public final class Options
     /** スライムマーカー強制. */
     public static final Mode.Option FORCE_SLIME;
 
+    /** スライムチャンクマーカー. */
+    public static final Mode.Option SLIME_CHUNK;
+
     /** IDからオプションを取得するためのマップ. */
     public static final ImmutableMap<String, Optional<Mode.Option>> MAP;
 
@@ -55,6 +58,7 @@ public final class Options
     {
         final Map<String, Optional<Mode.Option>> map = Maps.newHashMap();
         DISABLED = appendTo(map, "disable", 0);
+
         MARKER = appendTo(map, "marker", 10);
         GUIDELINE = appendTo(map, "guideline", 20);
         SLIME = appendTo(map, "slime", 30);
@@ -63,6 +67,8 @@ public final class Options
         FORCE_MARKER = appendTo(map, "force_marker", 60);
         FORCE_GUIDELINE = appendTo(map, "force_guideline", 70);
         FORCE_SLIME = appendTo(map, "force_slime", 80);
+
+        SLIME_CHUNK = appendTo(map, "slime_chunk", 10);
 
         MAP = ImmutableMap.copyOf(map);
     }

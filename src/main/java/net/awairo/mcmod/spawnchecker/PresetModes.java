@@ -31,6 +31,7 @@ import net.awairo.mcmod.spawnchecker.client.ClientSideProxy;
 import net.awairo.mcmod.spawnchecker.client.common.Settings;
 import net.awairo.mcmod.spawnchecker.client.mode.Mode;
 import net.awairo.mcmod.spawnchecker.client.mode.core.ModeBase;
+import net.awairo.mcmod.spawnchecker.client.mode.preset.SlimeChunkVisualizerMode;
 import net.awairo.mcmod.spawnchecker.client.mode.preset.SpawnCheckerMode;
 import net.awairo.mcmod.spawnchecker.client.mode.preset.config.PresetModeConfigs;
 
@@ -79,6 +80,7 @@ public class PresetModes
         if (isNotClient(event)) return;
 
         registerMode(SpawnCheckerMode.class);
+        registerMode(SlimeChunkVisualizerMode.class);
     }
 
     private void registerMode(Class<? extends Mode> modeClass)

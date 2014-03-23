@@ -22,14 +22,15 @@ import net.awairo.mcmod.spawnchecker.client.mode.core.ModeConfig;
  */
 public class PresetModeConfigs
 {
+    /** スポーンチェッカーモードの設定. */
     public final SpawnCheckerConfig spawnCheckerMode;
-    public final SlimeChunkFinderConfig slimeChunkFinlderMode;
-    public final SpawnerVisualizerConfig spawnerVisualizerMode;
+    /** スライムチャンク可視化の設定. */
+    public final SlimeChunkVisualizerConfig slimeChunkVisualizerMode;
 
     public PresetModeConfigs(ModeConfig config)
     {
         spawnCheckerMode = new SpawnCheckerConfig(config);
-        slimeChunkFinlderMode = new SlimeChunkFinderConfig(config);
-        spawnerVisualizerMode = new SpawnerVisualizerConfig(config);
+        slimeChunkVisualizerMode = new SlimeChunkVisualizerConfig(config);
     }
+
 }

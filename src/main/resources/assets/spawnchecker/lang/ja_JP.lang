@@ -10,7 +10,7 @@ spawnchecker.gui.disable=無効
 spawnchecker.gui.enable=有効
 
 spawnchecker.mode.spawnchecker=スポーンチェッカー
-spawnchecker.mode.slimechunk_visualizer=スライムチャンク表示
+spawnchecker.mode.slimechunk_visualizer=スライムチャンク可視化
 spawnchecker.mode.spawner_visualizer=スポーンブロック可視化
 
 spawnchecker.info.brightness=マーカー明るさ: %+d
@@ -26,5 +26,7 @@ spawnchecker.option.force= - 常に表示
 spawnchecker.option.force_marker= - マーカー(常に表示)
 spawnchecker.option.force_guideline= - ガイドライン(常に表示)
 spawnchecker.option.force_slime= - スライムマーカー(常に表示)
+
+spawnchecker.option.slime_chunk= - スライムチャンク
 
 spawnchecker.fingerprint_violation=fingerprint violation: このModはハックされている可能性があります。 (modid: %s)
