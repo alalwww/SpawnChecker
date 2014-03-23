@@ -26,11 +26,7 @@ import com.google.common.base.Supplier;
 import com.google.common.collect.Table;
 import com.google.common.collect.Tables;
 
-import cpw.mods.fml.relauncher.ReflectionHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.client.network.NetHandlerPlayClient;
-import net.minecraft.network.NetworkManager;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -39,10 +35,11 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.awairo.mcmod.spawnchecker.SpawnChecker;
 import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
 import net.awairo.mcmod.spawnchecker.client.common.MultiServerWorldSeedConfig;
+import net.awairo.mcmod.spawnchecker.client.common.Refrection;
 import net.awairo.mcmod.spawnchecker.client.mode.core.CopiedLogics;
 
 /**
- * スライムチャンクの判定.
+ * スライムスポーンの判定モデル.
  * 
  * @author alalwww
  */
@@ -52,7 +49,7 @@ public class SlimeSpawnChecker
     private static final Minecraft game = Minecraft.getMinecraft();
 
     private static final ConstantsConfig CONSTS = ConstantsConfig.instance();
-    private static final MultiServerWorldSeedConfig MULTI = MultiServerWorldSeedConfig.instance();
+    private static final MultiServerWorldSeedConfig MULTISEED_CONFIG = MultiServerWorldSeedConfig.instance();
     private static final SlimeSpawnChecker SEED_UNKNOWN = new SlimeSpawnChecker();
 
     /**
@@ -62,7 +59,7 @@ public class SlimeSpawnChecker
      */
     public static SlimeSpawnChecker newCheckerOfCurrentWorld()
     {
-        if (game.getIntegratedServer() != null)
+        if (isSinglePlayer())
         {
             final MinecraftServer ms = game.getIntegratedServer();
             final WorldServer ws = ms.worldServerForDimension(game.thePlayer.dimension);
@@ -72,22 +69,22 @@ public class SlimeSpawnChecker
         }
 
         // TODO: リファクタリング
-        final InetSocketAddress address = Refrection.getServerAddress();
-        if (address != null)
+        final Optional<InetSocketAddress> address = Refrection.getServerAddress();
+        if (address.isPresent())
         {
-            final String host = address.getAddress().getHostName();
-            final Integer port = address.getPort();
-            if (MULTI.worldSeeds.contains(host, port))
+            final String host = address.get().getAddress().getHostName();
+            final Integer port = address.get().getPort();
+            if (MULTISEED_CONFIG.serverWorldSeedMap.contains(host, port))
             {
-                final long seed = MULTI.worldSeeds.get(host, port);
+                final long seed = MULTISEED_CONFIG.serverWorldSeedMap.get(host, port);
                 LOGGER.info("current world is multi player world. world seed is {}", seed);
                 return new SlimeSpawnChecker(seed);
             }
 
-            final String ip = address.getAddress().getHostAddress();
-            if (MULTI.worldSeeds.contains(host, port))
+            final String ip = address.get().getAddress().getHostAddress();
+            if (MULTISEED_CONFIG.serverWorldSeedMap.contains(host, port))
             {
-                final long seed = MULTI.worldSeeds.get(ip, port);
+                final long seed = MULTISEED_CONFIG.serverWorldSeedMap.get(ip, port);
                 LOGGER.info("current world is multi player world. world seed is {}", seed);
                 return new SlimeSpawnChecker(seed);
             }
@@ -195,6 +192,11 @@ public class SlimeSpawnChecker
 
     // ------------------
 
+    private static boolean isSinglePlayer()
+    {
+        return game.getIntegratedServer() != null;
+    }
+
     /**
      * @see net.minecraft.entity.monster.EntitySlime#getCanSpawnHere()
      * @see net.minecraft.world.chunk.Chunk#getRandomWithSeed(long)
@@ -263,39 +265,6 @@ public class SlimeSpawnChecker
         protected boolean removeEldestEntry(Map.Entry<K, V> eldest)
         {
             return size() > maxSize;
-        }
-    }
-
-    private static final class Refrection
-    {
-        static InetSocketAddress getServerAddress() throws RuntimeException
-        {
-            final NetHandlerPlayClient sendQueue = getFieldValue(
-                    WorldClient.class, game.theWorld, "sendQueue", CONSTS.sendQueueSrgName);
-
-            if (sendQueue == null)
-                return null;
-
-            final NetworkManager netManager = sendQueue.getNetworkManager();
-
-            if (netManager.getSocketAddress() instanceof InetSocketAddress)
-                return (InetSocketAddress) netManager.getSocketAddress();
-
-            LOGGER.warn("not found InetSocketAddress");
-            return null;
-        }
-
-        private static <T, E> T getFieldValue(Class<? super E> clazz, E instance, String... names)
-        {
-            try
-            {
-                return ReflectionHelper.getPrivateValue(clazz, instance, names);
-            }
-            catch (RuntimeException ignore)
-            {
-                LOGGER.warn("refrection failed.", ignore);
-                return null;
-            }
         }
     }
 }

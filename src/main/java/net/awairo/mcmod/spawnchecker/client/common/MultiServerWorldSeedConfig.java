@@ -63,7 +63,7 @@ public class MultiServerWorldSeedConfig extends ConfigCategory
     /**
      * 行キーにホスト名またはIPアドレス文字列、列キーにポート、値にシード値を持った不変のテーブル.
      */
-    public final ImmutableTable<String, Integer, Long> worldSeeds;
+    public final ImmutableTable<String, Integer, Long> serverWorldSeedMap;
 
     /**
      * Constructor.
@@ -89,12 +89,12 @@ public class MultiServerWorldSeedConfig extends ConfigCategory
                         + "    \"192.168.0.1:25565=000000000000000000\"\n"
                         + ">");
 
-        worldSeeds = load(worldSeedsProp.getStringList());
-        if (!worldSeeds.isEmpty())
-            LOGGER.info("world seed configuration loaded: {}", worldSeeds);
+        serverWorldSeedMap = load(worldSeedsProp.getStringList());
+        if (!serverWorldSeedMap.isEmpty())
+            LOGGER.info("world seed configuration loaded: {}", serverWorldSeedMap);
 
         worldSeedsProp.setList(Collections2
-                .transform(worldSeeds.cellSet(), new Function<Table.Cell<String, Integer, Long>, String>()
+                .transform(serverWorldSeedMap.cellSet(), new Function<Table.Cell<String, Integer, Long>, String>()
                 {
                     @Override
                     public String apply(Cell<String, Integer, Long> input)
@@ -105,7 +105,7 @@ public class MultiServerWorldSeedConfig extends ConfigCategory
                                 input.getValue());
                     }
                 })
-                .toArray(new String[worldSeeds.size()]));
+                .toArray(new String[serverWorldSeedMap.size()]));
     }
 
     private static ImmutableTable<String, Integer, Long> load(String[] worldSeeds)
