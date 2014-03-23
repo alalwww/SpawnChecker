@@ -136,13 +136,17 @@ public final class SpawnPointMarker extends SkeletalMarker<SpawnPointMarker>
      */
     public static Supplier<SpawnPointMarker> supplier()
     {
-        return new Supplier<SpawnPointMarker>()
+        return SpawnPointMarkerSupplier.INSTANCE;
+    }
+
+    enum SpawnPointMarkerSupplier implements Supplier<SpawnPointMarker>
+    {
+        INSTANCE;
+
+        @Override
+        public SpawnPointMarker get()
         {
-            @Override
-            public SpawnPointMarker get()
-            {
-                return new SpawnPointMarker();
-            }
-        };
+            return new SpawnPointMarker();
+        }
     }
 }
