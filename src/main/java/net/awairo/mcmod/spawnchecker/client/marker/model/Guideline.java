@@ -25,10 +25,22 @@ public class Guideline extends SkeletalMarkerModel
     private static final double CENTER = 0.5d;
 
     private double length;
+    private double offsetX;
+    private double offsetZ;
 
     public void setLength(double length)
     {
         this.length = length;
+    }
+
+    public void setOffsetX(double offsetX)
+    {
+        this.offsetX = offsetX;
+    }
+
+    public void setOffsetZ(double offsetZ)
+    {
+        this.offsetZ = offsetZ;
     }
 
     @Override
@@ -37,8 +49,11 @@ public class Guideline extends SkeletalMarkerModel
         startDrawingLines();
         setGLColorAndBrightness(color, brightness);
 
-        addVertex(CENTER, 0, CENTER);
-        addVertex(CENTER, length, CENTER);
+        final double x = CENTER + offsetX;
+        final double z = CENTER + offsetZ;
+
+        addVertex(x, 0, z);
+        addVertex(x, length, z);
 
         draw();
     }

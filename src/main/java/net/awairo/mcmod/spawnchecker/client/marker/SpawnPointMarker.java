@@ -52,6 +52,17 @@ public final class SpawnPointMarker extends SkeletalMarker<SpawnPointMarker>
         if (showGuideline)
         {
             MarkerModels.GUIDELINE.setLength(guidelineLength);
+            if (model == MarkerModels.SLIME_SPAWN_POINT)
+            {
+                MarkerModels.GUIDELINE.setOffsetX(ConstantsConfig.instance().slimeMarkerOffset);
+                MarkerModels.GUIDELINE.setOffsetZ(ConstantsConfig.instance().slimeMarkerOffset);
+            }
+            else
+            {
+                MarkerModels.GUIDELINE.setOffsetX(0);
+                MarkerModels.GUIDELINE.setOffsetZ(0);
+            }
+
             render(MarkerModels.GUIDELINE, tickCount, partialTick);
         }
     }
