@@ -118,7 +118,8 @@ public class SlimeChunkVisualizerMode extends PresetMode<SlimeChunkVisualizerMod
             chunkMarkers.clear();
         }
 
-        if (options().contains(Options.SLIME) || options().contains(Options.GUIDELINE))
+        if (options().contains(Options.SLIME) || options().contains(Options.GUIDELINE)
+                || options().contains(Options.FORCE_SLIME) || options().contains(Options.FORCE_GUIDELINE))
         {
             checkSlimeSpawn(px, py, pz);
         }

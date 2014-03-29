@@ -52,10 +52,10 @@ public class SlimeChunkVisualizerConfig extends SkeletalConfig
         return ImmutableList.of(
                 OptionSet.of(DISABLED),
                 OptionSet.of(SLIME_CHUNK),
-                OptionSet.of(SLIME),
-                OptionSet.of(SLIME, GUIDELINE),
-                OptionSet.of(SLIME_CHUNK, SLIME),
-                OptionSet.of(SLIME_CHUNK, SLIME, GUIDELINE)
+                OptionSet.of(FORCE_SLIME),
+                OptionSet.of(FORCE_SLIME, FORCE_GUIDELINE),
+                OptionSet.of(SLIME_CHUNK, FORCE_SLIME),
+                OptionSet.of(SLIME_CHUNK, FORCE_SLIME, FORCE_GUIDELINE)
                 );
     }
 
@@ -66,7 +66,9 @@ public class SlimeChunkVisualizerConfig extends SkeletalConfig
                 DISABLED,
                 SLIME_CHUNK,
                 SLIME,
-                GUIDELINE
+                GUIDELINE,
+                FORCE_SLIME,
+                FORCE_GUIDELINE
                 );
     }
 
