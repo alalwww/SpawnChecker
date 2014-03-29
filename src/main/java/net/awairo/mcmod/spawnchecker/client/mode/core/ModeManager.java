@@ -122,10 +122,11 @@ public final class ModeManager extends ClientManager
 
         tickCount++;
 
+        setNewModeIfScheduled();
+
         if (isNotUpdateTiming())
             return;
 
-        setNewModeIfScheduled();
 
         settings().state().currentMode().update();
 
