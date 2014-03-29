@@ -20,9 +20,28 @@ import net.awairo.mcmod.spawnchecker.client.marker.model.MarkerModels;
  */
 public class ChunkMarker extends SkeletalMarker<ChunkMarker>
 {
+    private double height;
+    private double intervals;
+
+    /** @param height the height to set */
+    public ChunkMarker setHeight(double height)
+    {
+        this.height = height;
+        return this;
+    }
+
+    /** @param intervals the intervals to set */
+    public ChunkMarker setIntervals(double intervals)
+    {
+        this.intervals = intervals;
+        return this;
+    }
+
     @Override
     public void doRender(long tickCount, float partialTick)
     {
+        MarkerModels.CHUNK.setHeight(height);
+        MarkerModels.CHUNK.setIntervals(intervals);
         render(MarkerModels.CHUNK, tickCount, partialTick);
     }
 

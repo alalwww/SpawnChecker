@@ -74,8 +74,7 @@ public class SlimeChunkVisualizerMode extends PresetMode<SlimeChunkVisualizerMod
     {
         slimeSpawnChecker = SlimeSpawnChecker.newCheckerOfCurrentWorld();
         spawnCheck = new SurfaceSpawnCheck(this);
-        // TODO: 初期サイズ調整、定数化
-        chunkMarkers = Lists.newArrayListWithCapacity(256);
+        chunkMarkers = Lists.newArrayListWithCapacity(consts.slimeChunkMarkerCacheInitSize);
     }
 
     @Override
@@ -132,9 +131,7 @@ public class SlimeChunkVisualizerMode extends PresetMode<SlimeChunkVisualizerMod
         if (nextChunkMarkerUpdateTime > current)
             return false;
 
-        // TODO: 設定からロードするように変更
-        // 最短3秒毎更新でハードコーディング
-        nextChunkMarkerUpdateTime = current + 3 * 1000;
+        nextChunkMarkerUpdateTime = current + config().chunkUpdateFrequency();
 
         return true;
     }
@@ -146,11 +143,11 @@ public class SlimeChunkVisualizerMode extends PresetMode<SlimeChunkVisualizerMod
         final int centerX = CoordHelper.toChunkCoord(playerX);
         final int centerZ = CoordHelper.toChunkCoord(playerZ);
 
-        // TODO: 定数設定からロードするように変更 自身のいるチャンクから7チャンク、15x15チャンクを判定する
-        final int mincx = centerX - 7;
-        final int mincz = centerZ - 7;
-        final int maxcx = centerX + 7;
-        final int maxcz = centerZ + 7;
+        final int scanRange = config().chunkScanRange();
+        final int mincx = centerX - scanRange;
+        final int mincz = centerZ - scanRange;
+        final int maxcx = centerX + scanRange;
+        final int maxcz = centerZ + scanRange;
 
         // TODO: 重複コードの共通化、スポーンチェックのスケルトンクラスにも同じ処理がある
         final int computedBrightness = consts.baseBrightness
@@ -167,9 +164,9 @@ public class SlimeChunkVisualizerMode extends PresetMode<SlimeChunkVisualizerMod
                 if (slimeSpawnChecker.isSlimeChunk(worldX, worldZ))
                 {
                     chunkMarkers.add(new ChunkMarker()
-                            .setPosX(worldX)
-                            .setPosY(y)
-                            .setPosZ(worldZ)
+                            .setPoint(worldX, y, worldZ)
+                            .setHeight(config().chunkMarkerHeight())
+                            .setIntervals(config().chunkMarkerIntarval())
                             .setBrightness(computedBrightness)
                             .setColor(commonColor().slimeChunk())
                             );

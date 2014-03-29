@@ -80,8 +80,11 @@ public class ConstantsConfig extends ConfigCategory
     /** 湿地でスライムがスポーンする高さ上限. */
     public final int slimeSpawnLimitMaxYOnSwampland;
 
-    /** スライムチャンク判定結果のキャシュ上限. */
+    /** スライムチャンク判定結果のキャシュテーブルの行と列の上限. */
     public final int slimeChunkCacheSize;
+
+    /** スライムチャンクマーカーのキャッシュ初期サイズ. */
+    public final int slimeChunkMarkerCacheInitSize;
 
     /** WorldClient#sendQueue のsrg-name. */
     public final String sendQueueSrgName;
@@ -239,10 +242,16 @@ public class ConstantsConfig extends ConfigCategory
                 .comment("default: 32")
                 .getInt();
 
+        slimeChunkMarkerCacheInitSize = getValueOf("slimeChunkMarkerCacheInitSize", 256)
+                .comment("default: 256")
+                .getInt();
+
+        // リフレクション
         sendQueueSrgName = getValueOf("sendQueueSrgName", "field_73035_a")
                 .comment("default: field_73035_a (for mc 1.7.2)")
                 .getString();
 
+        // マーカーキャッシュのデフォルトサイズ
         defaultCachedSupplierSize = getValueOf("defaultCachedSupplierSize", 555)
                 .comment("default: 555")
                 .getInt();

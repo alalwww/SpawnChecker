@@ -24,13 +24,21 @@ public class ChunkMarkerModel extends SkeletalMarkerModel
 {
     public static final ChunkMarkerModel INSTANCE = new ChunkMarkerModel();
 
-    private final double minY = 0;
-    private final double maxY = 32;
-
-    private final double intervals = 1.5d;
-
     private final double chunkSizeMin = 0;
     private final double chunkSizeMax = 16;
+
+    private double height;
+    private double intervals;
+
+    public void setHeight(double height)
+    {
+        this.height = height;
+    }
+
+    public void setIntervals(double intervals)
+    {
+        this.intervals = intervals;
+    }
 
     @Override
     public void render(long tickCount, float partialTick)
@@ -38,7 +46,7 @@ public class ChunkMarkerModel extends SkeletalMarkerModel
         startDrawingLines();
         setGLColorAndBrightness(color, brightness);
 
-        for (double y = minY; y <= maxY; y += intervals)
+        for (double y = 0; y <= height; y += intervals)
         {
             // north
             addVertex(chunkSizeMin, y, chunkSizeMin);
