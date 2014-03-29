@@ -72,6 +72,7 @@ public class PresetModes
         final Settings settings = ((ClientSideProxy) SpawnChecker.sideProxy).settings();
         PresetMode.configs = new PresetModeConfigs(settings.mode());
         settings.add(PresetMode.configs.spawnCheckerMode);
+        settings.add(PresetMode.configs.slimeChunkVisualizerMode);
     }
 
     @Mod.EventHandler
