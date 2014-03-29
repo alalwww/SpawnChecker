@@ -36,7 +36,7 @@ public class ChunkMarkerModel extends SkeletalMarkerModel
     public void render(long tickCount, float partialTick)
     {
         startDrawingLines();
-        setColorAndBrightness(color, brightness);
+        setGLColorAndBrightness(color, brightness);
 
         for (double y = minY; y <= maxY; y += intervals)
         {
