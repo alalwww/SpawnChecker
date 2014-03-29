@@ -101,12 +101,22 @@ public class PresetModes
         return event.getSide() != Side.CLIENT;
     }
 
-    public static abstract class PresetMode<M extends PresetMode<M>> extends ModeBase<M> {
+    /**
+     * プリセットモードのスケルトン.
+     * 
+     * @author alalwww
+     *
+     * @param <M> プリセットモードのタイプ
+     */
+    public static abstract class PresetMode<M extends PresetMode<M>> extends ModeBase<M>
+    {
         private static PresetModeConfigs configs;
 
-        protected static PresetModeConfigs configs() {
+        protected static PresetModeConfigs configs()
+        {
             return configs;
         }
+
         protected PresetMode(String id, int ordinal)
         {
             super(id, ordinal);
