@@ -25,31 +25,70 @@ import net.awairo.mcmod.common.v1.function.ConvertFunctions;
 public final class Env
 {
 
+    /**
+     * 指定のキーに紐づくシステムプロパティを文字列値で取得.
+     * 
+     * @param key キー
+     * @param defaultValue 設定されてなかった場合の初期値
+     * @return プロパティ値もしくは初期値
+     */
     public static String getString(String key, String defaultValue)
     {
         return getString(key).or(checkNotNull(defaultValue, "defaultValue"));
     }
 
+    /**
+     * 指定のキーに紐づくシステムプロパティを取得.
+     * 
+     * @param key キー
+     * @return プロパティ値
+     */
     public static Optional<String> getString(String key)
     {
         return getProperty(key);
     }
 
+    /**
+     * 指定のキーに紐づくシステムプロパティを真偽値で取得.
+     * 
+     * @param key キー
+     * @param defaultValue 設定されてなかった場合の初期値
+     * @return プロパティ値もしくは初期値
+     */
     public static Boolean getBoolean(String key, Boolean defaultValue)
     {
         return getBoolean(key).or(checkNotNull(defaultValue, "defaultValue"));
     }
 
+    /**
+     * 指定のキーに紐づくシステムプロパティを取得.
+     * 
+     * @param key キー
+     * @return プロパティ値
+     */
     public static Optional<Boolean> getBoolean(String key)
     {
         return getProperty(key).transform(ConvertFunctions.TO_BOOLEAN);
     }
 
+    /**
+     * 指定のキーに紐づくシステムプロパティを整数値で取得.
+     * 
+     * @param key キー
+     * @param defaultValue 設定されてなかった場合の初期値
+     * @return プロパティ値もしくは初期値
+     */
     public static Integer getInteger(String key, Integer defaultValue)
     {
         return getInteger(key).or(checkNotNull(defaultValue, "defaultValue"));
     }
 
+    /**
+     * 指定のキーに紐づくシステムプロパティを取得.
+     * 
+     * @param key キー
+     * @return プロパティ値
+     */
     public static Optional<Integer> getInteger(String key)
     {
         return getProperty(key).transform(ConvertFunctions.TO_INTEGER);
@@ -63,11 +102,17 @@ public final class Env
     private static final boolean DEVELOP = getBoolean("net.awairo.develop", Boolean.FALSE);
     private static final boolean DEBUG = getBoolean("net.awairo.debug", Boolean.FALSE);
 
+    /**
+     * @return trueは開発環境フラグが有効
+     */
     public static boolean develop()
     {
         return DEVELOP;
     }
 
+    /**
+     * @return trueはデバッグフラグが有効
+     */
     public static boolean debug()
     {
         return DEBUG;
