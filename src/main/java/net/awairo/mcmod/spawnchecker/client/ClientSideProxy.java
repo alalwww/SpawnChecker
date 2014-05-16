@@ -20,6 +20,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.minecraft.client.settings.KeyBinding;
 
+import net.awairo.mcmod.spawnchecker.Proxy;
 import net.awairo.mcmod.spawnchecker.SpawnChecker;
 import net.awairo.mcmod.spawnchecker.client.common.Settings;
 import net.awairo.mcmod.spawnchecker.client.controls.KeyManager;
@@ -33,14 +34,16 @@ import net.awairo.mcmod.spawnchecker.client.mode.information.InformationManager;
  * 
  * @author alalwww
  */
-public final class ClientSideProxy extends SpawnChecker.Proxy
+public final class ClientSideProxy extends Proxy
 {
+    static Settings settings;
+
     /**
      * @return 設定
      */
     public Settings settings()
     {
-        return ClientManager.settings;
+        return settings;
     }
 
     @Override
@@ -48,7 +51,7 @@ public final class ClientSideProxy extends SpawnChecker.Proxy
     {
         super.handleModEvent(event);
 
-        ClientManager.settings = new Settings(event.getSuggestedConfigurationFile());
+        settings = new Settings(event.getSuggestedConfigurationFile());
     }
 
     @Override

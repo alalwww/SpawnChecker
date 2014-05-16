@@ -13,14 +13,14 @@
 
 package net.awairo.mcmod.spawnchecker.server;
 
-import net.awairo.mcmod.spawnchecker.SpawnChecker;
+import net.awairo.mcmod.spawnchecker.Proxy;
 
 /**
  * ServerSideProxy.
  * 
  * @author alalwww
  */
-public final class ServerSideProxy extends SpawnChecker.Proxy
+public final class ServerSideProxy extends Proxy
 {
     // ＼ﾉ'∀ン ﾋｬｯﾎｳ
     // まぁ…そのうちね

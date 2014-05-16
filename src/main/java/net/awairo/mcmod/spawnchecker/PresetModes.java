@@ -30,7 +30,6 @@ import net.awairo.mcmod.common.v1.util.Fingerprint;
 import net.awairo.mcmod.spawnchecker.client.ClientSideProxy;
 import net.awairo.mcmod.spawnchecker.client.common.Settings;
 import net.awairo.mcmod.spawnchecker.client.mode.Mode;
-import net.awairo.mcmod.spawnchecker.client.mode.core.ModeBase;
 import net.awairo.mcmod.spawnchecker.client.mode.preset.SlimeChunkVisualizerMode;
 import net.awairo.mcmod.spawnchecker.client.mode.preset.SpawnCheckerMode;
 import net.awairo.mcmod.spawnchecker.client.mode.preset.config.PresetModeConfigs;
@@ -51,6 +50,9 @@ public class PresetModes
     /** logger of the SpawnChecker. */
     private static final Logger logger = LogManager.getLogger(PresetModes.MOD_ID);
 
+    /** プリセットモードの設定. */
+    static PresetModeConfigs configs;
+
     @Mod.EventHandler
     private void handleModEvent(FMLFingerprintViolationEvent event)
     {
@@ -60,31 +62,31 @@ public class PresetModes
     @Mod.EventHandler
     private void handleModEvent(FMLPreInitializationEvent event)
     {
-        if (isNotClient(event)) return;
+        if (isNotClientSide(event)) return;
 
         final Properties prop = event.getVersionProperties();
 
-        // バージョンは本体と同期
+        // バージョンはSpawnChecker本体と同期
         // version.propertiesにこっちのmodidを足してもいけるけど、生成処理は汎用的にしておきたいのでコードで対応
         event.getModMetadata().version = prop.getProperty(SpawnChecker.MOD_ID + ".version");
 
         // 本体の設定ファイルを使ってプリセットモード用の設定も生成
         final Settings settings = ((ClientSideProxy) SpawnChecker.sideProxy).settings();
-        PresetMode.configs = new PresetModeConfigs(settings.mode());
-        settings.add(PresetMode.configs.spawnCheckerMode);
-        settings.add(PresetMode.configs.slimeChunkVisualizerMode);
+        configs = new PresetModeConfigs(settings.mode());
+        settings.add(configs.spawnCheckerMode);
+        settings.add(configs.slimeChunkVisualizerMode);
     }
 
     @Mod.EventHandler
     private void handleModEvent(FMLInitializationEvent event)
     {
-        if (isNotClient(event)) return;
+        if (isNotClientSide(event)) return;
 
         registerMode(SpawnCheckerMode.class);
         registerMode(SlimeChunkVisualizerMode.class);
     }
 
-    private void registerMode(Class<? extends Mode> modeClass)
+    private static void registerMode(Class<? extends Mode> modeClass)
     {
         if (FMLInterModComms.sendMessage(SpawnChecker.MOD_ID, SpawnChecker.IMC_REGISTERMODE, modeClass.getName()))
         {
@@ -97,30 +99,8 @@ public class PresetModes
         throw new RuntimeException(msg);
     }
 
-    private static boolean isNotClient(FMLStateEvent event)
+    private static boolean isNotClientSide(FMLStateEvent event)
     {
         return event.getSide() != Side.CLIENT;
-    }
-
-    /**
-     * プリセットモードのスケルトン.
-     * 
-     * @author alalwww
-     *
-     * @param <M> プリセットモードのタイプ
-     */
-    public static abstract class PresetMode<M extends PresetMode<M>> extends ModeBase<M>
-    {
-        private static PresetModeConfigs configs;
-
-        protected static PresetModeConfigs configs()
-        {
-            return configs;
-        }
-
-        protected PresetMode(String id, int ordinal)
-        {
-            super(id, ordinal);
-        }
     }
 }

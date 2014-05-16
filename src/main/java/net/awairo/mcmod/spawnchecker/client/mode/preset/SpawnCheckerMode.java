@@ -19,7 +19,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.util.MathHelper;
 
-import net.awairo.mcmod.spawnchecker.PresetModes.PresetMode;
+import net.awairo.mcmod.spawnchecker.PresetMode;
 import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
 import net.awairo.mcmod.spawnchecker.client.marker.SpawnPointMarker;
 import net.awairo.mcmod.spawnchecker.client.mode.preset.checker.SpawnCheck;

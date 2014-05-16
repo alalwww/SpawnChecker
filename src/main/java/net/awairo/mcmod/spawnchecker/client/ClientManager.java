@@ -17,7 +17,7 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 
-import net.awairo.mcmod.spawnchecker.SpawnChecker;
+import net.awairo.mcmod.spawnchecker.HandlerManager;
 import net.awairo.mcmod.spawnchecker.client.common.Settings;
 
 /**
@@ -25,9 +25,10 @@ import net.awairo.mcmod.spawnchecker.client.common.Settings;
  * 
  * @author alalwww
  */
-public abstract class ClientManager extends SpawnChecker.Manager
+public abstract class ClientManager extends HandlerManager
 {
     static final Map<Class<? extends ClientManager>, ClientManager> managers = Maps.newConcurrentMap();
+
     static Settings settings;
 
     /**

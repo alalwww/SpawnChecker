@@ -61,14 +61,6 @@ public final class Settings extends ConfigHolder
     // ------------------------------
 
     /**
-     * @return 設定
-     */
-    public Config config()
-    {
-        return config;
-    }
-
-    /**
      * @return 状態
      */
     public State state()
@@ -85,7 +77,7 @@ public final class Settings extends ConfigHolder
     }
 
     /**
-     * @return 汎用設定
+     * @return モード設定
      */
     public ModeConfig mode()
     {
