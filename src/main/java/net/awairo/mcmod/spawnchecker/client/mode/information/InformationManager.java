@@ -166,13 +166,16 @@ public final class InformationManager extends ClientManager
     @Override
     protected Object newFmlEventListener()
     {
-        return new Listener();
+        return new Listener(this);
     }
 
-    public final class Listener
+    public static final class Listener
     {
-        private Listener()
+        private final InformationManager manager;
+
+        private Listener(InformationManager manager)
         {
+            this.manager = manager;
         }
 
         @SubscribeEvent
@@ -180,7 +183,7 @@ public final class InformationManager extends ClientManager
         {
             if (event.phase != Phase.END) return;
 
-            drawInformationIfPresent();
+            manager.drawInformationIfPresent();
 
         }
     }
