@@ -36,14 +36,12 @@ import net.awairo.mcmod.spawnchecker.client.mode.information.InformationManager;
  */
 public final class ClientSideProxy extends Proxy
 {
-    static Settings settings;
-
     /**
      * @return 設定
      */
     public Settings settings()
     {
-        return settings;
+        return ClientManager.settings;
     }
 
     @Override
@@ -51,7 +49,7 @@ public final class ClientSideProxy extends Proxy
     {
         super.handleModEvent(event);
 
-        settings = new Settings(event.getSuggestedConfigurationFile());
+        ClientManager.settings = new Settings(event.getSuggestedConfigurationFile());
     }
 
     @Override
@@ -100,12 +98,12 @@ public final class ClientSideProxy extends Proxy
     {
         try
         {
-            final Class<?> clazz = Class.forName(msg.getStringValue());
             @SuppressWarnings("unchecked")
-            final Class<? extends Mode> modeClass = (Class<? extends Mode>) clazz;
+            final Class<Mode> modeClass = (Class<Mode>) Class.forName(msg.getStringValue());
             final Mode mode = modeClass.newInstance();
 
             ClientManager.get(ModeManager.class).addMode(mode);
+
             LOGGER.info("SpawnChecker: mode {}(id:{}) has been registered.", mode.name(), mode.id());
         }
         catch (ReflectiveOperationException | RuntimeException e)
@@ -114,5 +112,4 @@ public final class ClientSideProxy extends Proxy
             LOGGER.warn("unexpected imc event from {}", msg.getSender(), e);
         }
     }
-
 }

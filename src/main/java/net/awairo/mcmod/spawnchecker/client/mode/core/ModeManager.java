@@ -15,13 +15,6 @@ package net.awairo.mcmod.spawnchecker.client.mode.core;
 
 import static com.google.common.base.Preconditions.*;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.ClientTickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.Phase;
@@ -32,9 +25,11 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 
 import net.awairo.mcmod.spawnchecker.client.ClientManager;
 import net.awairo.mcmod.spawnchecker.client.common.Settings;
-import net.awairo.mcmod.spawnchecker.client.common.State.Direction;
 import net.awairo.mcmod.spawnchecker.client.marker.RenderingSupport;
+import net.awairo.mcmod.spawnchecker.client.mode.AlwaysRunMode;
+import net.awairo.mcmod.spawnchecker.client.mode.ConditionalMode;
 import net.awairo.mcmod.spawnchecker.client.mode.Mode;
+import net.awairo.mcmod.spawnchecker.client.mode.SelectableMode;
 
 /**
  * イベントを契機にモードの状態管理などを行います.
@@ -45,27 +40,39 @@ public final class ModeManager extends ClientManager
 {
     private static ModeManager instance = new ModeManager();
 
-    private final Map<String, Mode> idToModeMap = Maps.newHashMap();
-    private final List<Mode> sortedModeList = Lists.newArrayList();
+    private final SelectableModeContainer selectableModeContainer = new SelectableModeContainer();
+    private final ConditionalModeContainer conditionalModeContainer = new ConditionalModeContainer();
+    private final AlwaysRunModeContainer alwaysRunModeContainer = new AlwaysRunModeContainer();
 
-    private boolean initialized = false;
+    /** 現在起動している操作可能モードを格納するモードコンテナ. */
+    private OperatableModeContainer currentOperatableModeContainer;
 
-    private int selectedModeCursor;
+    /** 条件起動モードが起動しており、選択起動モードに戻すことが予定されている場合trueになる. */
+    private boolean scheduleOfResetToPreviousMode;
 
-    private long tickCount;
+    /**
+     * ワールド変更の検知用. (現在のワールド参照またはnull)
+     */
+    private World currentWorld;
+
+    /** 最後にモードを更新した時間(ミリ秒)　 */
     private long lastUpdateTime;
 
-    private boolean beganMode;
+    /** ワールドが存在する間clientのtickが呼ばれるたびにインクリメントされるカウンター. */
+    private long tickCounts;
+
+    /**
+     * 初期化済みフラグ.
+     * 
+     * @see #addMode(Mode)
+     * @see #initialize()
+     */
+    private boolean initialized = false;
+
+    // ------------------------------------------------------------------------------------
 
     /** クラスロード用. */
     public static void load()
-    {
-    }
-
-    /**
-     * Constructor.
-     */
-    private ModeManager()
     {
     }
 
@@ -74,11 +81,20 @@ public final class ModeManager extends ClientManager
         return instance;
     }
 
+    // ------------------------------------------------------------------------------------
+
+    /** Constructor. */
+    private ModeManager()
+    {
+    }
+
     @Override
     protected Settings settings()
     {
         return super.settings();
     }
+
+    // ------------------------------------------------------------------------------------
 
     /**
      * モードを追加します.
@@ -87,11 +103,27 @@ public final class ModeManager extends ClientManager
      */
     public void addMode(Mode mode)
     {
-        checkState(!initialized, "initialized manager. ur too late!");
-        checkArgument(!idToModeMap.containsKey(mode.id()), "mode id %s is duplicate.", mode.id());
+        checkInitializedState();
 
-        idToModeMap.put(mode.id(), mode);
-        sortedModeList.add(mode);
+        if (mode instanceof SelectableMode)
+        {
+            selectableModeContainer.add((SelectableMode) mode);
+            return;
+        }
+
+        if (mode instanceof ConditionalMode)
+        {
+            conditionalModeContainer.add((ConditionalMode) mode);
+            return;
+        }
+
+        if (mode instanceof AlwaysRunMode)
+        {
+            alwaysRunModeContainer.add((AlwaysRunMode) mode);
+            return;
+        }
+
+        throw new IllegalArgumentException(mode.getClass().getName() + " is unknown mode type.");
     }
 
     /**
@@ -99,132 +131,222 @@ public final class ModeManager extends ClientManager
      */
     public void initialize()
     {
-        Collections.sort(sortedModeList);
-        selectedModeCursor = sortedModeList.indexOf(idToModeMap.get(settings().mode().selectedMode.getString()));
-        if (selectedModeCursor < 0)
-            selectedModeCursor = 0;
+        checkInitializedState();
 
-        for (Mode mode : sortedModeList)
-            mode.initialize();
+        selectableModeContainer.initialize(settings());
+        conditionalModeContainer.initialize(settings());
+        alwaysRunModeContainer.initialize(settings());
 
+        currentOperatableModeContainer = selectableModeContainer;
         initialized = true;
     }
 
-    /** 現在のモードを更新. */
-    private void updateMode()
+    private void checkInitializedState()
+    {
+        checkState(!initialized, "initialized manager. ur too late!");
+    }
+
+    // ------------------------------------------------------------------------------------
+
+    /**
+     * 指定方向へのモード変更の計画を追加します.
+     * 
+     * <p>現在モードが条件起動モードだった場合、直前の選択起動モードに戻します。</p>
+     * 
+     * @param direction モードの変更方向
+     */
+    public void changeModeUp()
+    {
+        if (currentModeIsSelectableMode())
+        {
+            selectableModeContainer.next();
+            return;
+        }
+
+        scheduleOfResetToPreviousMode = true;
+    }
+
+    /**
+     * 指定方向へのモード変更の計画を追加します.
+     * 
+     * <p>現在モードが条件起動モードだった場合、直前の選択起動モードに戻します。</p>
+     * 
+     * @param direction モードの変更方向
+     */
+    public void changeModeDown()
+    {
+        if (currentModeIsSelectableMode())
+        {
+            selectableModeContainer.prev();
+            return;
+        }
+
+        scheduleOfResetToPreviousMode = true;
+    }
+
+    /** @return trueは現在のモードがSelectableModeかSelectableModeへの変更が既に予定されている */
+    private boolean currentModeIsSelectableMode()
+    {
+        return currentOperatableModeContainer == selectableModeContainer || scheduleOfResetToPreviousMode;
+    }
+
+    /**
+     * 現在の操作可能モードにキー押下の通知を送る.
+     * 
+     * @param shift trueはシフトキーが押下されている
+     * @param alt trueはオルトキーが押下されている
+     */
+    public void onUpKeyPress(boolean shift, boolean alt)
+    {
+        currentOperatableModeContainer.onUpKeyPress(shift, alt);
+    }
+
+    /**
+     * 現在の操作可能モードにキー押下の通知を送る.
+     * 
+     * @param shift trueはシフトキーが押下されている
+     * @param alt trueはオルトキーが押下されている
+     */
+    public void onDownKeyPress(boolean shift, boolean alt)
+    {
+        currentOperatableModeContainer.onDownKeyPress(shift, alt);
+    }
+
+    /**
+     * 現在の操作可能モードにキー押下の通知を送る.
+     * 
+     * @param ctrl trueはコントコールキーが押下されている
+     * @param shift trueはシフトキーが押下されている
+     * @param alt trueはオルトキーが押下されている
+     */
+    public void onPlusKeyPress(boolean ctrl, boolean shift, boolean alt)
+    {
+        currentOperatableModeContainer.onPlusKeyPress(ctrl, shift, alt);
+    }
+
+    /**
+     * 現在の操作可能モードにキー押下の通知を送る.
+     * 
+     * @param ctrl trueはコントコールキーが押下されている
+     * @param shift trueはシフトキーが押下されている
+     * @param alt trueはオルトキーが押下されている
+     */
+    public void onMinusKeyPress(boolean ctrl, boolean shift, boolean alt)
+    {
+        currentOperatableModeContainer.onMinusKeyPress(ctrl, shift, alt);
+    }
+
+    // ------------------------------------------------------------------------------------
+
+    /**
+     * ワールドが変わっていて、モードがすでに初期化されている場合、リセット.
+     */
+    private void resetIfWorldChanged()
     {
         final World wowld = Minecraft.getMinecraft().theWorld;
 
-        resetIfWorldChanged(wowld);
-
-        if (wowld == null)
+        // ワールド変わっていないので何もしない
+        if (currentWorld == wowld)
             return;
 
-        tickCount++;
+        currentWorld = wowld;
 
+        // ワールドが変わっているので停止
+        alwaysRunModeContainer.stopIfStarted();
+        currentOperatableModeContainer.stopIfStarted();
+    }
+
+    /**
+     * 現在のモードを更新.
+     */
+    private void updateMode()
+    {
         setNewModeIfScheduled();
+
+        // 開始していないモードは開始
+        alwaysRunModeContainer.startIfStopped();
+        currentOperatableModeContainer.startIfStopped();
 
         if (isNotUpdateTiming())
             return;
 
-
-        settings().state().currentMode().update();
+        alwaysRunModeContainer.update();
+        currentOperatableModeContainer.update();
 
         lastUpdateTime = Minecraft.getSystemTime();
     }
 
-    /** @return true は更新タイミングではない */
+    /**
+     * 更新タイミングか判定.
+     * 
+     * @return true は更新タイミングではない
+     */
     private boolean isNotUpdateTiming()
     {
+        // 最後に更新してから一定時間が立っていればtrue
         return Minecraft.getSystemTime() - lastUpdateTime < settings().mode().updateFrequency.getInt();
     }
 
-    /** ワールドが変わっていて、モードがすでに初期化されている場合、モードリセット . */
-    private void resetIfWorldChanged(World wowld)
-    {
-        if (settings().state().currentWorld() == wowld)
-            return;
-
-        if (!settings().state().modeInitialized())
-            return;
-
-        // モードが開始していれば一度終了する
-        if (beganMode)
-        {
-            settings().state().currentMode().end();
-            beganMode = false;
-        }
-
-        settings().state().setWorld(wowld);
-
-        // ワールドがあるなら開始する
-        if (wowld != null && !beganMode)
-        {
-            settings().state().currentMode().begin();
-            beganMode = true;
-        }
-    }
-
-    /** モード変更が予定されているか、まだモードが設定されていない場合、新しいモードを設定する . */
+    /**
+     * モード変更が予定されている場合、新しいモードに変更する .
+     */
     private void setNewModeIfScheduled()
     {
-        if (!settings().state().modeChangeScheduled() && settings().state().modeInitialized())
-            return;
-
-        // モードが開始していたら終了
-        if (beganMode)
+        if (!scheduleOfResetToPreviousMode)
         {
-            settings().state().currentMode().end();
-            beganMode = false;
+            // 条件起動モードを抜けるフラグが立っていない場合、条件起動モードが有効か判定
+            if (conditionalModeContainer.enabled())
+            {
+                // 現在モードが条件起動モードではなければ、切り替える
+                if (currentOperatableModeContainer != conditionalModeContainer)
+                {
+                    currentOperatableModeContainer.stopIfStarted();
+                    currentOperatableModeContainer = conditionalModeContainer;
+                }
+                return;
+            }
+
+            // 現在条件起動モードになっており、既に無効になっていたら、変更を予定する
+            if (currentOperatableModeContainer == conditionalModeContainer)
+                scheduleOfResetToPreviousMode = true;
         }
 
-        // 新しいモードを設定して開始
-        final Mode newMode = getNewMode();
-        settings().state().setNewMode(newMode);
-        newMode.begin();
-        beganMode = true;
-    }
-
-    /***/
-    private Mode getNewMode()
-    {
-        int newCursor = selectedModeCursor;
-
-        final int size = sortedModeList.size();
-        for (Direction d : settings().state().directions())
+        if (scheduleOfResetToPreviousMode || selectableModeContainer.modeChangeScheduled())
         {
-            newCursor += d == Direction.UP ? 1 : -1;
+            // 条件起動モードから戻す予定がされていたら、戻す
+            if (scheduleOfResetToPreviousMode)
+            {
+                scheduleOfResetToPreviousMode = false;
+                currentOperatableModeContainer.stopIfStarted();
+                currentOperatableModeContainer = selectableModeContainer;
+            }
 
-            // TODO: モード選択にループ機能を設けてもいいかも
-
-            if (newCursor < 0)
-                newCursor = 0;
-
-            if (newCursor >= size)
-                newCursor = size - 1;
+            // 選択可能モードの変更が予定されていたら変更する
+            selectableModeContainer.changeNewModeIfScheduled();
         }
-
-        selectedModeCursor = newCursor;
-
-        return sortedModeList.get(selectedModeCursor);
     }
 
     /** ワールド内にマーカーを描画. */
-    private void renderMarker(float partialTick)
+    private void renderMarker(float partialTicks)
     {
-        if (!beganMode) return;
-
         RenderingSupport.beginRendering();
-        settings().state().currentMode().renderIngame(tickCount, partialTick);
+
+        currentOperatableModeContainer.renderIngame(tickCounts, partialTicks);
+        alwaysRunModeContainer.renderIngame(tickCounts, partialTicks);
+
         RenderingSupport.endRendering();
     }
 
     /** 画面上に情報を描画. */
-    private void renderGui(float partialTick)
+    private void renderGui(float partialTicks)
     {
-        if (!beganMode) return;
+        currentOperatableModeContainer.renderGui(tickCounts, partialTicks);
+        alwaysRunModeContainer.renderGui(tickCounts, partialTicks);
+    }
 
-        settings().state().currentMode().renderGui(tickCount, partialTick);
+    private static boolean notStartedTheWorld()
+    {
+        return Minecraft.getMinecraft().theWorld == null;
     }
 
     // ------------------------------------------------------------------------------------
@@ -232,13 +354,15 @@ public final class ModeManager extends ClientManager
     @Override
     protected Object newFmlEventListener()
     {
-        return new FMLEventListener();
+        // アクセス可能なクラスじゃないとイベントバスが解析してくれなかったため、ここは無名クラスにできない
+        return new FMLEventListener(this);
     }
 
     @Override
     protected Object newForgeEventListener()
     {
-        return new ForgeEventListener();
+        // アクセス可能なクラスじゃないとイベントバスが解析してくれなかったため、ここは無名クラスにできない
+        return new ForgeEventListener(this);
     }
 
     // ------------------------------------------------------------------------------------
@@ -248,39 +372,61 @@ public final class ModeManager extends ClientManager
      * 
      * @author alalwww
      */
-    public final class FMLEventListener
+    public static final class FMLEventListener
     {
-        private FMLEventListener()
+        private final ModeManager manager;
+
+        private FMLEventListener(ModeManager manager)
         {
+            this.manager = checkNotNull(manager);
         }
 
         @SubscribeEvent
         public void handleClientTick(ClientTickEvent event)
         {
-            if (event.phase != Phase.START) return;
+            if (event.phase != Phase.START)
+                return;
 
-            // tick.SpawnChecker
-            profiler().startSection("SpawnChecker");
-            updateMode();
-            profiler().endSection();
+            try
+            {
+                // tick.SpawnChecker
+                profiler().startSection("SpawnChecker");
+
+                manager.resetIfWorldChanged();
+
+                if (notStartedTheWorld())
+                    return;
+
+                manager.tickCounts++;
+
+                manager.updateMode();
+            }
+            finally
+            {
+
+                profiler().endSection();
+            }
         }
 
         @SubscribeEvent
         public void handleRenderGameOverlay(RenderTickEvent event)
         {
-            if (Minecraft.getMinecraft().theWorld == null
-                    || event.phase != Phase.END)
+            if (event.phase != Phase.END)
+                return;
+
+            if (notStartedTheWorld())
                 return;
 
             // gameRenderer.gui.SpawnChecker
             profiler().startSection("gameRenderer");
             profiler().startSection("gui");
             profiler().startSection("SpawnChecker");
-            renderGui(event.renderTickTime);
-            profiler().endSection();
-            profiler().endSection();
-            profiler().endSection();
 
+            manager.renderGui(event.renderTickTime);
+
+            profiler().endSection();
+            profiler().endSection();
+            profiler().endSection();
         }
     }
 
@@ -289,21 +435,26 @@ public final class ModeManager extends ClientManager
      * 
      * @author alalwww
      */
-    public final class ForgeEventListener
+    public static final class ForgeEventListener
     {
-        private ForgeEventListener()
+        private final ModeManager manager;
+
+        private ForgeEventListener(ModeManager manager)
         {
+            this.manager = checkNotNull(manager);
         }
 
         @SubscribeEvent
         public void handleRenderWorldLast(RenderWorldLastEvent event)
         {
-            if (Minecraft.getMinecraft().theWorld == null)
+            if (notStartedTheWorld())
                 return;
 
             // gameRenderer.level.SpawnChecker
             profiler().endStartSection("SpawnChecker");
-            renderMarker(event.partialTicks);
+
+            manager.renderMarker(event.partialTicks);
+
             profiler().endStartSection("FRenderLast");
         }
     }

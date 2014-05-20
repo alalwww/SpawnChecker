@@ -22,7 +22,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.common.base.Objects;
-import com.google.common.primitives.Ints;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
@@ -30,7 +29,10 @@ import net.minecraft.client.resources.I18n;
 import net.awairo.mcmod.spawnchecker.SpawnChecker;
 import net.awairo.mcmod.spawnchecker.client.common.OptionSet;
 import net.awairo.mcmod.spawnchecker.client.common.SimpleInformation;
+import net.awairo.mcmod.spawnchecker.client.mode.ConditionalMode;
 import net.awairo.mcmod.spawnchecker.client.mode.Mode;
+import net.awairo.mcmod.spawnchecker.client.mode.OperatableMode;
+import net.awairo.mcmod.spawnchecker.client.mode.SelectableMode;
 import net.awairo.mcmod.spawnchecker.client.mode.information.InformationManager;
 
 /**
@@ -39,12 +41,11 @@ import net.awairo.mcmod.spawnchecker.client.mode.information.InformationManager;
  * @author alalwww
  * @param <T> type of child
  */
-public abstract class ModeBase<T extends ModeBase<T>> implements Mode
+public abstract class ModeBase<T extends ModeBase<T>> implements OperatableMode
 {
     private static final Logger LOG = LogManager.getLogger(SpawnChecker.MOD_ID);
 
     private final String id;
-    private final int ordinal;
     private String nameKey;
 
     private List<OptionSet> optionSetList;
@@ -56,12 +57,10 @@ public abstract class ModeBase<T extends ModeBase<T>> implements Mode
      * Constructor.
      * 
      * @param id モードID
-     * @param ordinal モードの序数
      */
-    protected ModeBase(String id, int ordinal)
+    protected ModeBase(String id)
     {
         this.id = id;
-        this.ordinal = ordinal;
     }
 
     /**
@@ -70,9 +69,9 @@ public abstract class ModeBase<T extends ModeBase<T>> implements Mode
     protected abstract ModeConfig.SubCategory config();
 
     /**
-     * @see Mode#begin()
+     * @see Mode#start()
      */
-    protected abstract void start();
+    protected abstract void onStart();
 
     /**
      * @see Mode#update()
@@ -80,20 +79,14 @@ public abstract class ModeBase<T extends ModeBase<T>> implements Mode
     protected abstract void onUpdate();
 
     /**
-     * @see Mode#end()
+     * @see Mode#stop()
      */
-    protected abstract void stop();
+    protected abstract void onStop();
 
     @Override
     public final String id()
     {
         return id;
-    }
-
-    @Override
-    public final int ordinal()
-    {
-        return ordinal;
     }
 
     @Override
@@ -109,12 +102,6 @@ public abstract class ModeBase<T extends ModeBase<T>> implements Mode
     }
 
     @Override
-    public boolean enabled()
-    {
-        return true;
-    }
-
-    @Override
     public void initialize()
     {
         optionSetList = config().getOptionSetList();
@@ -122,10 +109,10 @@ public abstract class ModeBase<T extends ModeBase<T>> implements Mode
     }
 
     @Override
-    public void begin()
+    public void start()
     {
         resetInformationForModeChange();
-        start();
+        onStart();
     }
 
     @Override
@@ -135,9 +122,9 @@ public abstract class ModeBase<T extends ModeBase<T>> implements Mode
     }
 
     @Override
-    public void end()
+    public void stop()
     {
-        stop();
+        onStop();
     }
 
     @Override
@@ -370,14 +357,6 @@ public abstract class ModeBase<T extends ModeBase<T>> implements Mode
     // --------------------------------------------------
 
     @Override
-    public final int compareTo(Mode o)
-    {
-        final int result = Ints.compare(ordinal(), o.ordinal());
-        if (result != 0) return result;
-        return id().compareTo(o.id());
-    }
-
-    @Override
     public final int hashCode()
     {
         return id().hashCode();
@@ -393,10 +372,16 @@ public abstract class ModeBase<T extends ModeBase<T>> implements Mode
     @Override
     public String toString()
     {
-        return Objects.toStringHelper(getClass())
+        final Objects.ToStringHelper helper = Objects.toStringHelper(getClass())
                 .add("mode id", id())
-                .add("name", name())
-                .add("ordinal", ordinal())
-                .toString();
+                .add("name", name());
+
+        if (this instanceof SelectableMode)
+            helper.add("ordinal", ((SelectableMode) this).ordinal());
+
+        if (this instanceof ConditionalMode)
+            helper.add("priority", ((ConditionalMode) this).priority());
+
+        return helper.toString();
     }
 }

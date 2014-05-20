@@ -24,10 +24,9 @@ public abstract class PresetMode<M extends PresetMode<M>> extends ModeBase<M>
      * Constructor.
      * 
      * @param id mode id
-     * @param ordinal mode ordinal
      */
-    protected PresetMode(String id, int ordinal)
+    protected PresetMode(String id)
     {
-        super(id, ordinal);
+        super(id);
     }
 }

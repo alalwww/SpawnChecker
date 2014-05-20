@@ -11,24 +11,20 @@
  * ライセンスの内容は次のサイトを確認してください。 http://www.mod-buildcraft.com/MMPL-1.0.txt
  */
 
-package net.awairo.mcmod.spawnchecker.client.controls;
+package net.awairo.mcmod.spawnchecker.client.mode;
 
 /**
- * テンキー「－」キー操作ハンドラー.
+ * 常時起動し続けるモード.
  * 
  * @author alalwww
  */
-final class MinusKeyHandler extends AbstractKeyHandler
+public interface AlwaysRunMode extends Mode
 {
-    MinusKeyHandler(KeyBindingWrapper key)
-    {
-        super(key);
-    }
-
-    @Override
-    void onKeyPress(boolean ctrl, boolean shift, boolean alt)
-    {
-        KeyManager.instance.onMinusKeyPress(ctrl, shift, alt);
-    }
+    /**
+     * 更新タイミングで毎回呼ばれます.
+     * 
+     * @return true はこのモードが有効であることを意味します
+     */
+    boolean enabled();
 
 }

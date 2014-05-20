@@ -17,8 +17,6 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import net.awairo.mcmod.spawnchecker.client.common.State;
-
 /**
  * キーハンドラー抽象クラス.
  * 
@@ -36,5 +34,5 @@ abstract class AbstractKeyHandler
         handlerList.add(this);
     }
 
-    abstract void onKeyPress(State state, boolean ctrl, boolean shift, boolean alt);
+    abstract void onKeyPress(boolean ctrl, boolean shift, boolean alt);
 }

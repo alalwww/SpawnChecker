@@ -27,6 +27,7 @@ import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
 import net.awairo.mcmod.spawnchecker.client.common.CoordHelper;
 import net.awairo.mcmod.spawnchecker.client.marker.ChunkMarker;
 import net.awairo.mcmod.spawnchecker.client.marker.Marker;
+import net.awairo.mcmod.spawnchecker.client.mode.SelectableMode;
 import net.awairo.mcmod.spawnchecker.client.mode.preset.checker.SlimeSpawnChecker;
 import net.awairo.mcmod.spawnchecker.client.mode.preset.checker.SurfaceSpawnCheck;
 import net.awairo.mcmod.spawnchecker.client.mode.preset.config.SlimeChunkVisualizerConfig;
@@ -36,7 +37,7 @@ import net.awairo.mcmod.spawnchecker.client.mode.preset.config.SlimeChunkVisuali
  * 
  * @author alalwww
  */
-public class SlimeChunkVisualizerMode extends PresetMode<SlimeChunkVisualizerMode>
+public class SlimeChunkVisualizerMode extends PresetMode<SlimeChunkVisualizerMode> implements SelectableMode
 {
     public static final String ID = "slimechunkvisualizer";
 
@@ -54,8 +55,20 @@ public class SlimeChunkVisualizerMode extends PresetMode<SlimeChunkVisualizerMod
      */
     public SlimeChunkVisualizerMode()
     {
-        super(ID, 20);
+        super(ID);
         setNameKey("spawnchecker.mode.slimechunk_visualizer");
+    }
+
+    @Override
+    public int ordinal()
+    {
+        return 20;
+    }
+
+    @Override
+    public int compareTo(SelectableMode o)
+    {
+        return SelectableMode.Comparator.compare(this, o);
     }
 
     @Override
@@ -71,7 +84,7 @@ public class SlimeChunkVisualizerMode extends PresetMode<SlimeChunkVisualizerMod
     }
 
     @Override
-    protected void start()
+    protected void onStart()
     {
         slimeSpawnChecker = SlimeSpawnChecker.newCheckerOfCurrentWorld();
         spawnCheck = new SurfaceSpawnCheck(this);
@@ -79,7 +92,7 @@ public class SlimeChunkVisualizerMode extends PresetMode<SlimeChunkVisualizerMod
     }
 
     @Override
-    protected void stop()
+    protected void onStop()
     {
         slimeSpawnChecker = null;
         spawnCheck = null;

@@ -21,6 +21,7 @@ import net.minecraft.client.Minecraft;
 
 import net.awairo.mcmod.spawnchecker.client.ClientManager;
 import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
+import net.awairo.mcmod.spawnchecker.client.mode.core.ModeManager;
 
 /**
  * Tick毎にキー状態を処理するクラス.
@@ -33,8 +34,7 @@ public final class KeyManager extends ClientManager
     private final int[] shiftKeys;
     private final int[] altKeys;
 
-    @SuppressWarnings("unused")
-    private static final KeyManager instance = new KeyManager();
+    static final KeyManager instance = new KeyManager();
 
     /** クラスロード用. */
     public static void load()
@@ -51,10 +51,52 @@ public final class KeyManager extends ClientManager
         altKeys = ConstantsConfig.instance().altKeyCodes.clone();
     }
 
+    void onUpKeyPress(boolean ctrl, boolean shift, boolean alt)
+    {
+        if (ctrl)
+            modeManager().changeModeUp();
+        else
+            modeManager().onUpKeyPress(shift, alt);
+    }
+
+    void onDownKeyPress(boolean ctrl, boolean shift, boolean alt)
+    {
+        if (ctrl)
+            modeManager().changeModeDown();
+        else
+            modeManager().onDownKeyPress(shift, alt);
+    }
+
+    void onPlusKeyPress(boolean ctrl, boolean shift, boolean alt)
+    {
+        modeManager().onPlusKeyPress(shift, shift, alt);
+    }
+
+    void onMinusKeyPress(boolean ctrl, boolean shift, boolean alt)
+    {
+        modeManager().onMinusKeyPress(shift, shift, alt);
+    }
+
+    private ModeManager modeManager()
+    {
+        return get(ModeManager.class);
+    }
+
+    private static boolean isKeysDown(int... keys)
+    {
+        for (int key : keys)
+            if (Keyboard.isKeyDown(key))
+                return true;
+
+        return false;
+    }
+
+    // ------------------------------------------------------------------------------------
+
     @Override
     protected Object newFmlEventListener()
     {
-        return new Listener();
+        return new Listener(this);
     }
 
     /**
@@ -62,10 +104,13 @@ public final class KeyManager extends ClientManager
      * 
      * @author alalwww
      */
-    public class Listener
+    public static class Listener
     {
-        private Listener()
+        private final KeyManager manager;
+
+        private Listener(KeyManager manager)
         {
+            this.manager = manager;
         }
 
         @SubscribeEvent
@@ -73,9 +118,9 @@ public final class KeyManager extends ClientManager
         {
             final long currentTime = Minecraft.getSystemTime();
 
-            final boolean ctrl = isKeysDown(ctrlKeys);
-            final boolean shift = isKeysDown(shiftKeys);
-            final boolean alt = isKeysDown(altKeys);
+            final boolean ctrl = isKeysDown(manager.ctrlKeys);
+            final boolean shift = isKeysDown(manager.shiftKeys);
+            final boolean alt = isKeysDown(manager.altKeys);
 
             for (AbstractKeyHandler handler : AbstractKeyHandler.handlerList)
             {
@@ -83,24 +128,9 @@ public final class KeyManager extends ClientManager
                 while (handler.key.isPressed())
                 {
                     LOGGER.trace("code:{}, ctrl:{}, shift:{}, alt:{}", handler.key.getKeyCode(), ctrl, shift, alt);
-                    handler.onKeyPress(settings().state(), ctrl, shift, alt);
+                    handler.onKeyPress(ctrl, shift, alt);
                 }
             }
         }
-    }
-
-    /**
-     * 指定キーコードのどれか1つでも押下されていればtrueを返します.
-     * 
-     * @param keys キー
-     * @return true は押下されている
-     */
-    private boolean isKeysDown(int... keys)
-    {
-        for (int key : keys)
-            if (Keyboard.isKeyDown(key))
-                return true;
-
-        return false;
     }
 }

@@ -13,9 +13,6 @@
 
 package net.awairo.mcmod.spawnchecker.client.controls;
 
-import net.awairo.mcmod.spawnchecker.client.common.State;
-import net.awairo.mcmod.spawnchecker.client.common.State.Direction;
-
 /**
  * 「下」キー操作ハンドラー.
  * 
@@ -29,15 +26,9 @@ final class DownKeyHandler extends AbstractKeyHandler
     }
 
     @Override
-    void onKeyPress(State state, boolean ctrl, boolean shift, boolean alt)
+    void onKeyPress(boolean ctrl, boolean shift, boolean alt)
     {
-        if (ctrl)
-        {
-            state.changeMode(Direction.DOWN);
-            return;
-        }
-
-        state.currentMode().onDownKeyPress(shift, alt);
+        KeyManager.instance.onDownKeyPress(ctrl, shift, alt);
     }
 
 }

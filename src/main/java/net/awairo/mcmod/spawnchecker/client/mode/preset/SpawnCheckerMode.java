@@ -22,6 +22,7 @@ import net.minecraft.util.MathHelper;
 import net.awairo.mcmod.spawnchecker.PresetMode;
 import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
 import net.awairo.mcmod.spawnchecker.client.marker.SpawnPointMarker;
+import net.awairo.mcmod.spawnchecker.client.mode.SelectableMode;
 import net.awairo.mcmod.spawnchecker.client.mode.preset.checker.SpawnCheck;
 import net.awairo.mcmod.spawnchecker.client.mode.preset.checker.SurfaceSpawnCheck;
 import net.awairo.mcmod.spawnchecker.client.mode.preset.config.SpawnCheckerConfig;
@@ -31,7 +32,7 @@ import net.awairo.mcmod.spawnchecker.client.mode.preset.config.SpawnCheckerConfi
  * 
  * @author alalwww
  */
-public final class SpawnCheckerMode extends PresetMode<SpawnCheckerMode>
+public final class SpawnCheckerMode extends PresetMode<SpawnCheckerMode> implements SelectableMode
 {
     public static final String ID = "spawnchecker";
 
@@ -45,8 +46,20 @@ public final class SpawnCheckerMode extends PresetMode<SpawnCheckerMode>
      */
     public SpawnCheckerMode()
     {
-        super(ID, 10);
+        super(ID);
         setNameKey("spawnchecker.mode.spawnchecker");
+    }
+
+    @Override
+    public final int ordinal()
+    {
+        return 10;
+    }
+
+    @Override
+    public int compareTo(SelectableMode o)
+    {
+        return SelectableMode.Comparator.compare(this, o);
     }
 
     @Override
@@ -62,14 +75,14 @@ public final class SpawnCheckerMode extends PresetMode<SpawnCheckerMode>
     }
 
     @Override
-    public void start()
+    public void onStart()
     {
         // TODO: ディメンションごとの切り替え
         spawnCheck = new SurfaceSpawnCheck(this);
     }
 
     @Override
-    public void stop()
+    public void onStop()
     {
         spawnCheck = null;
     }

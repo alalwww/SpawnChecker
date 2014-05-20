@@ -22,30 +22,25 @@ import net.awairo.mcmod.common.v1.util.LimitedNumber;
  * SpawnChecker mode.
  * 
  * <p>
- * このインターフェイスを実装したクラスのFQDNを、IMCでを送信することで、独自の新たなモードを追加することが出来ます。
- * IMCのmodidは、"spawnchecker"、メッセージキーは"registerMode"になります。
- * インターフェイスを独自に実装することも出来ますが、{@link net.awairo.mcmod.spawnchecker.client.mode.core.ModeBase}を継承し、
- * 最低限の実装のみで新たなモードを作成することも出来ます。
+ * すべてのSpawnCheckerモードの持つべき最低限のインターフェイスを定義します。
+ * 追加モードの実装者は、このインターフェイスを直接利用しないでください。
+ * 新たなモードを追加する場合、以下に上げるいずれかのインターフェイスを実装してください。
  * </p>
+ * <ul>
+ * <li>{@link AlwaysRunMode}</li>
+ * <li>{@link SelectableMode}</li>
+ * <li>{@link ConditionalMode}</li>
+ * </ul>
  * 
  * @author alalwww
  */
-public interface Mode extends Comparable<Mode>
+public interface Mode
 {
     /** @return id */
     String id();
 
     /** @return mode name */
     String name();
-
-    /** @return icon resource path */
-    String iconResourceName();
-
-    /** @return ordinal */
-    int ordinal();
-
-    /** @return true is mode enabled */
-    boolean enabled();
 
     /**
      * initialize mode.
@@ -63,7 +58,7 @@ public interface Mode extends Comparable<Mode>
      * このタイミングは、このモードが初期選択であり、初めてワールドにログインしたか、別のモードからこのモードへと切り替わった場合です。
      * モードの更新や描画に必要なリソースを準備などを行うタイミングです。
      */
-    void begin();
+    void start();
 
     /**
      * mode update.
@@ -83,7 +78,7 @@ public interface Mode extends Comparable<Mode>
      * ゲーム終了時には、このメソッドが実行されない可能性があります。
      * 何らかのデータの永続化を行いたい場合、更新処理の中で行うことを検討してください。
      */
-    void end();
+    void stop();
 
     /**
      * ゲームのワールド内への描画を行います.
@@ -104,48 +99,6 @@ public interface Mode extends Comparable<Mode>
      * @param partialTick partial tick
      */
     void renderGui(long tickCount, float partialTick);
-
-    /**
-     * 上キーが押下された場合の処理を行います.
-     * 
-     * <p>
-     * CTRLキーとの同時操作はモード変更操作として予約されているため通知されません。
-     * </p>
-     * 
-     * @param shift true is key down
-     * @param alt true is key down
-     */
-    void onUpKeyPress(boolean shift, boolean alt);
-
-    /**
-     * 下キーが押下された場合の処理を行います.
-     * 
-     * <p>
-     * CTRLキーとの同時操作はモード変更操作として予約されているため通知されません。
-     * </p>
-     * 
-     * @param shift true is key down
-     * @param alt true is key down
-     */
-    void onDownKeyPress(boolean shift, boolean alt);
-
-    /**
-     * テンキーのプラスキーが押下された場合の処理を行います.
-     * 
-     * @param ctrl true is key down
-     * @param shift true is key down
-     * @param alt true is key down
-     */
-    void onPlusKeyPress(boolean ctrl, boolean shift, boolean alt);
-
-    /**
-     * テンキーのマイナスキーが押下された場合の処理を行います.
-     * 
-     * @param ctrl true is key down
-     * @param shift true is key down
-     * @param alt true is key down
-     */
-    void onMinusKeyPress(boolean ctrl, boolean shift, boolean alt);
 
     // ----------------------------------------------------
 

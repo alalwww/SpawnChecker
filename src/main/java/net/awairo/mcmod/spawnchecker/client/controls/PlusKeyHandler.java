@@ -13,8 +13,6 @@
 
 package net.awairo.mcmod.spawnchecker.client.controls;
 
-import net.awairo.mcmod.spawnchecker.client.common.State;
-
 /**
  * テンキー「＋」キー操作ハンドラー.
  * 
@@ -28,9 +26,9 @@ final class PlusKeyHandler extends AbstractKeyHandler
     }
 
     @Override
-    void onKeyPress(State state, boolean ctrl, boolean shift, boolean alt)
+    void onKeyPress(boolean ctrl, boolean shift, boolean alt)
     {
-        state.currentMode().onPlusKeyPress(ctrl, shift, alt);
+        KeyManager.instance.onPlusKeyPress(ctrl, shift, alt);
     }
 
 }

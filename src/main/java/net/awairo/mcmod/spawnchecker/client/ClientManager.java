@@ -38,7 +38,7 @@ public abstract class ClientManager extends HandlerManager
      * @return マネージャーのインスタンス
      */
     @SuppressWarnings("unchecked")
-    static <T extends ClientManager> T get(Class<T> keyClass)
+    protected static <T extends ClientManager> T get(Class<T> keyClass)
     {
         return (T) managers.get(keyClass);
     }
