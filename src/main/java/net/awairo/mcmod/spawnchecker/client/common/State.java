@@ -22,6 +22,7 @@ import net.awairo.mcmod.spawnchecker.client.mode.core.ModeConfig;
  * 
  * @author alalwww
  */
+@Deprecated
 public final class State implements CommonState
 {
     private final LimitedNumber<Integer> horizontalRange;

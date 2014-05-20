@@ -120,6 +120,7 @@ public interface Mode
      * 
      * @author alalwww
      */
+    @Deprecated
     interface CommonState
     {
         /** @return 水平範囲 */
