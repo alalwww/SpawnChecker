@@ -15,12 +15,10 @@ package net.awairo.mcmod.spawnchecker.client.mode.preset;
 
 import com.google.common.primitives.Ints;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.util.MathHelper;
 
 import net.awairo.mcmod.spawnchecker.PresetMode;
-import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
 import net.awairo.mcmod.spawnchecker.client.marker.SpawnPointMarker;
 import net.awairo.mcmod.spawnchecker.client.mode.SelectableMode;
 import net.awairo.mcmod.spawnchecker.client.mode.preset.checker.SpawnCheck;
@@ -35,9 +33,6 @@ import net.awairo.mcmod.spawnchecker.client.mode.preset.config.SpawnCheckerConfi
 public final class SpawnCheckerMode extends PresetMode<SpawnCheckerMode> implements SelectableMode
 {
     public static final String ID = "spawnchecker";
-
-    private final Minecraft game = Minecraft.getMinecraft();
-    private final ConstantsConfig consts = ConstantsConfig.instance();
 
     private SpawnCheck spawnCheck;
 

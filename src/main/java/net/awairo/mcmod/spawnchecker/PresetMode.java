@@ -1,5 +1,8 @@
 package net.awairo.mcmod.spawnchecker;
 
+import net.minecraft.client.Minecraft;
+
+import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
 import net.awairo.mcmod.spawnchecker.client.mode.core.ModeBase;
 import net.awairo.mcmod.spawnchecker.client.mode.preset.config.PresetModeConfigs;
 
@@ -12,6 +15,9 @@ import net.awairo.mcmod.spawnchecker.client.mode.preset.config.PresetModeConfigs
  */
 public abstract class PresetMode<M extends PresetMode<M>> extends ModeBase<M>
 {
+    protected final Minecraft game = Minecraft.getMinecraft();
+    protected final ConstantsConfig consts = ConstantsConfig.instance();
+
     /**
      * @return preset mode config
      */
