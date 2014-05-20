@@ -42,7 +42,12 @@ public final class SpawnCheckerMode extends PresetMode<SpawnCheckerMode> impleme
     public SpawnCheckerMode()
     {
         super(ID);
-        setNameKey("spawnchecker.mode.spawnchecker");
+    }
+
+    @Override
+    protected String modeNameKey()
+    {
+        return "spawnchecker.mode.spawnchecker";
     }
 
     @Override

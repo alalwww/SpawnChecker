@@ -52,7 +52,12 @@ public class SlimeChunkVisualizerMode extends PresetMode<SlimeChunkVisualizerMod
     public SlimeChunkVisualizerMode()
     {
         super(ID);
-        setNameKey("spawnchecker.mode.slimechunk_visualizer");
+    }
+
+    @Override
+    protected String modeNameKey()
+    {
+        return "spawnchecker.mode.slimechunk_visualizer";
     }
 
     @Override

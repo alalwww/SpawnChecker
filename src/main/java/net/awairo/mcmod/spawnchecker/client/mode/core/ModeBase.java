@@ -13,8 +13,6 @@
 
 package net.awairo.mcmod.spawnchecker.client.mode.core;
 
-import static com.google.common.base.Preconditions.*;
-
 import java.util.Collection;
 import java.util.List;
 
@@ -46,7 +44,6 @@ public abstract class ModeBase<T extends ModeBase<T>> implements OperatableMode
     private static final Logger LOG = LogManager.getLogger(SpawnChecker.MOD_ID);
 
     private final String id;
-    private String nameKey;
 
     private List<OptionSet> optionSetList;
     private int cursor;
@@ -62,6 +59,11 @@ public abstract class ModeBase<T extends ModeBase<T>> implements OperatableMode
     {
         this.id = id;
     }
+
+    /**
+     * @return モードの名称のリソースキーまたはnull
+     */
+    protected abstract String modeNameKey();
 
     /**
      * @return モードのコンフィグレーション.
@@ -98,7 +100,7 @@ public abstract class ModeBase<T extends ModeBase<T>> implements OperatableMode
     @Override
     public String name()
     {
-        return nameKey == null ? id() : I18n.format(nameKey);
+        return modeNameKey() == null ? id() : I18n.format(modeNameKey());
     }
 
     @Override
@@ -250,13 +252,6 @@ public abstract class ModeBase<T extends ModeBase<T>> implements OperatableMode
     }
 
     // --------------------------------------------------
-
-    // TODO: name key の登録はやめ、取得する用の抽象メソッドにする
-    @Deprecated
-    protected void setNameKey(String nameKey)
-    {
-        this.nameKey = checkNotNull(nameKey, "nameKey");
-    }
 
     /**
      * @return 現在のオプションの一覧
