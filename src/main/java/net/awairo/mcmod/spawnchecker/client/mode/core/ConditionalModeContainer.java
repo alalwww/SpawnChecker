@@ -104,6 +104,7 @@ final class ConditionalModeContainer extends ModeContainer<ConditionalMode> impl
                 // 現在モードが有効ならそれより優先度の低いモードは無視
                 if (current.enabled())
                     return true;
+                continue;
             }
 
             if (mode.enabled())
