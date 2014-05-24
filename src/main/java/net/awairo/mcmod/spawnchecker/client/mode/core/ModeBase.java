@@ -189,7 +189,7 @@ public abstract class ModeBase<T extends ModeBase<T>> implements OperatableMode
         final boolean changed;
         final int current;
 
-        if (ctrl)
+        if (ctrl && !shift && !alt)
         {
             changed = commonState().brightness().increment();
             current = commonState().brightness().current();
@@ -198,7 +198,7 @@ public abstract class ModeBase<T extends ModeBase<T>> implements OperatableMode
             return;
         }
 
-        if (alt || shift)
+        if (!ctrl && (alt || shift))
         {
             changed = commonState().verticalRange().increment();
             current = commonState().verticalRange().current();
@@ -207,10 +207,13 @@ public abstract class ModeBase<T extends ModeBase<T>> implements OperatableMode
             return;
         }
 
-        changed = commonState().horizontalRange().increment();
-        current = commonState().horizontalRange().current();
-        LOG.debug("horizontalRange: changed={}, current={}", changed, current);
-        resetInformationForRangeChange();
+        if (!ctrl && !shift && !alt)
+        {
+            changed = commonState().horizontalRange().increment();
+            current = commonState().horizontalRange().current();
+            LOG.debug("horizontalRange: changed={}, current={}", changed, current);
+            resetInformationForRangeChange();
+        }
     }
 
     /*
@@ -227,7 +230,7 @@ public abstract class ModeBase<T extends ModeBase<T>> implements OperatableMode
         final boolean changed;
         final int current;
 
-        if (ctrl)
+        if (ctrl && !shift && !alt)
         {
             changed = commonState().brightness().decrement();
             current = commonState().brightness().current();
@@ -236,7 +239,7 @@ public abstract class ModeBase<T extends ModeBase<T>> implements OperatableMode
             return;
         }
 
-        if (alt || shift)
+        if (!ctrl && (alt || shift))
         {
             changed = commonState().verticalRange().decrement();
             current = commonState().verticalRange().current();
@@ -245,10 +248,13 @@ public abstract class ModeBase<T extends ModeBase<T>> implements OperatableMode
             return;
         }
 
-        changed = commonState().horizontalRange().decrement();
-        current = commonState().horizontalRange().current();
-        LOG.debug("horizontalRange: changed={}, current={}", changed, current);
-        resetInformationForRangeChange();
+        if (!ctrl && !shift && !alt)
+        {
+            changed = commonState().horizontalRange().decrement();
+            current = commonState().horizontalRange().current();
+            LOG.debug("horizontalRange: changed={}, current={}", changed, current);
+            resetInformationForRangeChange();
+        }
     }
 
     // --------------------------------------------------
