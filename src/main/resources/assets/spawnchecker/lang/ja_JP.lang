@@ -29,4 +29,11 @@ spawnchecker.option.force_slime= - スライムマーカー(常に表示)
 
 spawnchecker.option.slime_chunk= - スライムチャンク
 
+spawnchecker.option.spawner_hidden= - 非表示
+spawnchecker.option.spawner_spawn_area= - スポーン範囲
+spawnchecker.option.spawner_spawn_limit_area= - スポーン数制限範囲
+spawnchecker.option.spawner_spawnable_point= - スポーン可能ポイント
+spawnchecker.option.spawner_unspawnable_point= - スポーン不可能ポイント
+spawnchecker.option.spawner_activate_area= - スポーナー活性化範囲
+
 spawnchecker.fingerprint_violation=fingerprint violation: このModはハックされている可能性があります。 (modid: %s)
