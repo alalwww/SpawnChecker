@@ -21,6 +21,8 @@ import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderManager;
 
+import net.awairo.mcmod.common.v1.util.Colors;
+
 /**
  * RenderingSupport.
  * 
@@ -154,12 +156,7 @@ public final class RenderingSupport
         // ライトマップテクスチャに明るさを設定するのではなく、直接ブライトネスを色に反映して実現してる
         // tessellator のあのあたりの処理よく分かってないので自前で解決…
 
-        final int nowBrightness = Math.max(Math.max(color.getRed(), color.getGreen()), color.getBlue());
-        float ratio = (float) brightness / (float) nowBrightness;
-        final int r = (int) (color.getRed() * ratio);
-        final int g = (int) (color.getGreen() * ratio);
-        final int b = (int) (color.getBlue() * ratio);
-        setGLColor(r, g, b, color.getAlpha());
+        setGLColor(Colors.applyBrightnessTo(color, brightness));
     }
 
     /**
@@ -170,6 +167,20 @@ public final class RenderingSupport
     public static void setGLColor(Color c)
     {
         setGLColor(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha());
+    }
+
+    /**
+     * 色を設定します.
+     * 
+     * @param argb 色
+     */
+    public static void setGLColor(int argb)
+    {
+        int a = (argb >> 24) & 0xff;
+        int r = (argb >> 16) & 0xff;
+        int g = (argb >> 8) & 0xff;
+        int b = (argb >> 0) & 0xff;
+        setGLColor(r, g, b, a);
     }
 
     /**

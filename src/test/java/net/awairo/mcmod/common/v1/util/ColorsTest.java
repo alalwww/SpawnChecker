@@ -164,6 +164,24 @@ public class ColorsTest
         testFromRGB_IAE(0, 0, 0x00 - 0x01);
     }
 
+    @Test
+    public void testApplyBrightnessTo()
+    {
+        // 最大の明るさが0 ARGB #ff000000 のケース
+        assertThat(Colors.applyBrightnessTo(new Color(0), 50),
+                is(new Color(50, 50, 50, 255).getRGB()));
+
+        // Rが最大
+        assertThat(Colors.applyBrightnessTo(new Color(50, 30, 40, 200), 100),
+                is(new Color(100, 60, 80, 200).getRGB()));
+        // Gが最大
+        assertThat(Colors.applyBrightnessTo(new Color(40, 50, 30, 210), 100),
+                is(new Color(80, 100, 60, 210).getRGB()));
+        // Bが最大
+        assertThat(Colors.applyBrightnessTo(new Color(30, 40, 50, 220), 100),
+                is(new Color(60, 80, 100, 220).getRGB()));
+    }
+
     private static void testFromRGB_IAE(int r, int g, int b)
     {
         try

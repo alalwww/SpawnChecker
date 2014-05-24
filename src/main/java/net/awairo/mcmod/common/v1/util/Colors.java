@@ -390,6 +390,27 @@ public final class Colors
         }
     }
 
+    /**
+     * 色に明るさを適用します.
+     * 
+     * @param color 色
+     * @param brightness 明るさ
+     * @return 明るさが適用された色
+     */
+    public static int applyBrightnessTo(Color color, int brightness)
+    {
+        final int nowBrightness = Math.max(Math.max(color.getRed(), color.getGreen()), color.getBlue());
+
+        if (nowBrightness == 0)
+            return toIntColor(brightness, brightness, brightness, color.getAlpha());
+
+        float ratio = (float) brightness / (float) nowBrightness;
+        final int r = (int) (color.getRed() * ratio);
+        final int g = (int) (color.getGreen() * ratio);
+        final int b = (int) (color.getBlue() * ratio);
+        return toIntColor(r, g, b, color.getAlpha());
+    }
+
     private Colors()
     {
         throw new InternalError();
