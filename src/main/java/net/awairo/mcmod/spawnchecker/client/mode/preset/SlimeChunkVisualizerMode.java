@@ -180,13 +180,13 @@ public class SlimeChunkVisualizerMode extends PresetMode<SlimeChunkVisualizerMod
                             .setPoint(worldX, y, worldZ)
                             .setHeight(config().chunkMarkerHeight())
                             .setIntervals(config().chunkMarkerIntarval())
+                            .setAnimationCycle(config().chunkMarkerAnimationCycle())
                             .setBrightness(computedBrightness)
                             .setColor(commonColor().slimeChunk())
                             );
                 }
             }
         }
-
     }
 
     private void checkSlimeSpawn(int px, int py, int pz)
@@ -224,13 +224,13 @@ public class SlimeChunkVisualizerMode extends PresetMode<SlimeChunkVisualizerMod
     }
 
     @Override
-    public void renderIngame(long tickCount, float partialTick)
+    public void renderIngame(long tickCounts, float partialTicks)
     {
         for (Marker<?> marker : chunkMarkers)
-            marker.doRender(tickCount, partialTick);
+            marker.doRender(tickCounts, partialTicks);
 
         for (Marker<?> marker : spawnCheck.markers())
-            marker.doRender(tickCount, partialTick);
+            marker.doRender(tickCounts, partialTicks);
     }
 
 }

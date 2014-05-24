@@ -136,11 +136,11 @@ public final class SpawnCheckerMode extends PresetMode<SpawnCheckerMode> impleme
     }
 
     @Override
-    public void renderIngame(long tickCount, float partialTick)
+    public void renderIngame(long tickCounts, float partialTicks)
     {
         for (SpawnPointMarker marker : spawnCheck.markers())
         {
-            marker.doRender(tickCount, partialTick);
+            marker.doRender(tickCounts, partialTicks);
         }
     }
 

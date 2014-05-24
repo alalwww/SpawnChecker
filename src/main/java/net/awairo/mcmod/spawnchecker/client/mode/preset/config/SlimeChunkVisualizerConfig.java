@@ -39,6 +39,7 @@ public class SlimeChunkVisualizerConfig extends SkeletalConfig
 
     private final Prop chunkMarkerHeight;
     private final Prop chunkMarkerIntarval;
+    private final Prop chunkMarkerAnimationCycle;
 
     SlimeChunkVisualizerConfig(ModeConfig config)
     {
@@ -63,12 +64,12 @@ public class SlimeChunkVisualizerConfig extends SkeletalConfig
             chunkUpdateFrequency.set(3000);
 
         // チャンクマーカーの高さ
-        chunkMarkerHeight = getValueOf("chunk_marker_height", 32d)
+        chunkMarkerHeight = getValueOf("chunk_marker_height", 64d)
                 .comment("height of chunk marker.\n"
-                        + "\n(min: 8, max: 255, default: 32)");
+                        + "\n(min: 8, max: 255, default: 64)");
 
         if (chunkMarkerHeight.getDouble() < 8 || chunkMarkerHeight.getDouble() > 255)
-            chunkMarkerHeight.set(32d);
+            chunkMarkerHeight.set(64d);
 
         // チャンクマーカーの間隔
         chunkMarkerIntarval = getValueOf("chunk_marker_intarval", 1.5d)
@@ -77,6 +78,15 @@ public class SlimeChunkVisualizerConfig extends SkeletalConfig
 
         if (chunkMarkerIntarval.getDouble() < 0.5 || chunkMarkerIntarval.getDouble() > 10)
             chunkMarkerIntarval.set(1.5d);
+
+        // チャンクマーカーのアニメーションの周期
+        chunkMarkerAnimationCycle = getValueOf("chunk_marker_animation_cycle", 200)
+                .comment("tick of one cycle for animation. 0 is stop animation.\n"
+                        + "\n(min: 0, max: 10000, default: 200)");
+
+        if (chunkMarkerAnimationCycle.getInt() < 0 || chunkMarkerAnimationCycle.getInt() > 10000)
+            chunkMarkerAnimationCycle.set(200);
+
     }
 
     @Override
@@ -139,6 +149,12 @@ public class SlimeChunkVisualizerConfig extends SkeletalConfig
     public double chunkMarkerIntarval()
     {
         return chunkMarkerIntarval.getDouble();
+    }
+
+    /** @return チャンクマーカー線の間隔. */
+    public int chunkMarkerAnimationCycle()
+    {
+        return chunkMarkerAnimationCycle.getInt();
     }
 
 }

@@ -13,15 +13,19 @@
 
 package net.awairo.mcmod.spawnchecker.client.marker;
 
-import net.awairo.mcmod.spawnchecker.client.marker.model.MarkerModels;
+import net.awairo.mcmod.spawnchecker.client.marker.model.ChunkMarkerModel;
 
 /**
+ * チャンクマーカー.
+ * 
  * @author alalwww
  */
 public class ChunkMarker extends SkeletalMarker<ChunkMarker>
 {
+    private static final ChunkMarkerModel MODEL = new ChunkMarkerModel();
     private double height;
     private double intervals;
+    private int cycle;
 
     /** @param height the height to set */
     public ChunkMarker setHeight(double height)
@@ -37,12 +41,19 @@ public class ChunkMarker extends SkeletalMarker<ChunkMarker>
         return this;
     }
 
-    @Override
-    public void doRender(long tickCount, float partialTick)
+    public ChunkMarker setAnimationCycle(int cycle)
     {
-        MarkerModels.CHUNK.setHeight(height);
-        MarkerModels.CHUNK.setIntervals(intervals);
-        render(MarkerModels.CHUNK, tickCount, partialTick);
+        this.cycle = cycle;
+        return this;
+    }
+
+    @Override
+    public void doRender(long tickCounts, float partialTicks)
+    {
+        MODEL.setTop(height);
+        MODEL.setIntervals(intervals);
+        MODEL.setCycle(cycle);
+        render(MODEL, tickCounts, partialTicks);
     }
 
 }

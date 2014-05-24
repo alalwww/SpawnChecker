@@ -86,20 +86,20 @@ public interface Mode
      * 
      * このメソッドは頻繁に実行されます。
      * 
-     * @param tickCount tick count
-     * @param partialTick partial tick
+     * @param tickCounts tick count
+     * @param partialTicks partial tick
      */
-    void renderIngame(long tickCount, float partialTick);
+    void renderIngame(long tickCounts, float partialTicks);
 
     /**
      * ゲームのGUIへの描画を行います.
      * 
      * このメソッドは頻繁に実行されます。
      * 
-     * @param tickCount tick count
-     * @param partialTick partial tick
+     * @param tickCounts tick count
+     * @param partialTicks partial tick
      */
-    void renderGui(long tickCount, float partialTick);
+    void renderGui(long tickCounts, float partialTicks);
 
     // ----------------------------------------------------
 

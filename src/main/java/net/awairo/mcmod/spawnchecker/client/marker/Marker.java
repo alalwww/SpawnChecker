@@ -82,9 +82,9 @@ public interface Marker<T extends Marker<T>>
     /**
      * 描画します.
      * 
-     * @param tickCount tick
-     * @param partialTick tick間の経過時間
+     * @param tickCounts tick
+     * @param partialTicks tick間の経過時間
      */
-    void doRender(long tickCount, float partialTick);
+    void doRender(long tickCounts, float partialTicks);
 
 }

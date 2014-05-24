@@ -132,10 +132,10 @@ public abstract class SkeletalMarker<T extends SkeletalMarker<T>> implements Mar
      * 指定したモデルをこのマーカーの位置に描画します.
      * 
      * @param model
-     * @param tickCount
-     * @param partialTick
+     * @param tickCounts
+     * @param partialTicks
      */
-    protected void render(MarkerModel model, long tickCount, float partialTick)
+    protected void render(MarkerModel model, long tickCounts, float partialTicks)
     {
         model.setColor(color);
         model.setBrightness(brightness);
@@ -145,7 +145,7 @@ public abstract class SkeletalMarker<T extends SkeletalMarker<T>> implements Mar
                 posY - renderManager.viewerPosY,
                 posZ - renderManager.viewerPosZ);
 
-        model.render(tickCount, partialTick);
+        model.render(tickCounts, partialTicks);
 
         setTranslation(0, 0, 0);
     }

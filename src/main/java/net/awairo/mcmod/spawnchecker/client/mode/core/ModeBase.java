@@ -130,7 +130,7 @@ public abstract class ModeBase<T extends ModeBase<T>> implements OperatableMode
     }
 
     @Override
-    public void renderGui(long tickCount, float partialTick)
+    public void renderGui(long tickCounts, float partialTicks)
     {
         // 描く必要がなければ何もしない
     }

@@ -13,59 +13,16 @@
 
 package net.awairo.mcmod.spawnchecker.client.marker.model;
 
-import static net.awairo.mcmod.spawnchecker.client.marker.RenderingSupport.*;
-
 /**
- * チャンクを描画するレンダラー.
+ * チャンクを描画するマーカーモデル.
  * 
  * @author alalwww
  */
-public class ChunkMarkerModel extends SkeletalMarkerModel
+public class ChunkMarkerModel extends AreaMarkerModel
 {
-    public static final ChunkMarkerModel INSTANCE = new ChunkMarkerModel();
-
-    private final double chunkSizeMin = 0;
-    private final double chunkSizeMax = 16;
-
-    private double height;
-    private double intervals;
-
-    public void setHeight(double height)
+    public ChunkMarkerModel()
     {
-        this.height = height;
+        setMin(0);
+        setMax(16);
     }
-
-    public void setIntervals(double intervals)
-    {
-        this.intervals = intervals;
-    }
-
-    @Override
-    public void render(long tickCount, float partialTick)
-    {
-        startDrawingLines();
-        setGLColorAndBrightness(color, brightness);
-
-        for (double y = 0; y <= height; y += intervals)
-        {
-            // north
-            addVertex(chunkSizeMin, y, chunkSizeMin);
-            addVertex(chunkSizeMin, y, chunkSizeMax);
-
-            // west
-            addVertex(chunkSizeMin, y, chunkSizeMax);
-            addVertex(chunkSizeMax, y, chunkSizeMax);
-
-            // south
-            addVertex(chunkSizeMax, y, chunkSizeMax);
-            addVertex(chunkSizeMax, y, chunkSizeMin);
-
-            // east
-            addVertex(chunkSizeMax, y, chunkSizeMin);
-            addVertex(chunkSizeMin, y, chunkSizeMin);
-        }
-
-        draw();
-    }
-
 }

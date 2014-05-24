@@ -45,8 +45,8 @@ public interface MarkerModel
     /**
      * レンダリングします.
      * 
-     * @param tickCount tick count
-     * @param partialTick render partial ticks
+     * @param tickCounts tick counts
+     * @param partialTicks render partial ticks
      */
-    void render(long tickCount, float partialTick);
+    void render(long tickCounts, float partialTicks);
 }
