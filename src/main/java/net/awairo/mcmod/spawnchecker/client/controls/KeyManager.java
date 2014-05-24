@@ -69,12 +69,12 @@ public final class KeyManager extends ClientManager
 
     void onPlusKeyPress(boolean ctrl, boolean shift, boolean alt)
     {
-        modeManager().onPlusKeyPress(shift, shift, alt);
+        modeManager().onPlusKeyPress(ctrl, shift, alt);
     }
 
     void onMinusKeyPress(boolean ctrl, boolean shift, boolean alt)
     {
-        modeManager().onMinusKeyPress(shift, shift, alt);
+        modeManager().onMinusKeyPress(ctrl, shift, alt);
     }
 
     private ModeManager modeManager()
