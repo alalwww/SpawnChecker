@@ -181,8 +181,7 @@ public class SlimeChunkVisualizerMode extends PresetMode<SlimeChunkVisualizerMod
                             .setHeight(config().chunkMarkerHeight())
                             .setIntervals(config().chunkMarkerIntarval())
                             .setAnimationCycle(config().chunkMarkerAnimationCycle())
-                            .setBrightness(computedBrightness)
-                            .setColor(commonColor().slimeChunk())
+                            .setColorAndBrightness(commonColor().slimeChunk(), computedBrightness)
                             );
                 }
             }

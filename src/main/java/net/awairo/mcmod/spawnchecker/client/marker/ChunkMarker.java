@@ -14,6 +14,7 @@
 package net.awairo.mcmod.spawnchecker.client.marker;
 
 import net.awairo.mcmod.spawnchecker.client.marker.model.ChunkMarkerModel;
+import net.awairo.mcmod.spawnchecker.client.marker.model.MarkerModel;
 
 /**
  * チャンクマーカー.
@@ -48,12 +49,13 @@ public class ChunkMarker extends SkeletalMarker<ChunkMarker>
     }
 
     @Override
-    public void doRender(long tickCounts, float partialTicks)
+    protected MarkerModel model()
     {
         MODEL.setTop(height);
         MODEL.setIntervals(intervals);
         MODEL.setCycle(cycle);
-        render(MODEL, tickCounts, partialTicks);
+        MODEL.setColor(argbColor);
+        return MODEL;
     }
 
 }

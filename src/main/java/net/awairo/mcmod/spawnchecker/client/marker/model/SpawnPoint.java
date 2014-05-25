@@ -108,10 +108,10 @@ public class SpawnPoint extends SkeletalMarkerModel
     }
 
     @Override
-    public void render(long tickCount, float partialTick)
+    public void render()
     {
         startDrawingQuads();
-        setGLColorAndBrightness(color, brightness);
+        setGLColor(color);
 
         // top
         addVertex(iMinX, oMaxY, iMinZ);

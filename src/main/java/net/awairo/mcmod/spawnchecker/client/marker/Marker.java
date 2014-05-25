@@ -32,7 +32,7 @@ public interface Marker<T extends Marker<T>>
      * @param posZ z
      * @return this instance
      */
-    public abstract T setPoint(double posX, double posY, double posZ);
+    T setPoint(double posX, double posY, double posZ);
 
     /**
      * 座標を設定.
@@ -40,7 +40,7 @@ public interface Marker<T extends Marker<T>>
      * @param posX x
      * @return this instance
      */
-    public abstract T setPosX(double posX);
+    T setPosX(double posX);
 
     /**
      * 座標を設定.
@@ -48,7 +48,7 @@ public interface Marker<T extends Marker<T>>
      * @param posY y
      * @return this instance
      */
-    public abstract T setPosY(double posY);
+    T setPosY(double posY);
 
     /**
      * 座標を設定.
@@ -56,23 +56,24 @@ public interface Marker<T extends Marker<T>>
      * @param posZ z
      * @return this instance
      */
-    public abstract T setPosZ(double posZ);
+    T setPosZ(double posZ);
 
     /**
-     * マーカーの色を設定.
+     * マーカーの色と明るさを設定.
+     * 
+     * @param color color
+     * @param brightness brightness
+     * @return this instance
+     */
+    T setColorAndBrightness(Color color, int brightness);
+
+    /**
+     * マーカーの色を設定(ARGB).
      * 
      * @param color color
      * @return this instance
      */
-    public abstract T setColor(Color color);
-
-    /**
-     * マーカーの明るさを設定.
-     * 
-     * @param brightness brightness
-     * @return this instance
-     */
-    public abstract T setBrightness(int brightness);
+    T setColor(int argbColor);
 
     /**
      * 状態をリセットします.

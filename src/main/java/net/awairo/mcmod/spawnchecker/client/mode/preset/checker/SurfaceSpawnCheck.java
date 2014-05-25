@@ -113,8 +113,7 @@ public class SurfaceSpawnCheck extends SkeletalSpawnCheck
                     .setPoint(x, y, z)
                     .showMarker(force || forceMarker || (hasEnableItem && marker))
                     .showGuideline(force || forceGuideline || (hasEnableItem && guideline))
-                    .setBrightness(computedBrightness)
-                    .setColor(color.enderman()));
+                    .setColorAndBrightness(color.enderman(), computedBrightness));
             return;
         }
 
@@ -126,8 +125,7 @@ public class SurfaceSpawnCheck extends SkeletalSpawnCheck
                     .setPoint(x, y, z)
                     .showMarker(force || forceMarker || (hasEnableItem && marker))
                     .showGuideline(force || forceGuideline || (hasEnableItem && guideline))
-                    .setBrightness(computedBrightness)
-                    .setColor(color.standardSizeMob()));
+                    .setColorAndBrightness(color.standardSizeMob(), computedBrightness));
             return;
         }
 
@@ -139,8 +137,7 @@ public class SurfaceSpawnCheck extends SkeletalSpawnCheck
                     .setPoint(x, y, z)
                     .showMarker(force || forceMarker || (hasEnableItem && marker))
                     .showGuideline(force || forceGuideline || (hasEnableItem && guideline))
-                    .setBrightness(computedBrightness)
-                    .setColor(color.spider()));
+                    .setColorAndBrightness(color.spider(), computedBrightness));
             return;
         }
 
@@ -161,8 +158,7 @@ public class SurfaceSpawnCheck extends SkeletalSpawnCheck
                     .setPoint(x, y, z)
                     .showMarker(force || forceSlime || (hasEnableItem && slime))
                     .showGuideline(force || forceGuideline || (hasEnableItem && guideline))
-                    .setBrightness(computedBrightness)
-                    .setColor(color.slime()));
+                    .setColorAndBrightness(color.slime(), computedBrightness));
         }
 
     }

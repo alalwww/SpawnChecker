@@ -13,10 +13,6 @@
 
 package net.awairo.mcmod.spawnchecker.client.marker.model;
 
-import static com.google.common.base.Preconditions.*;
-
-import java.awt.Color;
-
 /**
  * マーカーモデルのスケルトン.
  * 
@@ -24,19 +20,30 @@ import java.awt.Color;
  */
 public abstract class SkeletalMarkerModel implements MarkerModel
 {
-    protected Color color;
-    protected int brightness;
+    protected long tickCounts;
+    protected float partialTicks;
 
-    @Override
-    public void setColor(Color color)
+    protected int color;
+
+    /**
+     * アニメーションを行うモデルで用いれるタイミングを設定します.
+     * 
+     * @param tickCounts
+     * @param partialTicks
+     */
+    public void setTicks(long tickCounts, float partialTicks)
     {
-        this.color = checkNotNull(color);
+        this.tickCounts = tickCounts;
+        this.partialTicks = partialTicks;
     }
 
-    @Override
-    public void setBrightness(int brightness)
+    /**
+     * 描画色を設定します.
+     * 
+     * @param argb RGBカラー
+     */
+    public void setColor(int argbColor)
     {
-        checkArgument(brightness >= 0 && brightness <= 255);
-        this.brightness = brightness;
+        this.color = argbColor;
     }
 }

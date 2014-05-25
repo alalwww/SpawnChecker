@@ -17,6 +17,7 @@ import static net.awairo.mcmod.spawnchecker.client.marker.RenderingSupport.*;
 
 import java.awt.Color;
 
+import net.awairo.mcmod.common.v1.util.Colors;
 import net.awairo.mcmod.spawnchecker.client.marker.model.MarkerModel;
 
 /**
@@ -30,9 +31,10 @@ public abstract class SkeletalMarker<T extends SkeletalMarker<T>> implements Mar
     protected double posY;
     protected double posZ;
 
-    protected Color color;
+    protected int argbColor;
 
-    protected int brightness;
+    protected long tickCounts;
+    protected float partialTicks;
 
     /**
      * Constructor.
@@ -98,54 +100,60 @@ public abstract class SkeletalMarker<T extends SkeletalMarker<T>> implements Mar
         return (T) this;
     }
 
-    /**
-     * @param color color
-     * @return this instance
-     */
     @Override
-    @SuppressWarnings("unchecked")
-    public T setColor(Color color)
+    public T setColorAndBrightness(Color color, int brightness)
     {
-        this.color = color;
-        return (T) this;
+        return setColor(Colors.applyBrightnessTo(color, brightness));
     }
 
-    /**
-     * @param brightness brightness
-     * @return this instance
-     */
     @Override
     @SuppressWarnings("unchecked")
-    public T setBrightness(int brightness)
+    public T setColor(int argbColor)
     {
-        this.brightness = brightness;
+        this.argbColor = argbColor;
         return (T) this;
     }
 
     @Override
     public T reset()
     {
+        argbColor = 0;
         return setPoint(0, 0, 0);
+    }
+
+    /**
+     * 描画するモデルを取得します.
+     * 
+     * @return モデル
+     */
+    protected abstract MarkerModel model();
+
+    @Override
+    public void doRender(long tickCounts, float partialTicks)
+    {
+        setTicks(tickCounts, partialTicks);
+        render(model());
+    }
+
+    protected void setTicks(long tickCounts, float partialTicks)
+    {
+        this.tickCounts = tickCounts;
+        this.partialTicks = partialTicks;
     }
 
     /**
      * 指定したモデルをこのマーカーの位置に描画します.
      * 
      * @param model
-     * @param tickCounts
-     * @param partialTicks
      */
-    protected void render(MarkerModel model, long tickCounts, float partialTicks)
+    protected void render(MarkerModel model)
     {
-        model.setColor(color);
-        model.setBrightness(brightness);
-
         setTranslation(
                 posX - renderManager.viewerPosX,
                 posY - renderManager.viewerPosY,
                 posZ - renderManager.viewerPosZ);
 
-        model.render(tickCounts, partialTicks);
+        model.render();
 
         setTranslation(0, 0, 0);
     }

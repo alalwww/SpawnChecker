@@ -44,10 +44,10 @@ public class Guideline extends SkeletalMarkerModel
     }
 
     @Override
-    public void render(long tickCount, float partialTick)
+    public void render()
     {
         startDrawingLines();
-        setGLColorAndBrightness(color, brightness);
+        setGLColor(color);
 
         final double x = CENTER + offsetX;
         final double z = CENTER + offsetZ;

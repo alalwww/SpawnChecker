@@ -13,8 +13,6 @@
 
 package net.awairo.mcmod.spawnchecker.client.marker.model;
 
-import java.awt.Color;
-
 /**
  * マーカーモデル.
  * 
@@ -29,24 +27,7 @@ import java.awt.Color;
 public interface MarkerModel
 {
     /**
-     * 描画色を設定します.
-     * 
-     * @param color
-     */
-    void setColor(Color color);
-
-    /**
-     * 0～255の範囲の明るさを設定します.
-     * 
-     * @param brightness
-     */
-    void setBrightness(int brightness);
-
-    /**
      * レンダリングします.
-     * 
-     * @param tickCounts tick counts
-     * @param partialTicks render partial ticks
      */
-    void render(long tickCounts, float partialTicks);
+    void render();
 }

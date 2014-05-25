@@ -16,6 +16,7 @@ package net.awairo.mcmod.spawnchecker.client.marker;
 import com.google.common.base.Supplier;
 
 import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
+import net.awairo.mcmod.spawnchecker.client.marker.model.MarkerModel;
 import net.awairo.mcmod.spawnchecker.client.marker.model.MarkerModels;
 import net.awairo.mcmod.spawnchecker.client.marker.model.SpawnPoint;
 
@@ -39,14 +40,24 @@ public final class SpawnPointMarker extends SkeletalMarker<SpawnPointMarker>
 
     private double guidelineLength;
 
-    public void doRender(long tickCount, float partialTick)
+    @Override
+    @Deprecated
+    protected final MarkerModel model()
     {
+        throw new InternalError();
+    }
+
+    @Override
+    public void doRender(long tickCounts, float partialTicks)
+    {
+        setTicks(tickCounts, partialTicks);
         compute();
 
         if (showMarker)
         {
             model.setTopOffset(topOffset);
-            render(model, tickCount, partialTick);
+            model.setColor(argbColor);
+            render(model);
         }
 
         if (showGuideline)
@@ -63,7 +74,8 @@ public final class SpawnPointMarker extends SkeletalMarker<SpawnPointMarker>
                 MarkerModels.GUIDELINE.setOffsetZ(0);
             }
 
-            render(MarkerModels.GUIDELINE, tickCount, partialTick);
+            MarkerModels.GUIDELINE.setColor(argbColor);
+            render(MarkerModels.GUIDELINE);
         }
     }
 

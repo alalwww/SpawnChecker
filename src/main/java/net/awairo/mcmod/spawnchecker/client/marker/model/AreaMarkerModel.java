@@ -74,10 +74,10 @@ public class AreaMarkerModel extends SkeletalMarkerModel
     }
 
     @Override
-    public void render(long tickCounts, float partialTicks)
+    public void render()
     {
         startDrawingLines();
-        setGLColorAndBrightness(color, brightness);
+        setGLColor(color);
 
         final double halfSize = (max - min) / 2;
         final double center = min + halfSize;
