@@ -20,7 +20,7 @@ import com.google.common.base.Supplier;
 import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
 
 /**
- * CachedSupplier.
+ * マーカーインスタンスをリサイクルできるサプライヤー.
  * 
  * <p>
  * 毎フレームごとに使用する、マーカーインスタンスの生成コストを抑えるために、

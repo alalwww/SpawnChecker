@@ -18,7 +18,7 @@ import static net.awairo.mcmod.spawnchecker.client.marker.RenderingSupport.*;
 import java.awt.Color;
 
 import net.awairo.mcmod.common.v1.util.Colors;
-import net.awairo.mcmod.spawnchecker.client.marker.model.MarkerModel;
+import net.awairo.mcmod.spawnchecker.client.model.MarkerModel;
 
 /**
  * マーカーのスケルトン.

@@ -30,8 +30,8 @@ import net.awairo.mcmod.common.v1.util.Colors;
  */
 public final class RenderingSupport
 {
-    static final RenderManager renderManager = RenderManager.instance;
-    static final Tessellator tessellator = Tessellator.instance;
+    public static final RenderManager renderManager = RenderManager.instance;
+    public static final Tessellator tessellator = Tessellator.instance;
 
     /**
      * 描画開始前のGL設定.

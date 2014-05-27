@@ -89,7 +89,7 @@ public final class ClientSideProxy extends Proxy
                 break;
 
             default:
-                handleUnknownMessageKey(msg);
+                super.handleMessage(msg);
                 break;
         }
     }
@@ -100,16 +100,19 @@ public final class ClientSideProxy extends Proxy
         {
             @SuppressWarnings("unchecked")
             final Class<Mode> modeClass = (Class<Mode>) Class.forName(msg.getStringValue());
-            final Mode mode = modeClass.newInstance();
-
-            ClientManager.get(ModeManager.class).addMode(mode);
-
-            LOGGER.info("SpawnChecker: mode {}(id:{}) has been registered.", mode.name(), mode.id());
+            registerMode(modeClass.newInstance());
         }
         catch (ReflectiveOperationException | RuntimeException e)
         {
             // メッセージの内容に問題があるのは自信の責任ではないので落とさずロギングだけして無視
             LOGGER.warn("unexpected imc event from {}", msg.getSender(), e);
         }
+    }
+
+    @Override
+    protected void registerMode(Mode mode)
+    {
+        ClientManager.get(ModeManager.class).addMode(mode);
+        LOGGER.info("SpawnChecker: mode {}(id:{}) has been registered.", mode.name(), mode.id());
     }
 }

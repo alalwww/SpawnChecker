@@ -44,7 +44,7 @@ import net.awairo.mcmod.common.v1.util.config.Prop;
 import net.awairo.mcmod.spawnchecker.SpawnChecker;
 import net.awairo.mcmod.spawnchecker.client.common.OptionSet;
 import net.awairo.mcmod.spawnchecker.client.mode.Mode;
-import net.awairo.mcmod.spawnchecker.client.mode.preset.SpawnCheckerMode;
+import net.awairo.mcmod.spawnchecker.presetmode.spawnchecker.SpawnCheckerMode;
 
 /**
  * モード共通設定.
