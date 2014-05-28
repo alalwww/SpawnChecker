@@ -29,4 +29,11 @@ spawnchecker.option.force_slime= - Slime marker(Force)
 
 spawnchecker.option.slime_chunk= - Slime spawnable chunk
 
+spawnchecker.option.spawner_hidden= - Hidden
+spawnchecker.option.spawner_spawn_area= - Spawn area
+spawnchecker.option.spawner_spawn_limit_area= - Spawn limit area
+spawnchecker.option.spawner_spawnable_point= - Spawnable point
+spawnchecker.option.spawner_unspawnable_point= - Unspawnable point
+spawnchecker.option.spawner_activate_area= - Activate area
+
 spawnchecker.fingerprint_violation=fingerprint violation: This mod may have been hacked. (modid: %s)

@@ -48,7 +48,7 @@ public class ColorConfig extends ConfigCategory implements Mode.CommonColor
     public final ColorSetting slimeChunk;
 
     /** スポーナー強調枠のライン色. */
-    public final ColorSetting spawnerBorder;
+    public final ColorSetting spawnerOutline;
     /** スポーナーの湧き範囲ライン色. */
     public final ColorSetting spawnerSpawnArea;
     /** スポーナーの湧き数上限チェック範囲ライン色. */
@@ -91,7 +91,7 @@ public class ColorConfig extends ConfigCategory implements Mode.CommonColor
         slimeChunk = new ColorSetting("slime_chunk", "#6450E8C9")
                 .comment("marker color #ARGB or #AARRGGBB\n(default: #6450E8C9");
 
-        spawnerBorder = new ColorSetting("spawner_border", "#FFFF0000")
+        spawnerOutline = new ColorSetting("spawner_border", "#FFFF0000")
                 .comment("marker color #ARGB or #AARRGGBB\n(default: #FFFF0000");
 
         spawnerSpawnArea = new ColorSetting("spawner_spawn_area", "#6400FF00")
@@ -163,9 +163,9 @@ public class ColorConfig extends ConfigCategory implements Mode.CommonColor
     }
 
     @Override
-    public Color spawnerBorder()
+    public Color spawnerOutline()
     {
-        return spawnerBorder.get();
+        return spawnerOutline.get();
     }
 
     @Override

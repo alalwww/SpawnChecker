@@ -29,10 +29,13 @@ import cpw.mods.fml.relauncher.Side;
 import net.awairo.mcmod.common.v1.util.Fingerprint;
 import net.awairo.mcmod.spawnchecker.client.ClientSideProxy;
 import net.awairo.mcmod.spawnchecker.client.common.Settings;
-import net.awairo.mcmod.spawnchecker.client.mode.Mode;
-import net.awairo.mcmod.spawnchecker.client.mode.preset.SlimeChunkVisualizerMode;
-import net.awairo.mcmod.spawnchecker.client.mode.preset.SpawnCheckerMode;
-import net.awairo.mcmod.spawnchecker.client.mode.preset.config.PresetModeConfigs;
+import net.awairo.mcmod.spawnchecker.presetmode.SkeletalConfig;
+import net.awairo.mcmod.spawnchecker.presetmode.slimechunkvisualizer.SlimeChunkVisualizerModeConfig;
+import net.awairo.mcmod.spawnchecker.presetmode.slimechunkvisualizer.SlimeChunkVisualizerMode;
+import net.awairo.mcmod.spawnchecker.presetmode.spawnchecker.SpawnCheckerModeConfig;
+import net.awairo.mcmod.spawnchecker.presetmode.spawnchecker.SpawnCheckerMode;
+import net.awairo.mcmod.spawnchecker.presetmode.spawnervisualizer.SpawnerVisualizerModeConfig;
+import net.awairo.mcmod.spawnchecker.presetmode.spawnervisualizer.SpawnerVisualizerMode;
 
 /**
  * SpawnChecker preset mode.
@@ -51,7 +54,19 @@ public class PresetModes
     private static final Logger logger = LogManager.getLogger(PresetModes.MOD_ID);
 
     /** プリセットモードの設定. */
-    static PresetModeConfigs configs;
+    private SpawnCheckerMode spawnCheckerMode;
+    private SlimeChunkVisualizerMode slimeChunkVisualizerMode;
+    private SpawnerVisualizerMode spawnerVisualizeMode;
+
+    @Mod.InstanceFactory
+    private static PresetModes newInstance()
+    {
+        return new PresetModes();
+    }
+
+    private PresetModes()
+    {
+    }
 
     @Mod.EventHandler
     private void handleModEvent(FMLFingerprintViolationEvent event)
@@ -72,9 +87,21 @@ public class PresetModes
 
         // 本体の設定ファイルを使ってプリセットモード用の設定も生成
         final Settings settings = ((ClientSideProxy) SpawnChecker.sideProxy).settings();
-        configs = new PresetModeConfigs(settings.mode());
-        settings.add(configs.spawnCheckerMode);
-        settings.add(configs.slimeChunkVisualizerMode);
+
+        spawnCheckerMode = new SpawnCheckerMode(
+                addTo(settings, new SpawnCheckerModeConfig(settings.mode())));
+
+        slimeChunkVisualizerMode = new SlimeChunkVisualizerMode(
+                addTo(settings, new SlimeChunkVisualizerModeConfig(settings.mode())));
+
+        spawnerVisualizeMode = new SpawnerVisualizerMode(
+                addTo(settings, new SpawnerVisualizerModeConfig(settings.mode())));
+    }
+
+    private static <T extends SkeletalConfig> T addTo(Settings settings, T config)
+    {
+        settings.add(config);
+        return config;
     }
 
     @Mod.EventHandler
@@ -82,14 +109,12 @@ public class PresetModes
     {
         if (isNotClientSide(event)) return;
 
-        registerMode(SpawnCheckerMode.class);
-        registerMode(SlimeChunkVisualizerMode.class);
-    }
-
-    private static void registerMode(Class<? extends Mode> modeClass)
-    {
-        if (FMLInterModComms.sendMessage(SpawnChecker.MOD_ID, SpawnChecker.IMC_REGISTERMODE, modeClass.getName()))
+        if (FMLInterModComms.sendMessage(SpawnChecker.MOD_ID, SpawnChecker.IMC_HELLO, ""))
         {
+            SpawnChecker.registerMode(spawnCheckerMode);
+            SpawnChecker.registerMode(slimeChunkVisualizerMode);
+            SpawnChecker.registerMode(spawnerVisualizeMode);
+
             logger.info("[IMC] send of SpawnChecker registerMode message was succeed.");
             return;
         }

@@ -58,8 +58,10 @@ public class GuiScreenFactory implements IModGuiFactory
     @Override
     public RuntimeOptionGuiHandler getHandlerFor(final RuntimeOptionCategoryElement element)
     {
-        // TODO: 1007現在まだ呼び出し側が実装されてないっぽい？
-        System.out.println("SpawnCheckerGuiScreenFactory getHandlerFor");
+        // TODO: 1060現在まだ呼び出し側が実装されてないっぽい？
+        System.out.println("\n\n----------------------------------------------------\n"
+                + "SpawnCheckerGuiScreenFactory getHandlerFor\n\n"
+                + "----------------------------------------------------");
         return new RuntimeOptionGuiHandler()
         {
             @Override

@@ -15,6 +15,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.common.MinecraftForge;
 
 import net.awairo.mcmod.common.v1.util.Fingerprint;
+import net.awairo.mcmod.spawnchecker.client.mode.Mode;
 
 /**
  * side proxy.
@@ -64,7 +65,15 @@ public abstract class Proxy
      */
     protected void handleMessage(IMCMessage message)
     {
-        // nothing
+        switch (message.key)
+        {
+            case SpawnChecker.IMC_HELLO:
+                LOGGER.info("recived hello message from %s.", message.getSender());
+                return;
+
+            default:
+                handleUnknownMessageKey(message);
+        }
     }
 
     /**
@@ -76,6 +85,16 @@ public abstract class Proxy
     {
         // いえ、知らない子ですね・・・
         LOGGER.warn("unexpected key from {} (key:{})", message.getSender(), message.key);
+    }
+
+    /**
+     * モードを登録します.
+     * 
+     * @param mode モード
+     */
+    protected void registerMode(Mode mode)
+    {
+        LOGGER.warn("mode registration is an unsupported operation.");
     }
 
     /**

@@ -48,8 +48,6 @@ public abstract class ModeBase<T extends ModeBase<T>> implements OperatableMode
     private List<OptionSet> optionSetList;
     private int cursor;
 
-    protected final CopiedLogics copiedLogics = CopiedLogics.INSTANCE;
-
     /**
      * Constructor.
      * 

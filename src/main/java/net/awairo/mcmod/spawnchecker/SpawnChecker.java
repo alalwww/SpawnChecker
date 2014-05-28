@@ -13,6 +13,8 @@
 
 package net.awairo.mcmod.spawnchecker;
 
+import static com.google.common.base.Preconditions.*;
+
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLFingerprintViolationEvent;
@@ -22,6 +24,10 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 import net.awairo.mcmod.common.v1.util.Fingerprint;
+import net.awairo.mcmod.spawnchecker.client.mode.AlwaysRunMode;
+import net.awairo.mcmod.spawnchecker.client.mode.ConditionalMode;
+import net.awairo.mcmod.spawnchecker.client.mode.Mode;
+import net.awairo.mcmod.spawnchecker.client.mode.SelectableMode;
 
 /**
  * SpawnChecker
@@ -36,6 +42,9 @@ public final class SpawnChecker
 {
     /** mod id. */
     public static final String MOD_ID = "spawnchecker";
+
+    /** Greeting message key (for presence check). */
+    public static final String IMC_HELLO = "hello";
 
     /** mode registration message key. */
     public static final String IMC_REGISTERMODE = "registerMode";
@@ -95,4 +104,41 @@ public final class SpawnChecker
         sideProxy.handleModEvent(event);
     }
 
+    //------------------------
+
+    /**
+     * 新たなモードを登録します.
+     * 
+     * @param mode 選択起動モード
+     */
+    public static void registerMode(SelectableMode mode)
+    {
+        registerMode((Mode) mode);
+    }
+
+    /**
+     * 新たなモードを登録します.
+     * 
+     * @param mode 条件起動モード
+     */
+    public static void registerMode(ConditionalMode mode)
+    {
+        registerMode((Mode) mode);
+    }
+
+    /**
+     * 新たなモードを登録します.
+     * 
+     * @param mode 常時起動モード
+     */
+    public static void registerMode(AlwaysRunMode mode)
+    {
+        registerMode((Mode) mode);
+    }
+
+    private static void registerMode(Mode mode)
+    {
+        checkState(sideProxy != null, "mod is uninitialized.");
+        sideProxy.registerMode(mode);
+    }
 }
