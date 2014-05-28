@@ -95,7 +95,7 @@ public final class SpawnCheckerMode extends PresetMode<SpawnCheckerMode> impleme
         if (!spawnCheck.enable())
             return;
 
-        spawnCheck.setBrightness(commonState().brightness().current());
+        spawnCheck.setBrightness(commonState().computedBrightness());
 
         // TODO: このあたりのリファクタリング、したい
 

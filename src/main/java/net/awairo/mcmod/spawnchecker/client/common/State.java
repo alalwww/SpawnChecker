@@ -63,4 +63,10 @@ public final class State implements CommonState
     {
         return brightness;
     }
+
+    @Override
+    public int computedBrightness()
+    {
+        return Brightness.compute(brightness.current());
+    }
 }

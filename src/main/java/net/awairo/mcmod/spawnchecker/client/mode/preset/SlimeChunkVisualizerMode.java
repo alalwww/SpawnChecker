@@ -111,7 +111,7 @@ public class SlimeChunkVisualizerMode extends PresetMode<SlimeChunkVisualizerMod
             return;
         }
 
-        spawnCheck.setBrightness(commonState().brightness().current());
+        spawnCheck.setBrightness(commonState().computedBrightness());
 
         final EntityClientPlayerMP p = game.thePlayer;
 
@@ -164,9 +164,7 @@ public class SlimeChunkVisualizerMode extends PresetMode<SlimeChunkVisualizerMod
         final int maxcx = centerX + scanRange;
         final int maxcz = centerZ + scanRange;
 
-        // TODO: 重複コードの共通化、スポーンチェックのスケルトンクラスにも同じ処理がある
-        final int computedBrightness = consts.baseBrightness
-                + commonState().brightness().current() * consts.brightnessRatio;
+        final int computedBrightness = commonState().computedBrightness();
 
         final int y = Math.max(0, playerY - 16);
 

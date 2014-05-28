@@ -17,6 +17,7 @@ import java.awt.Color;
 import net.minecraft.util.ResourceLocation;
 
 import net.awairo.mcmod.common.v1.util.LimitedNumber;
+import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
 
 /**
  * SpawnChecker mode.
@@ -131,6 +132,18 @@ public interface Mode
 
         /** @return 明るさ */
         LimitedNumber<Integer> brightness();
+
+        int computedBrightness();
+
+        static class Brightness
+        {
+            private static final ConstantsConfig CONST = ConstantsConfig.instance();
+
+            public static int compute(int brightness)
+            {
+                return CONST.baseBrightness + brightness * CONST.brightnessRatio;
+            }
+        }
     }
 
     /**

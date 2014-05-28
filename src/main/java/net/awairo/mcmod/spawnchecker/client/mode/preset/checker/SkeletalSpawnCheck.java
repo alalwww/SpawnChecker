@@ -103,7 +103,7 @@ public abstract class SkeletalSpawnCheck implements SpawnCheck
     @Override
     public void setBrightness(int brightness)
     {
-        computedBrightness = consts.baseBrightness + brightness * consts.brightnessRatio;
+        computedBrightness = brightness;
     }
 
     @Override
