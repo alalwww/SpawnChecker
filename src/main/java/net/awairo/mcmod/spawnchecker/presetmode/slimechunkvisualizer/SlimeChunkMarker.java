@@ -56,6 +56,7 @@ public class SlimeChunkMarker extends SkeletalMarker<SlimeChunkMarker>
         MODEL.setIntervals(intervals);
         MODEL.setCycle(cycle);
         MODEL.setColor(argbColor);
+        MODEL.setTicks(tickCounts, partialTicks);
         return MODEL;
     }
 
