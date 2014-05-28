@@ -175,7 +175,7 @@ public interface Mode
         Color slimeChunk();
 
         /** @return 表示対象スポーナーマーカー色 */
-        Color spawnerBorder();
+        Color spawnerOutline();
 
         /** @return スポーナーのスポーン可能エリアマーカー色 */
         Color spawnerSpawnArea();

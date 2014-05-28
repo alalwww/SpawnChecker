@@ -24,13 +24,16 @@ public class PresetModeConfigs
 {
     /** スポーンチェッカーモードの設定. */
     public final SpawnCheckerConfig spawnCheckerMode;
-    /** スライムチャンク可視化の設定. */
+    /** スライムチャンク可視化モードの設定. */
     public final SlimeChunkVisualizerConfig slimeChunkVisualizerMode;
+    /** スポーナー可視化モードの設定. */
+    public final SpawnerVisualizerConfig spawnerVisualizerMode;
 
     public PresetModeConfigs(ModeConfig config)
     {
         spawnCheckerMode = new SpawnCheckerConfig(config);
         slimeChunkVisualizerMode = new SlimeChunkVisualizerConfig(config);
+        spawnerVisualizerMode = new SpawnerVisualizerConfig(config);
     }
 
 }

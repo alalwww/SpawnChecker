@@ -32,6 +32,7 @@ import net.awairo.mcmod.spawnchecker.client.common.Settings;
 import net.awairo.mcmod.spawnchecker.client.mode.Mode;
 import net.awairo.mcmod.spawnchecker.client.mode.preset.SlimeChunkVisualizerMode;
 import net.awairo.mcmod.spawnchecker.client.mode.preset.SpawnCheckerMode;
+import net.awairo.mcmod.spawnchecker.client.mode.preset.SpawnerVisualizerMode;
 import net.awairo.mcmod.spawnchecker.client.mode.preset.config.PresetModeConfigs;
 
 /**
@@ -75,6 +76,7 @@ public class PresetModes
         configs = new PresetModeConfigs(settings.mode());
         settings.add(configs.spawnCheckerMode);
         settings.add(configs.slimeChunkVisualizerMode);
+        settings.add(configs.spawnerVisualizerMode);
     }
 
     @Mod.EventHandler
@@ -84,6 +86,7 @@ public class PresetModes
 
         registerMode(SpawnCheckerMode.class);
         registerMode(SlimeChunkVisualizerMode.class);
+        registerMode(SpawnerVisualizerMode.class);
     }
 
     private static void registerMode(Class<? extends Mode> modeClass)

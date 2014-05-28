@@ -51,6 +51,19 @@ public final class Options
     /** スライムチャンクマーカー. */
     public static final Mode.Option SLIME_CHUNK;
 
+    /** 非表示. */
+    public static final Mode.Option SPAWNER_HIDDEN;
+    /** スポーン範囲. */
+    public static final Mode.Option SPAWNER_SPAWN_AREA;
+    /** スポーン数制限範囲. */
+    public static final Mode.Option SPAWNER_SPAWN_LIMIT_AREA;
+    /** スポーン可能ポイント. */
+    public static final Mode.Option SPAWNER_SPAWNABLE_POINT;
+    /** スポーン不可能ポイント. */
+    public static final Mode.Option SPAWNER_UNSPAWNABLE_POINT;
+    /** スポーナー活性化範囲. */
+    public static final Mode.Option SPAWNER_ACTIVATE_AREA;
+
     /** IDからオプションを取得するためのマップ. */
     public static final ImmutableMap<String, Optional<Mode.Option>> MAP;
 
@@ -69,6 +82,13 @@ public final class Options
         FORCE_SLIME = appendTo(map, "force_slime", 80);
 
         SLIME_CHUNK = appendTo(map, "slime_chunk", 10);
+
+        SPAWNER_HIDDEN = appendTo(map, "spawner_hidden", 10);
+        SPAWNER_SPAWN_AREA = appendTo(map, "spawner_spawn_area", 20);
+        SPAWNER_SPAWN_LIMIT_AREA = appendTo(map, "spawner_spawn_limit_area", 30);
+        SPAWNER_SPAWNABLE_POINT = appendTo(map, "spawner_spawnable_point", 40);
+        SPAWNER_UNSPAWNABLE_POINT = appendTo(map, "spawner_unspawnable_point", 50);
+        SPAWNER_ACTIVATE_AREA = appendTo(map, "spawner_activate_area", 60);
 
         MAP = ImmutableMap.copyOf(map);
     }
