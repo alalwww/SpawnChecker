@@ -13,16 +13,16 @@
 
 package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.measuremententity;
 
-import net.minecraft.entity.monster.EntityEnderman;
+import net.minecraft.entity.monster.EntityGolem;
 
 /**
- * エンダーマンの測定用エンティティ.
+ * ゴーレムの測定用エンティティ.
  * 
  * @author alalwww
  */
-final class EndermanMeasure extends EntityEnderman
+final class GolemMeasure extends EntityGolem
 {
-    EndermanMeasure()
+    GolemMeasure()
     {
         super(null);
     }
@@ -32,5 +32,4 @@ final class EndermanMeasure extends EntityEnderman
     {
         return false;
     }
-
 }

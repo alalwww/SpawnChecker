@@ -13,24 +13,27 @@
 
 package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.measuremententity;
 
-import net.minecraft.entity.monster.EntityEnderman;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.passive.EntityHorse;
 
 /**
- * エンダーマンの測定用エンティティ.
+ * 馬の測定用エンティティ.
  * 
  * @author alalwww
  */
-final class EndermanMeasure extends EntityEnderman
+final class HorseMeasure extends EntityHorse
 {
-    EndermanMeasure()
+    HorseMeasure()
     {
-        super(null);
+        super(Minecraft.getMinecraft().theWorld);
+        // インベントリをいじる処理があり、コンストラクターでワールドが必須
+        // このままだとワールドが消えた時にGCに回収されなくなるため、保持するワールドを削除して場当たり対応…
+        worldObj = null;
     }
 
     @Override
-    public boolean equals(Object obj)
+    public boolean equals(Object par1Obj)
     {
         return false;
     }
-
 }

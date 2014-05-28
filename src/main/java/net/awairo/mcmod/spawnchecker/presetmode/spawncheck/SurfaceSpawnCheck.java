@@ -150,6 +150,9 @@ public class SurfaceSpawnCheck extends SkeletalWorldSpawnCheck
         // スポーン可能？
         if (!slimeSpawnChecker.isSpawnable(x, y, z)) return;
 
+        // 地面がある？
+        if (!copiedLogics.canSpawnAtLocation(x, y, z)) return;
+
         // 接触しないならスポーン可能
         if (!copiedLogics.isColliding(x, y, z, measureEntities.slime))
         {

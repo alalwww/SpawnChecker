@@ -13,24 +13,25 @@
 
 package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.measuremententity;
 
-import net.minecraft.entity.monster.EntityEnderman;
+import net.minecraft.entity.passive.EntityPig;
 
 /**
- * エンダーマンの測定用エンティティ.
+ * ,､_,､_,_
+ * (´･ω･｀)　) oink oink
+ * `u--u'-u'
  * 
  * @author alalwww
  */
-final class EndermanMeasure extends EntityEnderman
+final class PigMeasure extends EntityPig
 {
-    EndermanMeasure()
+    PigMeasure()
     {
         super(null);
     }
 
     @Override
-    public boolean equals(Object obj)
+    public boolean equals(Object par1Obj)
     {
         return false;
     }
-
 }

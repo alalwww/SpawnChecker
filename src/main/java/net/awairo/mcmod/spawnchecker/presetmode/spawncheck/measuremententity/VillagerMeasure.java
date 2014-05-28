@@ -13,16 +13,16 @@
 
 package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.measuremententity;
 
-import net.minecraft.entity.monster.EntityEnderman;
+import net.minecraft.entity.passive.EntityVillager;
 
 /**
- * エンダーマンの測定用エンティティ.
+ * 村人の測定用エンティティ.
  * 
  * @author alalwww
  */
-final class EndermanMeasure extends EntityEnderman
+final class VillagerMeasure extends EntityVillager
 {
-    EndermanMeasure()
+    VillagerMeasure()
     {
         super(null);
     }
@@ -32,5 +32,4 @@ final class EndermanMeasure extends EntityEnderman
     {
         return false;
     }
-
 }

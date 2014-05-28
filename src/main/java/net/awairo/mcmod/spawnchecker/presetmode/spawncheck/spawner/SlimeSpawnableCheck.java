@@ -11,26 +11,28 @@
  * ライセンスの内容は次のサイトを確認してください。 http://www.mod-buildcraft.com/MMPL-1.0.txt
  */
 
-package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.measuremententity;
+package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.spawner;
 
-import net.minecraft.entity.monster.EntityEnderman;
+import net.awairo.mcmod.spawnchecker.presetmode.spawncheck.SlimeSpawnChecker;
 
 /**
- * エンダーマンの測定用エンティティ.
- * 
  * @author alalwww
+ *
  */
-final class EndermanMeasure extends EntityEnderman
+class SlimeSpawnableCheck extends SkeletalMobSpawnerSpawnableCheck
 {
-    EndermanMeasure()
-    {
-        super(null);
-    }
+    private final SlimeSpawnChecker checker = SlimeSpawnChecker.newCheckerOfCurrentWorld();
 
     @Override
-    public boolean equals(Object obj)
+    public boolean isSpawnable(int x, int y, int z)
     {
-        return false;
+        if (!checker.isSpawnable(x, y, z))
+            return false;
+
+        if (logics().isColliding(x, y, z, entities().standardSizeMob))
+            return false;
+
+        return true;
     }
 
 }

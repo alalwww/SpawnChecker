@@ -11,26 +11,21 @@
  * ライセンスの内容は次のサイトを確認してください。 http://www.mod-buildcraft.com/MMPL-1.0.txt
  */
 
-package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.measuremententity;
+package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.spawner;
 
-import net.minecraft.entity.monster.EntityEnderman;
+import net.minecraft.entity.EntityAgeable;
 
 /**
- * エンダーマンの測定用エンティティ.
+ * 豚スポーン判定.
  * 
  * @author alalwww
  */
-final class EndermanMeasure extends EntityEnderman
+public class PigSpawnableCheck extends SkeletalAgeableSpawnableCheck
 {
-    EndermanMeasure()
-    {
-        super(null);
-    }
-
     @Override
-    public boolean equals(Object obj)
+    EntityAgeable measurementEntity()
     {
-        return false;
+        return entities().pig;
     }
 
 }

@@ -19,6 +19,9 @@ import java.awt.Color;
 import java.util.List;
 import java.util.Random;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.common.collect.Lists;
 
 import net.minecraft.init.Blocks;
@@ -28,9 +31,11 @@ import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 
+import net.awairo.mcmod.spawnchecker.SpawnChecker;
 import net.awairo.mcmod.spawnchecker.client.marker.CachedSupplier;
 import net.awairo.mcmod.spawnchecker.client.mode.ConditionalMode;
 import net.awairo.mcmod.spawnchecker.presetmode.SkeletalPresetMode;
+import net.awairo.mcmod.spawnchecker.presetmode.spawncheck.spawner.MobSpawnerSpawnableCheck;
 
 /**
  * スポーナー可視化モード.
@@ -42,6 +47,7 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
     public static final String ID = "spawnervisualizer";
 
     private static final Random RANDOM = new Random();
+    private static final Logger LOG = LogManager.getLogger(SpawnChecker.MOD_ID);
 
     private final SpawnerVisualizerModeConfig config;
 
@@ -54,12 +60,15 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
     private List<MobSpawnerPointMerker> pointMarkers;
     private CachedSupplier<MobSpawnerPointMerker> pointMarkerSupplier;
 
+    private MobSpawnerSpawnableCheck spawnableCheck;
+
     private boolean scheduleResetSpawnerPosition;
 
     private boolean started;
     private boolean clicking;
 
     private TileEntityMobSpawner foundSpawner;
+    private MobSpawnerBaseLogic foundSpawnerLogic;
     private int foundSpawnerX;
     private int foundSpawnerY;
     private int foundSpawnerZ;
@@ -139,6 +148,7 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
         started = false;
 
         foundSpawner = null;
+        foundSpawnerLogic = null;
 
         blockMarker = null;
         spawnAreaMarker = null;
@@ -148,6 +158,8 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
         inherents = null;
         pointMarkers = null;
         pointMarkerSupplier = null;
+
+        spawnableCheck = null;
 
         hidden = true;
 
@@ -189,23 +201,30 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
                     return false;
 
                 if (!isTargetedOnSpawner(mop))
-                {
                     // スポーナーじゃないのでトグらない
                     return started;
-                }
 
-                // めっけたスポーナーの座標は覚えとく
                 foundSpawner = getSpawnerTileEntity(mop.blockX, mop.blockY, mop.blockZ);
                 if (foundSpawner == null)
+                    // TileEntityが想定外のタイプだった。ブロック座標を直前で確認しているので、発生しないはずだが、念のためチェック
                     return false;
+
+                final MobSpawnerBaseLogic logic = foundSpawner.func_145881_a();
+                if (foundSpawnerLogic == logic)
+                    // 既に同じ参照のロジックを参照しているなら変更されていないので再設定しなくて大丈夫
+                    return true;
+
+                // めっけたスポーナーの座標は覚えとく
+                foundSpawnerLogic = logic;
 
                 scheduleResetSpawnerPosition = true;
                 foundSpawnerX = mop.blockX;
                 foundSpawnerY = mop.blockY;
                 foundSpawnerZ = mop.blockZ;
 
-                System.out.printf("found mob spawner(x,y,z): %s, %s, %s\n",
+                LOG.info("found mob spawner(x,y,z): {}, {}, {}\n",
                         foundSpawnerX, foundSpawnerY, foundSpawnerZ);
+
                 return true;
             }
         }
@@ -289,6 +308,9 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
                     .setPoint(foundSpawnerX, foundSpawnerY, foundSpawnerZ);
             activateAreaMarker
                     .setPoint(foundSpawnerX, foundSpawnerY, foundSpawnerZ);
+
+            spawnableCheck = MobSpawnerSpawnableCheck.EntityMap
+                    .newInstanceOf(foundSpawnerLogic.getEntityNameToSpawn());
         }
 
         hidden = options().contains(SPAWNER_HIDDEN);
@@ -334,8 +356,19 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
 
     private void checkSpawnable(int posX, int posY, int posZ, int inherentIndex)
     {
+        // スポーン可否の判定に対応していないスポーナーの場合
+        if (!spawnableCheck.supported())
+        {
+            // TODO: 対応していない事を表示できるマーカーを追加する
+            //            pointMarkers.add(pointMarkerSupplier.get()
+            //                    .setPoint(posX, posY, posZ)
+            //                    .setColorAndBrightness(color, computedBrightness)
+            //                    .setInherent(inherents[inherentIndex]));
+            return;
+        }
+
         final Color color;
-        if (isSpawnable(posX, posY, posZ))
+        if (spawnableCheck.isSpawnable(posX, posY, posZ))
         {
             if (!spawnable) return;
             color = commonColor().spawnerSpawnablePoint();
@@ -350,16 +383,6 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
                 .setPoint(posX, posY, posZ)
                 .setColorAndBrightness(color, computedBrightness)
                 .setInherent(inherents[inherentIndex]));
-    }
-
-    private boolean isSpawnable(int posX, int posY, int posZ)
-    {
-        final MobSpawnerBaseLogic logic = foundSpawner.func_145881_a();
-
-        // TODO: スポーン可否判定
-        //System.out.println(logic.getEntityNameToSpawn());
-
-        return true;
     }
 
     private TileEntityMobSpawner getSpawnerTileEntity(int x, int y, int z)

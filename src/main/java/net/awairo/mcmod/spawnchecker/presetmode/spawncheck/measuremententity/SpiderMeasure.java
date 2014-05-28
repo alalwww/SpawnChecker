@@ -14,7 +14,6 @@
 package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.measuremententity;
 
 import net.minecraft.entity.monster.EntitySpider;
-import net.minecraft.world.World;
 
 /**
  * スパイダーの測定用エンティティ.
@@ -23,14 +22,9 @@ import net.minecraft.world.World;
  */
 final class SpiderMeasure extends EntitySpider
 {
-    /**
-     * Constructor.
-     * 
-     * @param world 現在のワールド
-     */
-    SpiderMeasure(World world)
+    SpiderMeasure()
     {
-        super(world);
+        super(null);
     }
 
     @Override

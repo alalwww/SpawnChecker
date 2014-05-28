@@ -14,7 +14,6 @@
 package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.measuremententity;
 
 import net.minecraft.entity.monster.EntityCaveSpider;
-import net.minecraft.world.World;
 
 /**
  * ケーブスパイダー測定用エンティティ.
@@ -23,14 +22,9 @@ import net.minecraft.world.World;
  */
 final class CaveSpiderMeasure extends EntityCaveSpider
 {
-    /**
-     * Constructor.
-     * 
-     * @param world 現在のワールド
-     */
-    CaveSpiderMeasure(World world)
+    CaveSpiderMeasure()
     {
-        super(world);
+        super(null);
     }
 
     @Override

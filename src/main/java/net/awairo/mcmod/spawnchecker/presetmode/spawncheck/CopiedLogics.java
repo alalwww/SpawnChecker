@@ -51,8 +51,32 @@ public enum CopiedLogics
      */
     public boolean canSpawnAtLocation(int x, int y, int z)
     {
+        return canSpawnAtLocation(x, y, z, EnumCreatureType.monster);
+    }
+
+    /**
+     * 生物がスポーンできる場所か判定.
+     */
+    public boolean canCreatureSpawnAtLocation(int x, int y, int z)
+    {
+        return canSpawnAtLocation(x, y, z, EnumCreatureType.creature);
+    }
+
+    /**
+     * 水棲生物がスポーンできる場所か判定.
+     */
+    public boolean canWaterCreatureSpawnAtLocation(int x, int y, int z)
+    {
+        return canSpawnAtLocation(x, y, z, EnumCreatureType.waterCreature);
+    }
+
+    /**
+     * モンスターがスポーンできる場所か判定.
+     */
+    public boolean canSpawnAtLocation(int x, int y, int z, EnumCreatureType type)
+    {
         return SpawnerAnimals.canCreatureTypeSpawnAtLocation(
-                EnumCreatureType.monster, game.theWorld, x, y, z);
+                type, game.theWorld, x, y, z);
     }
 
     /**

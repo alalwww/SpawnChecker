@@ -14,7 +14,6 @@
 package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.measuremententity;
 
 import net.minecraft.entity.monster.EntitySilverfish;
-import net.minecraft.world.World;
 
 /**
  * シルバーフィッシュの測定用エンティティ.
@@ -23,14 +22,9 @@ import net.minecraft.world.World;
  */
 final class SilverfishMeasure extends EntitySilverfish
 {
-    /**
-     * Constructor.
-     * 
-     * @param world 現在のワールド
-     */
-    SilverfishMeasure(World world)
+    SilverfishMeasure()
     {
-        super(world);
+        super(null);
     }
 
     @Override

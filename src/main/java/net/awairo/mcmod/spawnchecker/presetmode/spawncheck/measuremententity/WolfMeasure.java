@@ -13,24 +13,23 @@
 
 package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.measuremententity;
 
-import net.minecraft.entity.monster.EntityEnderman;
+import net.minecraft.entity.passive.EntityWolf;
 
 /**
- * エンダーマンの測定用エンティティ.
+ * 狼のの測定用エンティティ.
  * 
  * @author alalwww
  */
-final class EndermanMeasure extends EntityEnderman
+final class WolfMeasure extends EntityWolf
 {
-    EndermanMeasure()
+    WolfMeasure()
     {
         super(null);
     }
 
     @Override
-    public boolean equals(Object obj)
+    public boolean equals(Object par1Obj)
     {
         return false;
     }
-
 }

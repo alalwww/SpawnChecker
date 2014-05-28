@@ -11,24 +11,23 @@
  * ライセンスの内容は次のサイトを確認してください。 http://www.mod-buildcraft.com/MMPL-1.0.txt
  */
 
-package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.measuremententity;
-
-import net.minecraft.entity.monster.EntityEnderman;
+package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.spawner;
 
 /**
- * エンダーマンの測定用エンティティ.
+ * 対応していないMob用.
  * 
  * @author alalwww
  */
-final class EndermanMeasure extends EntityEnderman
+final class UnsupportedMobSpawnableCheck implements MobSpawnerSpawnableCheck
 {
-    EndermanMeasure()
+    @Override
+    public boolean isSpawnable(int x, int y, int z)
     {
-        super(null);
+        return false;
     }
 
     @Override
-    public boolean equals(Object obj)
+    public boolean supported()
     {
         return false;
     }

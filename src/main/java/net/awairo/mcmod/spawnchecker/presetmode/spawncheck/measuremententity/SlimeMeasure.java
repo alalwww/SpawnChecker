@@ -14,7 +14,6 @@
 package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.measuremententity;
 
 import net.minecraft.entity.monster.EntitySlime;
-import net.minecraft.world.World;
 
 /**
  * スライムの測定用エンティティ.
@@ -25,14 +24,9 @@ final class SlimeMeasure extends EntitySlime
 {
     private static final int SMALLEST = 1;
 
-    /**
-     * Constructor.
-     * 
-     * @param world 現在のワールド
-     */
-    SlimeMeasure(World world)
+    SlimeMeasure()
     {
-        super(world);
+        super(null);
         setSlimeSize(SMALLEST);
     }
 

@@ -13,26 +13,17 @@
 
 package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.measuremententity;
 
+import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.world.World;
 
 /**
  * 衝突判定に用いる測定用エンティティ.
  * 
  * @author alalwww
  */
-public final class MeasurementEntities
+public enum MeasurementEntities
 {
-    /**
-     * 新しい測定用エンティティを生成します.
-     * 
-     * @param theWorld 現在のワールド
-     * @return 新しいインスタンス
-     */
-    public static MeasurementEntities of(World theWorld)
-    {
-        return new MeasurementEntities(theWorld);
-    }
+    INSTANCE;
 
     /** 標準的な大きさのMobエンティティ. */
     public final EntityLiving standardSizeMob;
@@ -47,19 +38,47 @@ public final class MeasurementEntities
     /** シルバーフィッシュ. */
     public final EntityLiving silverFish;
 
-    /**
-     * Constructor.
-     * 
-     * @param world 現在のワールド
-     */
-    private MeasurementEntities(World world)
+    /** ゴーレム. */
+    public final EntityLiving golem;
+
+    /** 鶏. */
+    public final EntityAgeable chicken;
+    /** 牛. */
+    public final EntityAgeable cow;
+    /** 馬. */
+    public final EntityAgeable horse;
+    /** 猫. */
+    public final EntityAgeable ocelot;
+    /** 豚. */
+    public final EntityAgeable pig;
+    /** 羊. */
+    public final EntityAgeable sheep;
+    /** 狼. */
+    public final EntityAgeable wolf;
+
+    /** 村人. */
+    public final EntityAgeable villager;
+
+    private MeasurementEntities()
     {
-        standardSizeMob = new StandardSizeMobMeasure(world);
-        enderman = new EndermanMeasure(world);
-        spider = new SpiderMeasure(world);
-        caveSpider = new CaveSpiderMeasure(world);
-        slime = new SlimeMeasure(world);
-        silverFish = new SilverfishMeasure(world);
+        standardSizeMob = new StandardSizeMobMeasure();
+        enderman = new EndermanMeasure();
+        spider = new SpiderMeasure();
+        caveSpider = new CaveSpiderMeasure();
+        slime = new SlimeMeasure();
+        silverFish = new SilverfishMeasure();
+
+        golem = new GolemMeasure();
+
+        chicken = new ChickenMeasure();
+        cow = new CowMeasure();
+        horse = new HorseMeasure();
+        ocelot = new OcelotMeasure();
+        pig = new PigMeasure();
+        sheep = new SheepMeasure();
+        wolf = new WolfMeasure();
+
+        villager = new VillagerMeasure();
     }
 
 }

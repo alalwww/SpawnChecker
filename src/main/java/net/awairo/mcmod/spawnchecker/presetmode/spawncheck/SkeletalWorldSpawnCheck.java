@@ -45,6 +45,9 @@ public abstract class SkeletalWorldSpawnCheck implements WorldSpawnCheck
     /** コピーしてきたチェック処理. */
     protected final CopiedLogics copiedLogics = CopiedLogics.INSTANCE;
 
+    /** 当たり判定用のエンティティ. */
+    protected final MeasurementEntities measureEntities = MeasurementEntities.INSTANCE;
+
     /** 共通色設定. */
     public Mode.CommonColor color;
 
@@ -53,9 +56,6 @@ public abstract class SkeletalWorldSpawnCheck implements WorldSpawnCheck
 
     /** 計算した明るさの値. */
     protected int computedBrightness;
-
-    /** 当たり判定用のエンティティ. */
-    protected MeasurementEntities measureEntities;
 
     /** マーカーインスタンスのキャッシュ. */
     public final CachedSupplier<SpawnPointMarker> cache;
@@ -75,7 +75,6 @@ public abstract class SkeletalWorldSpawnCheck implements WorldSpawnCheck
         cache = CachedSupplier.of(SpawnPointMarker.supplier());
         markers = Lists.newArrayListWithExpectedSize(consts.defaultSpawnCheckerMarkerListSize);
         currentWorld = game.theWorld;
-        measureEntities = MeasurementEntities.of(currentWorld);
     }
 
     /**
@@ -115,7 +114,6 @@ public abstract class SkeletalWorldSpawnCheck implements WorldSpawnCheck
         if (currentWorld != game.theWorld)
         {
             currentWorld = game.theWorld;
-            measureEntities = MeasurementEntities.of(currentWorld);
             cache.clearAll();
             markers.ensureCapacity(consts.defaultSpawnCheckerMarkerListSize);
         }

@@ -150,7 +150,7 @@ public class SlimeSpawnChecker implements SpawnCheck
     public boolean isSpawnable(int x, int y, int z)
     {
         if (isSpawnableSwampland(x, y, z) || isSpawnablePos(x, y, z))
-            return copiedLogics.canSpawnAtLocation(x, y, z);
+            return true;
 
         return false;
     }

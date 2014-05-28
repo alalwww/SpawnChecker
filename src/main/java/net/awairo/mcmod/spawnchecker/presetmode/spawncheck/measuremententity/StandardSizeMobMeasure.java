@@ -14,7 +14,6 @@
 package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.measuremententity;
 
 import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.world.World;
 
 /**
  * 標準的なサイズのモンスター測定用エンティティ.
@@ -23,14 +22,9 @@ import net.minecraft.world.World;
  */
 final class StandardSizeMobMeasure extends EntityMob
 {
-    /**
-     * Constructor.
-     * 
-     * @param world 現在のワールド
-     */
-    StandardSizeMobMeasure(World world)
+    StandardSizeMobMeasure()
     {
-        super(world);
+        super(null);
     }
 
     @Override
