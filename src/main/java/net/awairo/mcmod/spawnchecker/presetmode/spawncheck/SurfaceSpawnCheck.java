@@ -13,7 +13,6 @@
 
 package net.awairo.mcmod.spawnchecker.presetmode.spawncheck;
 
-import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 
 import net.awairo.mcmod.spawnchecker.client.common.OptionSet;
@@ -172,7 +171,7 @@ public class SurfaceSpawnCheck extends SkeletalWorldSpawnCheck
         final ItemStack stack = game.thePlayer.inventory.getCurrentItem();
 
         return stack != null
-                ? mode.enablingItems().contains(Block.getBlockFromItem(stack.getItem()))
+                ? mode.enablingItems().contains(stack.getItem())
                 : false;
     }
 }

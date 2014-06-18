@@ -21,8 +21,8 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.common.base.Objects;
 
-import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.item.Item;
 
 import net.awairo.mcmod.spawnchecker.SpawnChecker;
 import net.awairo.mcmod.spawnchecker.client.common.OptionSet;
@@ -318,7 +318,7 @@ public abstract class ModeBase<T extends ModeBase<T>> implements OperatableMode
      * 
      * @return 有効化アイテムの設定
      */
-    public final Collection<Block> enablingItems()
+    public final Collection<Item> enablingItems()
     {
         return ModeManager.instance().settings().mode().enablingItems();
     }

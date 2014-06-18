@@ -36,7 +36,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 
 import net.awairo.mcmod.common.v1.util.config.Config;
 import net.awairo.mcmod.common.v1.util.config.ConfigCategory;
@@ -70,7 +70,7 @@ public class ModeConfig extends ConfigCategory
 
     /** 有効にするアイテム. */
     private final Prop enablingItemsProp;
-    private final Map<String, Block> enablingItemMap = Maps.newHashMap();
+    private final Map<String, Item> enablingItemMap = Maps.newHashMap();
 
     /**
      * Constructor.
@@ -124,8 +124,10 @@ public class ModeConfig extends ConfigCategory
 
         // ----------
 
-        enablingItemsProp = getListOf("enabling_item", "torch", "lit_pumpkin")
-                .comment("item id list.\n"
+        enablingItemsProp = getListOf("checker_enabling_items", "torch", "lit_pumpkin")
+                .comment("spawn checker enabling item id list.\n"
+                        + "Add \"itemid\" if you'd like to use other vanilla's item."
+                        + "Add \"modid:itemid\" if you'd like to use other mod's item."
                         + "(default: torch, lit_pumpkin)");
     }
 
@@ -142,22 +144,22 @@ public class ModeConfig extends ConfigCategory
      * 
      * @return 有効化アイテムのブロック集合
      */
-    public final Collection<Block> enablingItems()
+    public final Collection<Item> enablingItems()
     {
         enablingItemMap.clear();
 
         final String[] ids = enablingItemsProp.getStringList();
         for (String id : ids)
         {
-            final Block block = (Block) Block.blockRegistry.getObject(id);
+            final Item item = (Item) Item.itemRegistry.getObject(id);
 
-            if (block == null)
+            if (item == null)
             {
                 LOGGER.warn("enabling item id(%s) is unknown block id.", id);
                 continue;
             }
 
-            enablingItemMap.put(id, block);
+            enablingItemMap.put(id, item);
         }
 
         if (ids.length != enablingItemMap.size())
