@@ -13,7 +13,6 @@
 
 package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.spawner;
 
-
 /**
  * @author alalwww
  */

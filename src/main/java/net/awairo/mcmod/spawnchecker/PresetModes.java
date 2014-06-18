@@ -30,12 +30,12 @@ import net.awairo.mcmod.common.v1.util.Fingerprint;
 import net.awairo.mcmod.spawnchecker.client.ClientSideProxy;
 import net.awairo.mcmod.spawnchecker.client.common.Settings;
 import net.awairo.mcmod.spawnchecker.presetmode.SkeletalConfig;
-import net.awairo.mcmod.spawnchecker.presetmode.slimechunkvisualizer.SlimeChunkVisualizerModeConfig;
 import net.awairo.mcmod.spawnchecker.presetmode.slimechunkvisualizer.SlimeChunkVisualizerMode;
-import net.awairo.mcmod.spawnchecker.presetmode.spawnchecker.SpawnCheckerModeConfig;
+import net.awairo.mcmod.spawnchecker.presetmode.slimechunkvisualizer.SlimeChunkVisualizerModeConfig;
 import net.awairo.mcmod.spawnchecker.presetmode.spawnchecker.SpawnCheckerMode;
-import net.awairo.mcmod.spawnchecker.presetmode.spawnervisualizer.SpawnerVisualizerModeConfig;
+import net.awairo.mcmod.spawnchecker.presetmode.spawnchecker.SpawnCheckerModeConfig;
 import net.awairo.mcmod.spawnchecker.presetmode.spawnervisualizer.SpawnerVisualizerMode;
+import net.awairo.mcmod.spawnchecker.presetmode.spawnervisualizer.SpawnerVisualizerModeConfig;
 
 /**
  * SpawnChecker preset mode.
