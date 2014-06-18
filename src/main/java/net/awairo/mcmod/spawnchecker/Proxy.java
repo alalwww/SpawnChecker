@@ -68,7 +68,7 @@ public abstract class Proxy
         switch (message.key)
         {
             case SpawnChecker.IMC_HELLO:
-                LOGGER.info("recived hello message from %s.", message.getSender());
+                LOGGER.info("recived hello message from {}.", message.getSender());
                 return;
 
             default:
@@ -114,7 +114,7 @@ public abstract class Proxy
      */
     final void handleModEvent(IMCEvent event)
     {
-        LOGGER.debug("IMCEvent: %s", event.getMessages());
+        LOGGER.debug("IMCEvent: {}", event.getMessages());
 
         for (IMCMessage message : event.getMessages())
         {

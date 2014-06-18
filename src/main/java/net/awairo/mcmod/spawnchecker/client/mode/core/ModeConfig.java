@@ -155,7 +155,7 @@ public class ModeConfig extends ConfigCategory
 
             if (item == null)
             {
-                LOGGER.warn("enabling item id(%s) is unknown block id.", id);
+                LOGGER.warn("enabling item id \"{}\" is unknown item id. remove it.", id);
                 continue;
             }
 
