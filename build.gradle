@@ -27,6 +27,9 @@ apply from: 'version-writer.gradle'
 
 processResources {
 
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
     exclude 'Log4j-config.xsd', 'Log4j-events.dtd', 'Log4j-events.xsd', 'log4j2.xml'
 
     from(sourceSets.main.resources.srcDirs) {
