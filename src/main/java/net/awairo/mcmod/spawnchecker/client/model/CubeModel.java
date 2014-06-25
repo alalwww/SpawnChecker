@@ -29,11 +29,19 @@ public class CubeModel extends SkeletalMarkerModel
     protected double maxY;
     protected double maxZ;
 
+    /**
+     * @param min X、Y、Z軸の最小値
+     */
     public void setMin(double min)
     {
         setMin(min, min, min);
     }
 
+    /**
+     * @param minX X軸上の最小値
+     * @param minY Y軸上の最小値
+     * @param minZ Z軸上の最小値
+     */
     public void setMin(double minX, double minY, double minZ)
     {
         this.minX = minX;
@@ -41,11 +49,19 @@ public class CubeModel extends SkeletalMarkerModel
         this.minZ = minZ;
     }
 
+    /**
+     * @param max X、Y、Z軸の最大値
+     */
     public void setMax(double max)
     {
         setMax(max, max, max);
     }
 
+    /**
+     * @param maxX X軸上の最大値
+     * @param maxY Y軸上の最大値
+     * @param maxZ Z軸上の最大値
+     */
     public void setMax(double maxX, double maxY, double maxZ)
     {
         this.maxX = maxX;
@@ -53,6 +69,9 @@ public class CubeModel extends SkeletalMarkerModel
         this.maxZ = maxZ;
     }
 
+    /**
+     * @param offset 描画オフセット値
+     */
     public void setOffset(double offset)
     {
         minX -= offset;

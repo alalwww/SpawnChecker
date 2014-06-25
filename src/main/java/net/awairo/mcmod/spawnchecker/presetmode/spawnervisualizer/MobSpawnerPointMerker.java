@@ -15,9 +15,8 @@ package net.awairo.mcmod.spawnchecker.presetmode.spawnervisualizer;
 
 import static net.awairo.mcmod.spawnchecker.client.marker.RenderingSupport.*;
 
-import org.lwjgl.opengl.GL11;
-
 import com.google.common.base.Supplier;
+import org.lwjgl.opengl.GL11;
 
 import net.awairo.mcmod.spawnchecker.client.marker.SkeletalMarker;
 import net.awairo.mcmod.spawnchecker.client.model.MarkerModel;
@@ -38,6 +37,14 @@ public class MobSpawnerPointMerker extends SkeletalMarker<MobSpawnerPointMerker>
         // TODO: アニメーションの設定などの読み込み
     }
 
+    /**
+     * アニメーション開始位置の個体差を設定します.
+     * 
+     * <p>この値を用い、全てのマーカーモデルが同じアニメーションとならないようにしています。</p>
+     * 
+     * @param inherent 個体差値
+     * @return このインスタンス
+     */
     public MobSpawnerPointMerker setInherent(int inherent)
     {
         this.inherent = inherent;
@@ -86,9 +93,9 @@ public class MobSpawnerPointMerker extends SkeletalMarker<MobSpawnerPointMerker>
             final double tremor = Math.sin(tick * 0.06f) * 0.02;
 
             GL11.glTranslated(
-                    posX - renderManager.viewerPosX,
-                    posY - renderManager.viewerPosY + tremor,
-                    posZ - renderManager.viewerPosZ);
+                    posX - manager().viewerPosX,
+                    posY - manager().viewerPosY + tremor,
+                    posZ - manager().viewerPosZ);
 
             setGLColor(argbColor);
 
@@ -103,6 +110,10 @@ public class MobSpawnerPointMerker extends SkeletalMarker<MobSpawnerPointMerker>
         GL11.glPopMatrix();
     }
 
+    /**
+     * @param config スポーナー可視化モードの設定
+     * @return スポーンポイントマーカーのSupplier
+     */
     public static Supplier<MobSpawnerPointMerker> supplier(final SpawnerVisualizerModeConfig config)
     {
         return new Supplier<MobSpawnerPointMerker>()

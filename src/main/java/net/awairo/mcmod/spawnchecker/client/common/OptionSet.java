@@ -47,6 +47,10 @@ public final class OptionSet extends LinkedHashSet<Mode.Option>
         return copyOf(Arrays.asList(options));
     }
 
+    /**
+     * @param options コピー元
+     * @return 新たなオプションセット
+     */
     public static OptionSet copyOf(Iterable<Mode.Option> options)
     {
         final OptionSet set = new OptionSet();
@@ -58,6 +62,11 @@ public final class OptionSet extends LinkedHashSet<Mode.Option>
         return set;
     }
 
+    /**
+     * 新しいオプションセットビルダーを取得.
+     * 
+     * @return 新しいビルダー
+     */
     public static Builder builder()
     {
         return new Builder();
@@ -203,6 +212,9 @@ public final class OptionSet extends LinkedHashSet<Mode.Option>
             return addAll(Arrays.asList(a));
         }
 
+        /**
+         * @return 新たなオプションセットを生成します
+         */
         public OptionSet build()
         {
             checkState(!set.isEmpty(), "empty");

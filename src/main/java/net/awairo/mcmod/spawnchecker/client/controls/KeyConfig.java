@@ -3,21 +3,20 @@
  * 
  * (c) 2014 alalwww
  * https://github.com/alalwww
- *
+ * 
  * This mod is distributed under the terms of the Minecraft Mod Public License 1.0, or MMPL.
  * Please check the contents of the license located in http://www.mod-buildcraft.com/MMPL-1.0.txt
- *
+ * 
  * この MOD は、Minecraft Mod Public License (MMPL) 1.0 の条件のもとに配布されています。
  * ライセンスの内容は次のサイトを確認してください。 http://www.mod-buildcraft.com/MMPL-1.0.txt
  */
 
 package net.awairo.mcmod.spawnchecker.client.controls;
 
-import org.lwjgl.input.Keyboard;
-
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
+import org.lwjgl.input.Keyboard;
 
 import net.minecraft.client.settings.KeyBinding;
 
@@ -32,7 +31,7 @@ import net.awairo.mcmod.common.v1.util.config.Prop;
  */
 public final class KeyConfig extends ConfigCategory
 {
-    public static final String CATEGORY = "spawnchecker.key.category";
+    static final String CATEGORY = "spawnchecker.key.category";
 
     private static final String UP_KEY_DESC = "spawnchecker.key.up";
     private static final String DOWN_KEY_DESC = "spawnchecker.key.down";
@@ -80,6 +79,9 @@ public final class KeyConfig extends ConfigCategory
         return "controls";
     }
 
+    /**
+     * @return キーバインディングの不変リスト
+     */
     public ImmutableList<KeyBinding> keys()
     {
         return ImmutableList.copyOf(Lists.transform(handlers, new Function<AbstractKeyHandler, KeyBinding>()

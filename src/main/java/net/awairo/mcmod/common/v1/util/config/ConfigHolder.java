@@ -18,11 +18,15 @@ import static com.google.common.base.Preconditions.*;
 import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 
-import org.apache.logging.log4j.Logger;
-
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import org.apache.logging.log4j.Logger;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.world.World;
+
+import net.minecraftforge.common.config.Configuration;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
@@ -31,9 +35,6 @@ import cpw.mods.fml.common.gameevent.TickEvent.Phase;
 import cpw.mods.fml.common.gameevent.TickEvent.ServerTickEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.Minecraft;
-import net.minecraft.world.World;
-import net.minecraftforge.common.config.Configuration;
 
 /**
  * 自動保存用のTickEventリスナーを持った設定保持クラス.

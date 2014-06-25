@@ -24,14 +24,14 @@ import com.google.common.collect.Lists;
  */
 abstract class AbstractKeyHandler
 {
-    static final List<AbstractKeyHandler> handlerList = Lists.newArrayList();
+    static final List<AbstractKeyHandler> HANDLER_LIST = Lists.newArrayList();
 
     final KeyBindingWrapper key;
 
     AbstractKeyHandler(KeyBindingWrapper key)
     {
         this.key = key;
-        handlerList.add(this);
+        HANDLER_LIST.add(this);
     }
 
     abstract void onKeyPress(boolean ctrl, boolean shift, boolean alt);

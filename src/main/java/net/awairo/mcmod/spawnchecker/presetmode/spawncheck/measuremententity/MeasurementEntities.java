@@ -23,6 +23,7 @@ import net.minecraft.entity.EntityLiving;
  */
 public enum MeasurementEntities
 {
+    /** instance. */
     INSTANCE;
 
     /** 標準的な大きさのMobエンティティ. */

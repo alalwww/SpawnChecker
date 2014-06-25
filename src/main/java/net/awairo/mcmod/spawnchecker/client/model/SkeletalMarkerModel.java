@@ -40,7 +40,7 @@ public abstract class SkeletalMarkerModel implements MarkerModel
     /**
      * 描画色を設定します.
      * 
-     * @param argb RGBカラー
+     * @param argbColor RGBカラー
      */
     public void setColor(int argbColor)
     {

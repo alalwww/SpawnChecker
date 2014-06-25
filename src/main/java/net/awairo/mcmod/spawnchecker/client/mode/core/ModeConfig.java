@@ -24,9 +24,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
@@ -35,6 +32,8 @@ import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import net.minecraft.item.Item;
 
@@ -173,7 +172,7 @@ public class ModeConfig extends ConfigCategory
      * 
      * @author alalwww
      */
-    public static abstract class SubCategory extends ConfigCategory
+    public abstract static class SubCategory extends ConfigCategory
     {
         private static final Pattern QUOTED_PATTERN = Pattern.compile("^\"([^\"]+)\"$");
         private static final String SEPARATOR = ",";

@@ -43,6 +43,10 @@ public class SlimeChunkMarker extends SkeletalMarker<SlimeChunkMarker>
         return this;
     }
 
+    /**
+     * @param cycle アニメーションが1周期するのに必要なtick
+     * @return このインスタンス
+     */
     public SlimeChunkMarker setAnimationCycle(int cycle)
     {
         this.cycle = cycle;

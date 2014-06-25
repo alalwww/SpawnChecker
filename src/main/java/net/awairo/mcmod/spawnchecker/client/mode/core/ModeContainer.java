@@ -35,7 +35,7 @@ abstract class ModeContainer<M extends Mode>
     private Settings settings;
 
     /** 派生コンテナで追加された全てのモードのマップ. */
-    static final Map<String, Mode> idToModeMap = Maps.newHashMap();
+    static final Map<String, Mode> ID_TO_MODE_MAP = Maps.newHashMap();
 
     /** コンテナに格納されているモードの一覧. */
     private final List<M> modes = Lists.newArrayList();
@@ -109,7 +109,7 @@ abstract class ModeContainer<M extends Mode>
     @SuppressWarnings("unchecked")
     M getById(String id)
     {
-        return (M) idToModeMap.get(id);
+        return (M) ID_TO_MODE_MAP.get(id);
     }
 
     M getByIndex(int index)
@@ -130,9 +130,9 @@ abstract class ModeContainer<M extends Mode>
     boolean add(M mode)
     {
         checkNotNull(mode, "mode");
-        checkArgument(!idToModeMap.containsKey(mode.id()), "mode id %s is duplicate.", mode.id());
+        checkArgument(!ID_TO_MODE_MAP.containsKey(mode.id()), "mode id %s is duplicate.", mode.id());
 
-        idToModeMap.put(mode.id(), mode);
+        ID_TO_MODE_MAP.put(mode.id(), mode);
         return modes.add(mode);
     }
 

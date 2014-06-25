@@ -51,7 +51,7 @@ public class PresetModes
     public static final String MOD_ID = SpawnChecker.MOD_ID + ".presetmode";
 
     /** logger of the SpawnChecker. */
-    private static final Logger logger = LogManager.getLogger(PresetModes.MOD_ID);
+    private static final Logger LOGGER = LogManager.getLogger(PresetModes.MOD_ID);
 
     /** プリセットモードの設定. */
     private SpawnCheckerMode spawnCheckerMode;
@@ -115,12 +115,12 @@ public class PresetModes
             SpawnChecker.registerMode(slimeChunkVisualizerMode);
             SpawnChecker.registerMode(spawnerVisualizeMode);
 
-            logger.info("[IMC] send of SpawnChecker registerMode message was succeed.");
+            LOGGER.info("[IMC] send of SpawnChecker registerMode message was succeed.");
             return;
         }
 
         final String msg = "[IMC] has been failed to preset mode registering.";
-        logger.error(msg);
+        LOGGER.error(msg);
         throw new RuntimeException(msg);
     }
 

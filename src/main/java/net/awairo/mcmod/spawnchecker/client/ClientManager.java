@@ -27,7 +27,7 @@ import net.awairo.mcmod.spawnchecker.client.common.Settings;
  */
 public abstract class ClientManager extends HandlerManager
 {
-    static final Map<Class<? extends ClientManager>, ClientManager> managers = Maps.newConcurrentMap();
+    static final Map<Class<? extends ClientManager>, ClientManager> MANAGERS = Maps.newConcurrentMap();
 
     static Settings settings;
 
@@ -40,7 +40,7 @@ public abstract class ClientManager extends HandlerManager
     @SuppressWarnings("unchecked")
     protected static <T extends ClientManager> T get(Class<T> keyClass)
     {
-        return (T) managers.get(keyClass);
+        return (T) MANAGERS.get(keyClass);
     }
 
     /**
@@ -48,7 +48,7 @@ public abstract class ClientManager extends HandlerManager
      */
     protected ClientManager()
     {
-        managers.put(getClass(), this);
+        MANAGERS.put(getClass(), this);
     }
 
     /**

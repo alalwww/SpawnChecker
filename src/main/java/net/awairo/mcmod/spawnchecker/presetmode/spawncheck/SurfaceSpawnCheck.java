@@ -92,9 +92,9 @@ public class SurfaceSpawnCheck extends SkeletalWorldSpawnCheck
     /**
      * スポーンチェック.
      * 
-     * @param x
-     * @param y
-     * @param z
+     * @param x X座標
+     * @param y Y座標
+     * @param z Z座標
      */
     public void spawnCheckAt(int x, int y, int z)
     {
@@ -142,6 +142,13 @@ public class SurfaceSpawnCheck extends SkeletalWorldSpawnCheck
 
     }
 
+    /**
+     * 指定座標にスライムがスポーン可能か判定し、必要に応じてマーカーを追加します.
+     * 
+     * @param x X座標
+     * @param y Y座標
+     * @param z Z座標
+     */
     public void slimeSpawnCheckAt(int x, int y, int z)
     {
         if (!slime) return;

@@ -18,11 +18,12 @@ import java.util.Set;
 
 import com.google.common.collect.ImmutableSet;
 
-import cpw.mods.fml.client.IModGuiFactory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+
+import cpw.mods.fml.client.IModGuiFactory;
 
 /**
  * Mod設定画面ファクトリ.
@@ -35,7 +36,7 @@ public class GuiScreenFactory implements IModGuiFactory
     // TODO: インゲーム設定画面がまともに動くようになったらちゃんと設定する
     //    private static final Set<RuntimeOptionCategoryElement> categories = ImmutableSet
     //            .of(new RuntimeOptionCategoryElement("PARENT", "CHILD"));
-    private static final Set<RuntimeOptionCategoryElement> categories = ImmutableSet
+    private static final Set<RuntimeOptionCategoryElement> CATEGORIES = ImmutableSet
             .of(new RuntimeOptionCategoryElement("HELP", "SpawnChecker"));
 
     @Override
@@ -52,7 +53,7 @@ public class GuiScreenFactory implements IModGuiFactory
     @Override
     public Set<RuntimeOptionCategoryElement> runtimeGuiCategories()
     {
-        return categories;
+        return CATEGORIES;
     }
 
     @Override

@@ -121,7 +121,6 @@ public interface Mode
      * 
      * @author alalwww
      */
-    @Deprecated
     interface CommonState
     {
         /** @return 水平範囲 */
@@ -229,7 +228,7 @@ public interface Mode
          * 
          * @return 文字色
          */
-        public int intColor();
+        int intColor();
 
         /**
          * @return true はアイコンを持っている情報を意味する

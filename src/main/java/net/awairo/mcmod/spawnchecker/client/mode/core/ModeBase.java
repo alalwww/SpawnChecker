@@ -16,10 +16,9 @@ package net.awairo.mcmod.spawnchecker.client.mode.core;
 import java.util.Collection;
 import java.util.List;
 
+import com.google.common.base.Objects;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import com.google.common.base.Objects;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;

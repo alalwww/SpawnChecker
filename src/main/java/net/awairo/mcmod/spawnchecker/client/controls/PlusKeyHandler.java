@@ -28,7 +28,7 @@ final class PlusKeyHandler extends AbstractKeyHandler
     @Override
     void onKeyPress(boolean ctrl, boolean shift, boolean alt)
     {
-        KeyManager.instance.onPlusKeyPress(ctrl, shift, alt);
+        KeyManager.INSTANCE.onPlusKeyPress(ctrl, shift, alt);
     }
 
 }

@@ -28,7 +28,7 @@ final class DownKeyHandler extends AbstractKeyHandler
     @Override
     void onKeyPress(boolean ctrl, boolean shift, boolean alt)
     {
-        KeyManager.instance.onDownKeyPress(ctrl, shift, alt);
+        KeyManager.INSTANCE.onDownKeyPress(ctrl, shift, alt);
     }
 
 }

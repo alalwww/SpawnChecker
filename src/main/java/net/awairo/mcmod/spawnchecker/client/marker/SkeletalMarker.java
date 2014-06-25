@@ -24,6 +24,8 @@ import net.awairo.mcmod.spawnchecker.client.model.MarkerModel;
  * マーカーのスケルトン.
  * 
  * @author alalwww
+ * 
+ * @param <T> marker type
  */
 public abstract class SkeletalMarker<T extends SkeletalMarker<T>> implements Marker<T>
 {
@@ -149,9 +151,9 @@ public abstract class SkeletalMarker<T extends SkeletalMarker<T>> implements Mar
     protected void render(MarkerModel model)
     {
         setTranslation(
-                posX - renderManager.viewerPosX,
-                posY - renderManager.viewerPosY,
-                posZ - renderManager.viewerPosZ);
+                posX - manager().viewerPosX,
+                posY - manager().viewerPosY,
+                posZ - manager().viewerPosZ);
 
         model.render();
 

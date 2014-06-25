@@ -37,16 +37,25 @@ public class GuidelineModel extends SkeletalMarkerModel
     {
     }
 
+    /**
+     * @param length ガイドライン長
+     */
     public void setLength(double length)
     {
         this.length = length;
     }
 
+    /**
+     * @param offsetX X軸オフセット
+     */
     public void setOffsetX(double offsetX)
     {
         this.offsetX = offsetX;
     }
 
+    /**
+     * @param offsetZ Z軸オフセット
+     */
     public void setOffsetZ(double offsetZ)
     {
         this.offsetZ = offsetZ;

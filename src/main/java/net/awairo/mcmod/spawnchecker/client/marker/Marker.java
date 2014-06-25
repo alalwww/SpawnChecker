@@ -70,7 +70,7 @@ public interface Marker<T extends Marker<T>>
     /**
      * マーカーの色を設定(ARGB).
      * 
-     * @param color color
+     * @param argbColor color
      * @return this instance
      */
     T setColor(int argbColor);

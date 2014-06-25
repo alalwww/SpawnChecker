@@ -32,6 +32,7 @@ import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
  */
 public enum YOffsetHelper
 {
+    /** instance. */
     INSTANCE;
 
     private final Minecraft minecraft = Minecraft.getMinecraft();

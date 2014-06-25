@@ -67,7 +67,7 @@ class Renderer
         final int rgb = rgbOf(info.intColor());
         int a = alpha == 1.0f
                 ? alphaOf(info.intColor())
-                : Math.max(Math.round((alphaOf(info.intColor()) * alpha)), MIN_ALPHA);
+                : Math.max(Math.round(alphaOf(info.intColor()) * alpha), MIN_ALPHA);
 
         if (info.hasIcon())
             drawIcon(posX, posY, info, rgb, a);
@@ -138,7 +138,7 @@ class Renderer
     private static int getMessageOffset(final Mode.Information info)
     {
         int offset = consts().spacerOfIconAndMessage;
-        offset += (info.doubleSizeIcon() ? consts().iconWidth + consts().iconWidth : consts().iconWidth);
+        offset += info.doubleSizeIcon() ? consts().iconWidth + consts().iconWidth : consts().iconWidth;
         return offset;
     }
 

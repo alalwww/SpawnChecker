@@ -135,6 +135,8 @@ public class ConstantsConfig extends ConfigCategory
         return instance;
     }
 
+    // CHECKSTYLE:OFF
+
     /**
      * Constructor.
      * 
@@ -311,6 +313,8 @@ public class ConstantsConfig extends ConfigCategory
                 .comment("default: " + Keyboard.KEY_LMENU + ", " + Keyboard.KEY_RMENU)
                 .getIntList();
     }
+
+    // CHECKSTYLE:ON
 
     // ---------------------------
 

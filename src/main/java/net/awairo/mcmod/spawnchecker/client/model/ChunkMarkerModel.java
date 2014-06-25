@@ -20,6 +20,9 @@ package net.awairo.mcmod.spawnchecker.client.model;
  */
 public class ChunkMarkerModel extends AreaMarkerModel
 {
+    /**
+     * Constructor.
+     */
     public ChunkMarkerModel()
     {
         setMin(0);

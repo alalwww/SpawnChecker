@@ -43,22 +43,22 @@ public final class CoordHelper
      */
     public static class IntegerCache
     {
-        static final int high = 0b1111_1111_1111_1111;
-        static final int low = -high;
-        private static final Integer cache[];
+        static final int HIGH = 0b1111_1111_1111_1111;
+        static final int LOW = -HIGH;
+        private static final Integer CACHES[];
 
         static
         {
-            cache = new Integer[(high - low) + 1];
-            int value = low;
-            for (int index = 0; index < cache.length; index++)
-                cache[index] = Integer.valueOf(value++);
+            CACHES = new Integer[(HIGH - LOW) + 1];
+            int value = LOW;
+            for (int index = 0; index < CACHES.length; index++)
+                CACHES[index] = Integer.valueOf(value++);
         }
 
         static Integer get(int i)
         {
-            if (i >= IntegerCache.low && i <= IntegerCache.high)
-                return IntegerCache.cache[i + (-IntegerCache.low)];
+            if (i >= IntegerCache.LOW && i <= IntegerCache.HIGH)
+                return IntegerCache.CACHES[i + (-IntegerCache.LOW)];
 
             return Integer.valueOf(i);
         }

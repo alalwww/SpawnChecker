@@ -19,10 +19,9 @@ import java.awt.Color;
 import java.util.List;
 import java.util.Random;
 
+import com.google.common.collect.Lists;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import com.google.common.collect.Lists;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.MobSpawnerBaseLogic;
@@ -44,6 +43,7 @@ import net.awairo.mcmod.spawnchecker.presetmode.spawncheck.spawner.MobSpawnerSpa
  */
 public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerMode> implements ConditionalMode
 {
+    /** mode id. */
     public static final String ID = "spawnervisualizer";
 
     private static final Random RANDOM = new Random();

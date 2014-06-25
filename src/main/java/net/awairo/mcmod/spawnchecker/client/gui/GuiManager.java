@@ -27,7 +27,7 @@ import net.awairo.mcmod.spawnchecker.client.common.Settings;
  */
 public final class GuiManager extends ClientManager
 {
-    private static final GuiManager instance = new GuiManager();
+    private static final GuiManager INSTANCE = new GuiManager();
 
     /** クラスロード用. */
     public static void load()
@@ -43,7 +43,7 @@ public final class GuiManager extends ClientManager
 
     static GuiManager instance()
     {
-        return instance;
+        return INSTANCE;
     }
 
     @Override

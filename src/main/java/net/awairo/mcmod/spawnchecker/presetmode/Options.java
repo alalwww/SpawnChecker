@@ -93,6 +93,10 @@ public final class Options
         MAP = ImmutableMap.copyOf(map);
     }
 
+    /**
+     * @param id モードオプションの識別子
+     * @return 識別子に一致するオプションがある場合はそのオプションを返却
+     */
     public static Optional<Mode.Option> valueOf(String id)
     {
         final Optional<Mode.Option> value = MAP.get(id);

@@ -28,6 +28,11 @@ import net.awairo.mcmod.common.v1.client.gui.ToggleButton;
  */
 public final class GuiConfigScreen extends ModGuiScreen
 {
+    /**
+     * Constructor.
+     * 
+     * @param parent 親スクリーン
+     */
     public GuiConfigScreen(GuiScreen parent)
     {
         super(parent);

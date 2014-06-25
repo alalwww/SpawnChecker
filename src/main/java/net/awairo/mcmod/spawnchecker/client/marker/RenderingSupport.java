@@ -30,8 +30,17 @@ import net.awairo.mcmod.common.v1.util.Colors;
  */
 public final class RenderingSupport
 {
-    public static final RenderManager renderManager = RenderManager.instance;
-    public static final Tessellator tessellator = Tessellator.instance;
+    /** @return レンダーマネージャー */
+    public static RenderManager manager()
+    {
+        return RenderManager.instance;
+    }
+
+    /** @return てっせレーター */
+    public static Tessellator tessellator()
+    {
+        return Tessellator.instance;
+    }
 
     /**
      * 描画開始前のGL設定.
@@ -71,7 +80,7 @@ public final class RenderingSupport
      */
     public static void startDrawingQuads()
     {
-        tessellator.startDrawingQuads();
+        tessellator().startDrawingQuads();
     }
 
     /**
@@ -79,7 +88,7 @@ public final class RenderingSupport
      */
     public static void startDrawingLines()
     {
-        tessellator.startDrawing(GL11.GL_LINES);
+        tessellator().startDrawing(GL11.GL_LINES);
     }
 
     /**
@@ -91,7 +100,7 @@ public final class RenderingSupport
      */
     public static void setTranslation(double xOffset, double yOffset, double zOffset)
     {
-        tessellator.setTranslation(xOffset, yOffset, zOffset);
+        tessellator().setTranslation(xOffset, yOffset, zOffset);
     }
 
     /**
@@ -103,7 +112,7 @@ public final class RenderingSupport
      */
     public static void addVertex(double x, double y, double z)
     {
-        tessellator.addVertex(x, y, z);
+        tessellator().addVertex(x, y, z);
     }
 
     /**
@@ -117,7 +126,7 @@ public final class RenderingSupport
      */
     public static void addVertexWithUV(double x, double y, double z, double u, double v)
     {
-        tessellator.addVertexWithUV(x, y, z, u, v);
+        tessellator().addVertexWithUV(x, y, z, u, v);
     }
 
     /**
@@ -127,7 +136,7 @@ public final class RenderingSupport
      */
     public static int draw()
     {
-        return tessellator.draw();
+        return tessellator().draw();
     }
 
     /**
@@ -140,8 +149,8 @@ public final class RenderingSupport
     // brightnessの値はかなり大きな数値っぽいけど何を設定しても色に反映されてくれない…
     public static void setColorAndBrightness(Color color, int brightness)
     {
-        tessellator.setBrightness(brightness);
-        tessellator.setColorRGBA(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+        tessellator().setBrightness(brightness);
+        tessellator().setColorRGBA(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
     }
 
     /**

@@ -30,12 +30,15 @@ import net.awairo.mcmod.spawnchecker.presetmode.spawnchecker.model.SpawnPoint;
  */
 public final class SpawnPointMarker extends SkeletalMarker<SpawnPointMarker>
 {
+    /** スポーンポイントマーカーモデル. */
     public static final SpawnPoint SPAWN_POINT = new SpawnPoint();
+    /** スライムスポーンポイントマーカーモデル. */
     public static final SlimeSpawnPoint SLIME_SPAWN_POINT = new SlimeSpawnPoint();
+
     private static final GuidelineModel GUIDELINE = new GuidelineModel();
 
     // TODO: 定数化
-    static final double GUIDELINE_LENGTH = 64d;
+    private final double guidelineMaxLengthDefault = 64d;
 
     private SpawnPoint model;
 
@@ -49,7 +52,7 @@ public final class SpawnPointMarker extends SkeletalMarker<SpawnPointMarker>
 
     @Override
     @Deprecated
-    protected final MarkerModel model()
+    protected MarkerModel model()
     {
         throw new InternalError();
     }
@@ -145,7 +148,7 @@ public final class SpawnPointMarker extends SkeletalMarker<SpawnPointMarker>
             topOffset = YOffsetHelper.getYOffset(posX, posY, posZ);
 
         if (showGuideline)
-            guidelineLength = Math.min(posY + GUIDELINE_LENGTH, ConstantsConfig.instance().worldHeightMax);
+            guidelineLength = Math.min(posY + guidelineMaxLengthDefault, ConstantsConfig.instance().worldHeightMax);
 
         computed = true;
     }

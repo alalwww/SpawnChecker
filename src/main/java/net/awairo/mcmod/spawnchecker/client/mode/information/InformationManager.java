@@ -18,11 +18,12 @@ import java.util.List;
 import com.google.common.collect.Lists;
 import com.google.common.primitives.Ints;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
+
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.Phase;
 import cpw.mods.fml.common.gameevent.TickEvent.RenderTickEvent;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
 
 import net.awairo.mcmod.spawnchecker.client.ClientManager;
 import net.awairo.mcmod.spawnchecker.client.mode.Mode;
@@ -65,16 +66,25 @@ public final class InformationManager extends ClientManager
     {
     }
 
+    /**
+     * @param info 追加するモード情報
+     */
     public void add(Mode.Information info)
     {
         cache.add(info);
     }
 
+    /**
+     * 現在描画しているモード情報をクリア.
+     */
     public void clear()
     {
         cache.clear();
     }
 
+    /**
+     * @param infos 新たに設定するモード情報
+     */
     public void set(Mode.Information... infos)
     {
         clear();
@@ -169,6 +179,11 @@ public final class InformationManager extends ClientManager
         return new Listener(this);
     }
 
+    /**
+     * イベントリスナ.
+     * 
+     * @author alalwww
+     */
     public static final class Listener
     {
         private final InformationManager manager;
@@ -178,6 +193,11 @@ public final class InformationManager extends ClientManager
             this.manager = manager;
         }
 
+        /**
+         * RenderTickEventを処理.
+         * 
+         * @param event RenderTickEvent
+         */
         @SubscribeEvent
         public void onRenderTick(RenderTickEvent event)
         {

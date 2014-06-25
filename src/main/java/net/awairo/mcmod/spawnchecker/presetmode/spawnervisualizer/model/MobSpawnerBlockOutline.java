@@ -17,12 +17,15 @@ import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
 import net.awairo.mcmod.spawnchecker.client.model.CubeModel;
 
 /**
- * スポーナーブロックの外周枠を描画.
+ * スポーナーブロックの外周枠モデル.
  * 
  * @author alalwww
  */
 public final class MobSpawnerBlockOutline extends CubeModel
 {
+    /**
+     * Constructor.
+     */
     public MobSpawnerBlockOutline()
     {
         setMin(0);

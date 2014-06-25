@@ -37,7 +37,9 @@ import net.awairo.mcmod.spawnchecker.presetmode.spawncheck.SurfaceSpawnCheck;
  */
 public class SlimeChunkVisualizerMode extends SkeletalPresetMode<SlimeChunkVisualizerMode> implements SelectableMode
 {
+    /** mode id. */
     public static final String ID = "slimechunkvisualizer";
+
     private final SlimeChunkVisualizerModeConfig config;
     private SlimeSpawnChecker slimeSpawnChecker;
     private SurfaceSpawnCheck spawnCheck;

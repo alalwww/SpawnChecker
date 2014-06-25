@@ -16,8 +16,9 @@ import static com.google.common.base.Preconditions.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import cpw.mods.fml.common.event.FMLFingerprintViolationEvent;
 import net.minecraft.client.resources.I18n;
+
+import cpw.mods.fml.common.event.FMLFingerprintViolationEvent;
 
 /**
  * 署名.

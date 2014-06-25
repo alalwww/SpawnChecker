@@ -26,6 +26,11 @@ public class MobSpawnerSpawnLimitAreaMarker extends SkeletalMarker<MobSpawnerSpa
 {
     private final MobSpawnerSpawnLimitArea model = new MobSpawnerSpawnLimitArea();
 
+    /**
+     * Constructor.
+     * 
+     * @param config スポーナー可視化モードの設定
+     */
     public MobSpawnerSpawnLimitAreaMarker(SpawnerVisualizerModeConfig config)
     {
         // TODO: 設定ロード

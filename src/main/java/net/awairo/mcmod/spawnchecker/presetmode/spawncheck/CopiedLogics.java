@@ -31,6 +31,7 @@ import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
  */
 public enum CopiedLogics
 {
+    /** instance. */
     INSTANCE;
 
     private final Minecraft game = Minecraft.getMinecraft();

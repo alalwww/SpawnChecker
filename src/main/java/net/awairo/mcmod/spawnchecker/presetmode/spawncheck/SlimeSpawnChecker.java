@@ -18,13 +18,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.google.common.base.Optional;
 import com.google.common.base.Supplier;
 import com.google.common.collect.Table;
 import com.google.common.collect.Tables;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
@@ -46,7 +45,7 @@ import net.awairo.mcmod.spawnchecker.client.common.Refrection;
 public class SlimeSpawnChecker implements SpawnCheck
 {
     private static final Logger LOGGER = LogManager.getLogger(SpawnChecker.MOD_ID);
-    private static final Minecraft game = Minecraft.getMinecraft();
+    private static final Minecraft GAME = Minecraft.getMinecraft();
 
     private static final ConstantsConfig CONSTS = ConstantsConfig.instance();
     private static final MultiServerWorldSeedConfig MULTISEED_CONFIG = MultiServerWorldSeedConfig.instance();
@@ -61,8 +60,8 @@ public class SlimeSpawnChecker implements SpawnCheck
     {
         if (isSinglePlayer())
         {
-            final MinecraftServer ms = game.getIntegratedServer();
-            final WorldServer ws = ms.worldServerForDimension(game.thePlayer.dimension);
+            final MinecraftServer ms = GAME.getIntegratedServer();
+            final WorldServer ws = ms.worldServerForDimension(GAME.thePlayer.dimension);
             final long seed = ws.getSeed();
             LOGGER.info("current world is single player world. world seed is {}", seed);
             return new SlimeSpawnChecker(seed);
@@ -96,7 +95,7 @@ public class SlimeSpawnChecker implements SpawnCheck
 
     //---------------------
 
-    private static final CopiedLogics copiedLogics = CopiedLogics.INSTANCE;
+    private static final CopiedLogics COPIED_LOGICS = CopiedLogics.INSTANCE;
     private final Table<Integer, Integer, Boolean> keyTable = createKeytable();
 
     /** ワールドのシード値. */
@@ -171,11 +170,11 @@ public class SlimeSpawnChecker implements SpawnCheck
             return false;
 
         // 湿地ばいーむ
-        final World world = game.theWorld;
+        final World world = GAME.theWorld;
         if (world == null || world.getBiomeGenForCoords(x, z) != BiomeGenBase.swampland)
             return false;
 
-        return copiedLogics.canSpawnByLightLevel(x, y, z, CONSTS.spawnableLightLevel);
+        return COPIED_LOGICS.canSpawnByLightLevel(x, y, z, CONSTS.spawnableLightLevel);
     }
 
     /**
@@ -195,7 +194,7 @@ public class SlimeSpawnChecker implements SpawnCheck
 
     private static boolean isSinglePlayer()
     {
-        return game.getIntegratedServer() != null;
+        return GAME.getIntegratedServer() != null;
     }
 
     /**

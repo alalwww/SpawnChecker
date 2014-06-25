@@ -28,16 +28,25 @@ public class MobSpawnerActivateArea extends SphereModel
     private int lineColor;
     private int fillColor;
 
+    /**
+     * @param drawingFillSphere trueは球の面を描画する
+     */
     public void setDrawingFillSphere(boolean drawingFillSphere)
     {
         this.drawingFillSphere = drawingFillSphere;
     }
 
+    /**
+     * @param lineColor ワイヤーフレーム線の色
+     */
     public void setLineColor(int lineColor)
     {
         this.lineColor = lineColor;
     }
 
+    /**
+     * @param fillColor 級の表面の色
+     */
     public void setFillColor(int fillColor)
     {
         this.fillColor = fillColor;
@@ -49,9 +58,6 @@ public class MobSpawnerActivateArea extends SphereModel
         setDrawStyleToLine();
 
         setGLColor(lineColor);
-
-        setSlices(10);
-        setStacks(10);
 
         if (drawingFillSphere)
         {

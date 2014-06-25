@@ -17,10 +17,9 @@ import static com.google.common.base.Preconditions.*;
 
 import java.util.Arrays;
 
+import com.google.common.base.Objects;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import com.google.common.base.Objects;
 
 import net.minecraftforge.common.config.Property;
 

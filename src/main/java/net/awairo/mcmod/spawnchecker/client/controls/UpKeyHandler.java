@@ -28,7 +28,7 @@ final class UpKeyHandler extends AbstractKeyHandler
     @Override
     void onKeyPress(boolean ctrl, boolean shift, boolean alt)
     {
-        KeyManager.instance.onUpKeyPress(ctrl, shift, alt);
+        KeyManager.INSTANCE.onUpKeyPress(ctrl, shift, alt);
     }
 
 }

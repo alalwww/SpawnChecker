@@ -41,6 +41,11 @@ public final class SlimeChunkVisualizerModeConfig extends SkeletalConfig
     private final Prop chunkMarkerIntarval;
     private final Prop chunkMarkerAnimationCycle;
 
+    /**
+     * Constructor.
+     * 
+     * @param config モード設定
+     */
     public SlimeChunkVisualizerModeConfig(ModeConfig config)
     {
         super(config);

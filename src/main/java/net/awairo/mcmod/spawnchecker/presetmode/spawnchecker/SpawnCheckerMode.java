@@ -30,7 +30,9 @@ import net.awairo.mcmod.spawnchecker.presetmode.spawncheck.WorldSpawnCheck;
  */
 public final class SpawnCheckerMode extends SkeletalPresetMode<SpawnCheckerMode> implements SelectableMode
 {
+    /** mode id. */
     public static final String ID = "spawnchecker";
+
     private final SpawnCheckerModeConfig config;
     private WorldSpawnCheck spawnCheck;
 
@@ -52,7 +54,7 @@ public final class SpawnCheckerMode extends SkeletalPresetMode<SpawnCheckerMode>
     }
 
     @Override
-    public final int ordinal()
+    public int ordinal()
     {
         return 10;
     }

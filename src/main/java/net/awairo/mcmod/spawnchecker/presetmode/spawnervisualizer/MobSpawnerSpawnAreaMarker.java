@@ -27,8 +27,14 @@ public class MobSpawnerSpawnAreaMarker extends SkeletalMarker<MobSpawnerSpawnAre
     /** スポーナーのスポーン範囲. */
     private final MobSpawnerSpawnArea model = new MobSpawnerSpawnArea();
 
+    /**
+     * Constructor.
+     * 
+     * @param config スポーナー可視化モードの設定
+     */
     public MobSpawnerSpawnAreaMarker(SpawnerVisualizerModeConfig config)
     {
+        // TODO: 設定値のロード
         model.setMin(-4, -1, -4);
         model.setMax(4, 2, 4);
         model.setOffset(0.01d);

@@ -28,7 +28,7 @@ final class MinusKeyHandler extends AbstractKeyHandler
     @Override
     void onKeyPress(boolean ctrl, boolean shift, boolean alt)
     {
-        KeyManager.instance.onMinusKeyPress(ctrl, shift, alt);
+        KeyManager.INSTANCE.onMinusKeyPress(ctrl, shift, alt);
     }
 
 }

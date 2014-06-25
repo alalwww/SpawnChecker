@@ -19,6 +19,8 @@ import net.awairo.mcmod.spawnchecker.client.model.MarkerModel;
  * 複数のモデルを使うマーカー.
  * 
  * @author alalwww
+ * 
+ * @param <T> marker type
  */
 public abstract class SkeletalMultiModelMarker<T extends SkeletalMultiModelMarker<T>> extends SkeletalMarker<T>
 {

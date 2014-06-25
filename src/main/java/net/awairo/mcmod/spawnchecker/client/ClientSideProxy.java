@@ -13,12 +13,13 @@
 
 package net.awairo.mcmod.spawnchecker.client;
 
+import net.minecraft.client.settings.KeyBinding;
+
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLInterModComms.IMCMessage;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import net.minecraft.client.settings.KeyBinding;
 
 import net.awairo.mcmod.spawnchecker.Proxy;
 import net.awairo.mcmod.spawnchecker.SpawnChecker;
@@ -67,7 +68,7 @@ public final class ClientSideProxy extends Proxy
         InformationManager.load();
         ModeManager.load();
 
-        for (ClientManager manager : ClientManager.managers.values())
+        for (ClientManager manager : ClientManager.MANAGERS.values())
             registerEventListener(manager);
     }
 

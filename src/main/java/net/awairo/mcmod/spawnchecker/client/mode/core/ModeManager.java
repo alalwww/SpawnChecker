@@ -15,13 +15,14 @@ package net.awairo.mcmod.spawnchecker.client.mode.core;
 
 import static com.google.common.base.Preconditions.*;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent.ClientTickEvent;
-import cpw.mods.fml.common.gameevent.TickEvent.Phase;
-import cpw.mods.fml.common.gameevent.TickEvent.RenderTickEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.World;
+
 import net.minecraftforge.client.event.RenderWorldLastEvent;
+
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent.Phase;
+import cpw.mods.fml.common.gameevent.TickEvent.RenderTickEvent;
 
 import net.awairo.mcmod.spawnchecker.client.ClientManager;
 import net.awairo.mcmod.spawnchecker.client.common.Settings;
@@ -152,8 +153,6 @@ public final class ModeManager extends ClientManager
      * 指定方向へのモード変更の計画を追加します.
      * 
      * <p>現在モードが条件起動モードだった場合、直前の選択起動モードに戻します。</p>
-     * 
-     * @param direction モードの変更方向
      */
     public void changeModeUp()
     {
@@ -170,8 +169,6 @@ public final class ModeManager extends ClientManager
      * 指定方向へのモード変更の計画を追加します.
      * 
      * <p>現在モードが条件起動モードだった場合、直前の選択起動モードに戻します。</p>
-     * 
-     * @param direction モードの変更方向
      */
     public void changeModeDown()
     {
@@ -381,8 +378,11 @@ public final class ModeManager extends ClientManager
             this.manager = checkNotNull(manager);
         }
 
+        /**
+         * @param event RenderTickEvent
+         */
         @SubscribeEvent
-        public void handleClientTick(ClientTickEvent event)
+        public void handleClientTick(RenderTickEvent event)
         {
             if (event.phase != Phase.START)
                 return;
@@ -408,6 +408,9 @@ public final class ModeManager extends ClientManager
             }
         }
 
+        /**
+         * @param event RenderTickEvent
+         */
         @SubscribeEvent
         public void handleRenderGameOverlay(RenderTickEvent event)
         {
@@ -444,6 +447,9 @@ public final class ModeManager extends ClientManager
             this.manager = checkNotNull(manager);
         }
 
+        /**
+         * @param event RenderWorldLastEvent
+         */
         @SubscribeEvent
         public void handleRenderWorldLast(RenderWorldLastEvent event)
         {

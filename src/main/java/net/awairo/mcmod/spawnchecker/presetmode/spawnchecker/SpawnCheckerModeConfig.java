@@ -33,6 +33,11 @@ import net.awairo.mcmod.spawnchecker.presetmode.SkeletalConfig;
  */
 public final class SpawnCheckerModeConfig extends SkeletalConfig
 {
+    /**
+     * Constructor.
+     * 
+     * @param config モード設定
+     */
     public SpawnCheckerModeConfig(ModeConfig config)
     {
         super(config);

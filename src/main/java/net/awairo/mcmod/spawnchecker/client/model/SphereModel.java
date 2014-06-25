@@ -23,7 +23,7 @@ import org.lwjgl.util.glu.Sphere;
  */
 public class SphereModel implements MarkerModel
 {
-    protected static final Sphere sphere = new Sphere();
+    protected static final Sphere SPHERE = new Sphere();
 
     protected int drawStyle = GLU.GLU_LINE;
 
@@ -49,11 +49,13 @@ public class SphereModel implements MarkerModel
         this.stacks = stacks;
     }
 
+    /** set draw style to GLU_LINE. */
     public void setDrawStyleToLine()
     {
         drawStyle = GLU.GLU_LINE;
     }
 
+    /** set draw style to GLU_FILL. */
     public void setDrawStyleToFill()
     {
         drawStyle = GLU.GLU_FILL;
@@ -62,8 +64,8 @@ public class SphereModel implements MarkerModel
     @Override
     public void render()
     {
-        sphere.setDrawStyle(drawStyle);
-        sphere.draw(radius, slices, stacks);
+        SPHERE.setDrawStyle(drawStyle);
+        SPHERE.draw(radius, slices, stacks);
     }
 
 }

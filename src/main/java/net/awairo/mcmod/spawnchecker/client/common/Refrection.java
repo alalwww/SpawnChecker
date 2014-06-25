@@ -17,16 +17,16 @@ import static com.google.common.base.Preconditions.*;
 
 import java.net.InetSocketAddress;
 
+import com.google.common.base.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.google.common.base.Optional;
-
-import cpw.mods.fml.relauncher.ReflectionHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.network.NetworkManager;
+
+import cpw.mods.fml.relauncher.ReflectionHelper;
 
 import net.awairo.mcmod.spawnchecker.SpawnChecker;
 
@@ -35,7 +35,7 @@ import net.awairo.mcmod.spawnchecker.SpawnChecker;
  */
 public final class Refrection
 {
-    private static final Minecraft game = Minecraft.getMinecraft();
+    private static final Minecraft GAME = Minecraft.getMinecraft();
     private static final Logger LOGGER = LogManager.getLogger(SpawnChecker.MOD_ID);
 
     /**
@@ -45,11 +45,11 @@ public final class Refrection
      */
     public static Optional<InetSocketAddress> getServerAddress()
     {
-        checkState(game.theWorld != null, "world is not started");
-        checkState(game.getIntegratedServer() == null, "current mode is the single player.");
+        checkState(GAME.theWorld != null, "world is not started");
+        checkState(GAME.getIntegratedServer() == null, "current mode is the single player.");
 
         final NetHandlerPlayClient sendQueue = getFieldValue(
-                WorldClient.class, game.theWorld, "sendQueue", ConstantsConfig.instance().sendQueueSrgName);
+                WorldClient.class, GAME.theWorld, "sendQueue", ConstantsConfig.instance().sendQueueSrgName);
 
         if (sendQueue == null)
             return Optional.absent();

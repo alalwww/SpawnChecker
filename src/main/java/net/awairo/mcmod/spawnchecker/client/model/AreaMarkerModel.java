@@ -28,49 +28,70 @@ public class AreaMarkerModel extends SkeletalMarkerModel
     private double min;
     private double max;
 
-    private double top;
     private double bottom;
+    private double top;
 
     private double intervals;
     private int cycle;
 
+    /**
+     * @param min X軸Z軸の負数方向の大きさ
+     */
     public void setMin(double min)
     {
         this.min = min;
     }
 
+    /**
+     * @param max X軸Z軸の正数方向の大きさ
+     */
     public void setMax(double max)
     {
         this.max = max;
     }
 
-    public void setTop(double top)
-    {
-        this.top = top;
-    }
-
+    /**
+     * @param bottom Y軸の負数方向の大きさ
+     */
     public void setBottom(double bottom)
     {
         this.bottom = bottom;
     }
 
+    /**
+     * @param top Y軸の正数方向の大きさ
+     */
+    public void setTop(double top)
+    {
+        this.top = top;
+    }
+
+    /**
+     * @param intervals ラインの描画の間隔
+     */
     public void setIntervals(double intervals)
     {
         this.intervals = intervals;
     }
 
+    /**
+     * @param cycle ラインアニメーションが1サイクルするまでに必要なtick
+     */
     public void setCycle(int cycle)
     {
         checkArgument(cycle >= 0, "negative value(%s)", cycle);
         this.cycle = cycle;
     }
 
+    /**
+     * @param offset ラインの描画オフセット
+     */
     public void setOffset(double offset)
     {
         min -= offset;
         max += offset;
-        top += offset;
         bottom -= offset;
+        top += offset;
     }
 
     @Override
@@ -89,71 +110,35 @@ public class AreaMarkerModel extends SkeletalMarkerModel
 
         // 底面の広がる四角形を描画
         for (xz = intervals * tick; xz <= maxXZOffset; xz += intervals)
-        {
-            final double minXZ = center - xz;
-            final double maxXZ = center + xz;
-
-            // north
-            addVertex(minXZ, bottom, minXZ);
-            addVertex(minXZ, bottom, maxXZ);
-
-            // west
-            addVertex(minXZ, bottom, maxXZ);
-            addVertex(maxXZ, bottom, maxXZ);
-
-            // south
-            addVertex(maxXZ, bottom, maxXZ);
-            addVertex(maxXZ, bottom, minXZ);
-
-            // east
-            addVertex(maxXZ, bottom, minXZ);
-            addVertex(minXZ, bottom, minXZ);
-        }
+            addSquareVertex(center - xz, center + xz, bottom);
 
         // 縦に積み重なった四角形を描画
         for (y = bottom - maxXZOffset + xz; y <= top; y += intervals)
-        {
-            // north
-            addVertex(min, y, min);
-            addVertex(min, y, max);
-
-            // west
-            addVertex(min, y, max);
-            addVertex(max, y, max);
-
-            // south
-            addVertex(max, y, max);
-            addVertex(max, y, min);
-
-            // east
-            addVertex(max, y, min);
-            addVertex(min, y, min);
-        }
+            addSquareVertex(min, max, y);
 
         // 上面の小さくなる四角形を描画
         for (xz = y - top; xz <= halfSize; xz += intervals)
-        {
-            final double minXZ = min + xz;
-            final double maxXZ = max - xz;
-
-            // north
-            addVertex(minXZ, top, minXZ);
-            addVertex(minXZ, top, maxXZ);
-
-            // west
-            addVertex(minXZ, top, maxXZ);
-            addVertex(maxXZ, top, maxXZ);
-
-            // south
-            addVertex(maxXZ, top, maxXZ);
-            addVertex(maxXZ, top, minXZ);
-
-            // east
-            addVertex(maxXZ, top, minXZ);
-            addVertex(minXZ, top, minXZ);
-        }
+            addSquareVertex(min + xz, max - xz, top);
 
         draw();
     }
 
+    private void addSquareVertex(double minXZ, double maxXZ, double y)
+    {
+        // north　line
+        addVertex(minXZ, y, minXZ);
+        addVertex(minXZ, y, maxXZ);
+
+        // west　line
+        addVertex(minXZ, y, maxXZ);
+        addVertex(maxXZ, y, maxXZ);
+
+        // south　line
+        addVertex(maxXZ, y, maxXZ);
+        addVertex(maxXZ, y, minXZ);
+
+        // east　line
+        addVertex(maxXZ, y, minXZ);
+        addVertex(minXZ, y, minXZ);
+    }
 }

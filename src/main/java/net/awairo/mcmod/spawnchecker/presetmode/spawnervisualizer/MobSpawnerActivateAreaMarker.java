@@ -41,6 +41,11 @@ public class MobSpawnerActivateAreaMarker extends SkeletalMarker<MobSpawnerActiv
     private Color fillColor;
     private int brightness;
 
+    /**
+     * Constructor.
+     * 
+     * @param config スポーナー可視化モードの設定
+     */
     public MobSpawnerActivateAreaMarker(SpawnerVisualizerModeConfig config)
     {
         // TODO: アニメーションなどの設定ロード
@@ -82,6 +87,10 @@ public class MobSpawnerActivateAreaMarker extends SkeletalMarker<MobSpawnerActiv
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * @param lineColor ワイヤーフレーム線の色
+     * @return このインスタンス
+     */
     public MobSpawnerActivateAreaMarker setLineColor(Color lineColor)
     {
         reset();
@@ -89,6 +98,10 @@ public class MobSpawnerActivateAreaMarker extends SkeletalMarker<MobSpawnerActiv
         return this;
     }
 
+    /**
+     * @param fillColor 球体の面の色
+     * @return このインスタンス
+     */
     public MobSpawnerActivateAreaMarker setFillColor(Color fillColor)
     {
         reset();
@@ -96,6 +109,10 @@ public class MobSpawnerActivateAreaMarker extends SkeletalMarker<MobSpawnerActiv
         return this;
     }
 
+    /**
+     * @param brightness 色の明るさ
+     * @return このインスタンス
+     */
     public MobSpawnerActivateAreaMarker setBrightness(int brightness)
     {
         reset();
@@ -113,6 +130,9 @@ public class MobSpawnerActivateAreaMarker extends SkeletalMarker<MobSpawnerActiv
     private void compute()
     {
         if (computed) return;
+
+        model.setSlices(10);
+        model.setStacks(10);
 
         model.setLineColor(Colors.applyBrightnessTo(lineColor, brightness));
 
@@ -136,9 +156,9 @@ public class MobSpawnerActivateAreaMarker extends SkeletalMarker<MobSpawnerActiv
 
         {
             GL11.glTranslated(
-                    posX - renderManager.viewerPosX,
-                    posY - renderManager.viewerPosY,
-                    posZ - renderManager.viewerPosZ);
+                    posX - manager().viewerPosX,
+                    posY - manager().viewerPosY,
+                    posZ - manager().viewerPosZ);
 
             // 線の集まる部分が左右なのはなんかかっちょわるから、90度回転し上下に集まるようにする
             GL11.glRotatef(90, 1, 0, 0);

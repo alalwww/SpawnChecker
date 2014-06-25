@@ -15,9 +15,10 @@ package net.awairo.mcmod.spawnchecker.client.controls;
 
 import org.lwjgl.input.Keyboard;
 
+import net.minecraft.client.Minecraft;
+
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.ClientTickEvent;
-import net.minecraft.client.Minecraft;
 
 import net.awairo.mcmod.spawnchecker.client.ClientManager;
 import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
@@ -34,7 +35,7 @@ public final class KeyManager extends ClientManager
     private final int[] shiftKeys;
     private final int[] altKeys;
 
-    static final KeyManager instance = new KeyManager();
+    static final KeyManager INSTANCE = new KeyManager();
 
     /** クラスロード用. */
     public static void load()
@@ -113,6 +114,9 @@ public final class KeyManager extends ClientManager
             this.manager = manager;
         }
 
+        /**
+         * @param event ClientTickEvent
+         */
         @SubscribeEvent
         public void onTick(ClientTickEvent event)
         {
@@ -122,7 +126,7 @@ public final class KeyManager extends ClientManager
             final boolean shift = isKeysDown(manager.shiftKeys);
             final boolean alt = isKeysDown(manager.altKeys);
 
-            for (AbstractKeyHandler handler : AbstractKeyHandler.handlerList)
+            for (AbstractKeyHandler handler : AbstractKeyHandler.HANDLER_LIST)
             {
                 handler.key.update(currentTime);
                 while (handler.key.isPressed())

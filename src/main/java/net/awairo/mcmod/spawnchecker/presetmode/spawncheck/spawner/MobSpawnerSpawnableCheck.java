@@ -19,14 +19,22 @@ import com.google.common.collect.ImmutableMap;
 import net.awairo.mcmod.spawnchecker.presetmode.spawncheck.SpawnCheck;
 
 /**
- * 
+ * スポーナーのスポーン可否チェック.
  * 
  * @author alalwww
  */
 public interface MobSpawnerSpawnableCheck extends SpawnCheck
 {
+    /**
+     * @return trueはこのチェック処理が対象Mobのスポーン判定をサポートしている
+     */
     boolean supported();
 
+    /**
+     * エンティティ識別子とスポーンチェック処理のマップ.
+     * 
+     * @author alalwww
+     */
     public static final class EntityMap
     {
         private static final ImmutableMap<String, Class<? extends MobSpawnerSpawnableCheck>> INSTANCE;
@@ -66,6 +74,12 @@ public interface MobSpawnerSpawnableCheck extends SpawnCheck
                     .build();
         }
 
+        /**
+         * 新しいMobSpawnerのスポーンチェック処理を取得します.
+         * 
+         * @param entityId エンティティ識別子
+         * @return スポーンチェック処理
+         */
         public static MobSpawnerSpawnableCheck newInstanceOf(String entityId)
         {
             try

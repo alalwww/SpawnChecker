@@ -27,6 +27,11 @@ public class MobSpawnerBlockMarker extends SkeletalMarker<MobSpawnerBlockMarker>
     /** スポーナーブロックの外周. */
     private final MobSpawnerBlockOutline model = new MobSpawnerBlockOutline();
 
+    /**
+     * Constructor.
+     * 
+     * @param config スポーナー可視化モードの設定
+     */
     public MobSpawnerBlockMarker(SpawnerVisualizerModeConfig config)
     {
         // TODO: 設定ロード
