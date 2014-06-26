@@ -124,15 +124,14 @@ public class MobSpawnerActivateAreaMarker extends SkeletalMarker<MobSpawnerActiv
     protected MarkerModel model()
     {
         compute();
+        model.setSlices(10);
+        model.setStacks(10);
         return model;
     }
 
     private void compute()
     {
         if (computed) return;
-
-        model.setSlices(10);
-        model.setStacks(10);
 
         model.setLineColor(Colors.applyBrightnessTo(lineColor, brightness));
 
