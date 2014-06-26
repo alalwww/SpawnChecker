@@ -85,7 +85,6 @@ task deobfJar(type: Jar, dependsOn: classes) {
 
 task sourceJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
-    println sourceMainJava.output
     from sourceMainJava.output
 }
 
