@@ -4,15 +4,13 @@ ant.condition(property: "os", value: "unix") { os(family: "unix") }
 
 def format = { format, ... args -> String.format(format, args) }
 
-def getRevision = {
-    ->
+def getRevision = { ->
     def file = file(".modrevision")
     String text = file.exists() ? file.getText() : ""
     return text.isEmpty() ? "1" : text
 }
 
-def getVersionInfo = {
-    ->
+def getVersionInfo = { ->
     def baos = new ByteArrayOutputStream()
     exec {
         switch (ant.properties.os) {
@@ -44,8 +42,7 @@ project.ext.versionInfo = getVersionInfo()
 // ------------------------------------------------------------------------------------
 
 // writeversion task
-project.ext.writeVersion = {
-    ->
+project.ext.writeVersion = { ->
 
     def fw = file("src/main/resources/version.properties")
     fw.metaClass.writeLine = { f, ... a -> append(format(f, a) + "\n") }
@@ -66,8 +63,7 @@ project.ext.writeVersion = {
             project.versionInfo.version(), project.versionInfo.githash))
 }
 
-project.ext.revisionUp = {
-    ->
+project.ext.revisionUp = { ->
 
     def vi = project.versionInfo
 
@@ -81,8 +77,7 @@ project.ext.revisionUp = {
     writeVersion()
 }
 
-project.ext.revisionDown = {
-    ->
+project.ext.revisionDown = { ->
 
     def vi = project.versionInfo
 
@@ -132,20 +127,22 @@ def class VersionInfo {
         beta = values[5]
     }
 
-    // 0.0.0-SNAPSHOT or 0.0.0.0
+    // 0.0.0.0
     def version()
     {
-        return (beta
-            ? String.format("%s.%s.%s-SNAPSHOT", major, minor, build)
-            : String.format("%s.%s.%s.%s", major, minor, build, revision))
+        return String.format(beta ? "%s.%s.%s.%sb" : "%s.%s.%s.%s", major, minor, build, revision)
     }
 
-    // 0.0.0 SANPSHOT or 0.0.0 #0
+    // 0.0-SNAPSHOT
+    def snapshotVersion()
+    {
+        return String.format("%s.%s-SNAPSHOT", major, minor)
+    }
+
+    // 0.0.0 #0
     def modinfoVersion()
     {
-        return (beta
-            ? String.format("%s.%s.%s SNAPSHOT", major, minor, build)
-            : String.format("%s.%s.%s #%s", major, minor, build, revision))
+        return String.format(beta ? "%s.%s.%s beta #%s" : "%s.%s.%s #%s", major, minor, build, revision)
     }
 
     def String toString() { return version }

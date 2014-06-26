@@ -44,6 +44,7 @@ import net.awairo.mcmod.spawnchecker.presetmode.spawnervisualizer.SpawnerVisuali
  */
 @Mod(
         modid = PresetModes.MOD_ID,
+        version = "@VERSION@",
         certificateFingerprint = Fingerprint.VALUE)
 public class PresetModes
 {

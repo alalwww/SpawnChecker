@@ -1,0 +1,70 @@
+
+//apply plugin: 'signing'
+
+//signing {
+//    sign XXXXXXXXXXX
+//}
+
+uploadArchives {
+    dependsOn build
+
+    repositories {
+        if (project.hasProperty('maven_url')
+                && project.hasProperty('maven_user')
+                && project.hasProperty('maven_password')) {
+
+            mavenDeployer {
+                configuration = configurations.deployerJars
+                uniqueVersion = false
+
+                //beforeDeployment {
+                //    MavenDeployment deployment -> signing.signPom(deployment)
+                //}
+
+                repository(url: project.maven_url) {
+                    authentication(userName: project.maven_user, password: project.maven_password)
+                }
+
+                pom {
+                    artifactId = project.archivesBaseName
+
+                    project {
+                        name project.archivesBaseName
+                        packaging 'jar'
+                        description 'The SpawnChecer draw informations to ingame of mob spawn points, slime chunks and the MobSpawner.'
+                        url 'http://www.awairo.net/minecraft/'
+
+                        scm {
+                            url 'https://github.com/alalwww/SpawnChecker'
+                            connection 'scm:git:https://github.com/alalwww/SpawnChecker.git'
+                            developerConnection 'scm:git:git@github.com:alalwww/SpawnChecker.git'
+                        }
+
+                        issueManagement {
+                            system 'GitHub'
+                            url 'https://github.com/alalwww/SpawnChecker/issues'
+                        }
+
+                        licenses {
+                            license {
+                                name 'Minecraft Mod Public License'
+                                url 'http://www.mod-buildcraft.com/MMPL-1.0.txt'
+                                distribution 'repo'
+                            }
+                        }
+
+                        developers {
+                            developer {
+                                id 'alalwww'
+                                name 'alalwww'
+                                roles { role 'developer' }
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            add project.repositories.mavenLocal()
+        }
+    }
+}

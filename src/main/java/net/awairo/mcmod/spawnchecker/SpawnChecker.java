@@ -36,6 +36,7 @@ import net.awairo.mcmod.spawnchecker.client.mode.SelectableMode;
  */
 @Mod(
         modid = SpawnChecker.MOD_ID,
+        version = "@VERSION@",
         certificateFingerprint = Fingerprint.VALUE,
         guiFactory = "net.awairo.mcmod.spawnchecker.client.gui.GuiScreenFactory")
 public final class SpawnChecker
