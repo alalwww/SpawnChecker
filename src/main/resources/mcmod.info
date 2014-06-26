@@ -1,0 +1,32 @@
+[
+{
+  "modid": "spawnchecker",
+  "name": "SpawnChecker",
+  "description": "The SpawnChecer draw informations to ingame of mob spawn points, slime chunks and the MobSpawner.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "http://www.awairo.net/minecraft/",
+  "updateUrl": "",
+  "authors": ["alalwww"],
+  "credits": "By alalwww, original idea and mod by fillppo",
+  "logoFile": "logo.png",
+  "parent": "",
+  "screenshots": [],
+  "requiredMods": [],
+  "dependencies": [],
+  "dependants": [],
+  "useDependencyInformation": "false"
+},
+{
+  "modid": "spawnchecker.presetmode",
+  "name": "SpawnChecker preset mode",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "authors": ["alalwww"],
+  "parent": "spawnchecker",
+  "requiredMods": ["spawnchecker@[2.0,)"],
+  "dependencies": ["spawnchecker@[2.0,)"],
+  "dependants": [],
+  "useDependencyInformation": "true"
+}
+]

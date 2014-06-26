@@ -1,25 +1,62 @@
-SpawnChecker
-============
+SpawnChecker2
+================================================================================================
 
 What is this?
----------------
-Minecraft mod. Drawing monster spawn points, slime chunks, and the MobSpawner informations.
+---------------------------------------------------------------------------
+[Minecraft](http://minecraft.net/) mod. Drawing monster spawn points, slime chunks, and the MobSpawner informations.
 
 モンスターがスポーンする場所、スライムチャンク、モンスタースポーナーの情報を画面内に表示する、[マインクラフト](http://minecraft.net/)のMODです。
 
-Installation instructions.
----------------
+Installation
+---------------------------------------------------------------------------
 
-###Requirements
-*Minecraft
-*[FML](https://github.com/cpw/FML) or [Minecraft Forge](http://minecraftforge.net/) [(Forge Downloads)](http://files.minecraftforge.net/)
+### Requirements
+* [Minecraft](https://minecraft.net)
+* [Minecraft Forge](http://minecraftforge.net/) [(downloads)](http://files.minecraftforge.net/)
 
-###Installing
-1. Download and install FML (or Minecraft Forge) files into the minecraft.jar.
-FML (もしくは Minecraft Forge) をダウンロードし、minecraft.jar に導入します。
-2. Add this MOD's ZIP file into mods folder, and run Minecraft. ENJOY!
-このMODのZIPファイルを mods フォルダーに加え、マインクラフトを実行します。
+### Installation
+* put in the mods folder!
+
+Controll
+---------------------------------------------------------------------------
+key: `UP`, `DOWN`, `Num Add(+)`, `Num Sub(-)`, and modifier keys(CTRL/SHIFT/ALT)
+
+- `ctrl` + `up`/`down`: change mode
+- `up`/`down`: change mode option
+- `num +`/`num -`: change horizontal scan range
+- `shift`/`alt` + `num +`/`num -`: change vertical scan range
+- `ctrl` + `num +`/`num -`: change marker brightness
+
+- click mob spawner block with bare hands: start spawner visualizer mode 
 
 Downloads
----------------
-*[Downloads](http://goo.gl/Hkp2d)
+---------------------------------------------------------------------------
+* [Downloads](http://goo.gl/Hkp2d)
+
+For Modder
+---------------------------------------------------------------------------
+
+cloneしてsetupしてbuildタスクを叩けば、多分jarは生成されます。
+
+Modの開発環境から参照したい場合、mavenリポジトリを追加することで参照できます。
+
+	repositories {
+	    mavenCentral()
+	    maven {
+	        name = "awairo"
+	        url = "http://maven.awairo.net/"
+	    }
+	}
+	
+	dependencies {
+	    // 2.0.x.xxx:dev 形式で明確なバージョンを指定もできます
+	    compile 'net.awairo.mcmod:SpawnChecker:2.0-SNAPSHOT:dev'
+	}
+
+
+SpawnChecker2は、他のModから任意のモードを追加することができます。
+リファレンスなどは作成していないので、presetmodeの実装を参照して下さい。
+バージョンアップでもなるべく互換性は保ちますが、保証はできません。
+
+PRは受け付けますが、マージするかは内容を見て判断します。
+
