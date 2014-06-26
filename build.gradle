@@ -67,14 +67,14 @@ dependencies {
 
 processResources {
 
-    inputs.property "version", project.version
+    inputs.property "version", versionInfo.version()
     inputs.property "mcversion", project.minecraft.version
 
     exclude 'Log4j-config.xsd', 'Log4j-events.dtd', 'Log4j-events.xsd', 'log4j2.xml'
 
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
-        expand 'version':versionInfo.modinfoVersion(), 'mcversion':minecraft.version
+        expand 'version':versionInfo.version(), 'modinfoversion':versionInfo.modinfoVersion(), 'mcversion':minecraft.version
     }
 }
 
@@ -115,9 +115,8 @@ task signJar(dependsOn:assemble) << {
     }
 }
 
-build {
-    dependsOn jar, deobfJar, sourceJar, javadocJar, signJar
-}
+build { dependsOn signJar }
+
 checkstyle {
     configFile = file('project/checkstyle.xml')
     ignoreFailures = true
