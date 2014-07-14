@@ -169,6 +169,16 @@ gradle.taskGraph.whenReady { taskGraph ->
     } else {
         writeVersion()
         uploadArchives.repositories.mavenDeployer.pom.version = project.version = versionInfo.version()
+
+    // update configuration of source copy tasks
+    project.tasks.withType(net.minecraftforge.gradle.tasks.user.SourceCopyTask.class).each {
+        t -> t.replace '@VERSION@', project.version
+    }
+    project.tasks.findAll { t -> t.name.equals("processResources") }.each { t ->
+        t.from(sourceSets.main.resources.srcDirs) {
+            include 'mcmod.info'
+            expand 'version':project.version, 'modinfoversion':versionInfo.modinfoVersion(), 'mcversion':minecraft.version
+        }
     }
 
     logger.quiet('upload archives version: ' + version)
