@@ -33,7 +33,7 @@ ext.modid = "spawnchecker"
 
 minecraft {
     // forge version
-    version = "1.7.2-10.12.2.1121"
+    version = "1.7.2-10.12.2.1161-mc172"
 
     assetDir = "run/assets"
 
