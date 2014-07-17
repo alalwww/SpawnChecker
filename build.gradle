@@ -69,7 +69,7 @@ processResources {
     // exclude debug log configurations
     exclude 'Log4j-config.xsd', 'Log4j-events.dtd', 'Log4j-events.xsd', 'log4j2.xml'
 
-    // expand the variable and copy mcmod.info
+    // expand variables and copy mcmod.info
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
         expand 'version':versionInfo.version(), 'modinfoversion':versionInfo.modinfoVersion(), 'mcversion':minecraft.version
