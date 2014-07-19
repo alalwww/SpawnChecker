@@ -20,6 +20,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.google.common.base.Function;
+import com.google.common.base.Optional;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableTable;
@@ -62,7 +63,7 @@ public class MultiServerWorldSeedConfig extends ConfigCategory
     /**
      * 行キーにホスト名またはIPアドレス文字列、列キーにポート、値にシード値を持った不変のテーブル.
      */
-    public final ImmutableTable<String, Integer, Long> serverWorldSeedMap;
+    private final ImmutableTable<String, Integer, Long> serverWorldSeedMap;
 
     /**
      * Constructor.
@@ -163,5 +164,17 @@ public class MultiServerWorldSeedConfig extends ConfigCategory
     protected String configurationCategory()
     {
         return "world-seeds";
+    }
+
+    /**
+     * シード設定を取得します.
+     * 
+     * @param rowKey 行キー
+     * @param columnKey 列キー
+     * @return seed
+     */
+    public Optional<Long> get(String rowKey, Integer columnKey)
+    {
+        return Optional.fromNullable(serverWorldSeedMap.get(rowKey, columnKey));
     }
 }

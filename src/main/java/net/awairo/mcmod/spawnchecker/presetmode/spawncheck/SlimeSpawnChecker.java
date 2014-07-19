@@ -13,6 +13,7 @@
 
 package net.awairo.mcmod.spawnchecker.presetmode.spawncheck;
 
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -48,7 +49,6 @@ public class SlimeSpawnChecker implements SpawnCheck
     private static final Minecraft GAME = Minecraft.getMinecraft();
 
     private static final ConstantsConfig CONSTS = ConstantsConfig.instance();
-    private static final MultiServerWorldSeedConfig MULTISEED_CONFIG = MultiServerWorldSeedConfig.instance();
     private static final SlimeSpawnChecker SEED_UNKNOWN = new SlimeSpawnChecker();
 
     /**
@@ -63,34 +63,43 @@ public class SlimeSpawnChecker implements SpawnCheck
             final MinecraftServer ms = GAME.getIntegratedServer();
             final WorldServer ws = ms.worldServerForDimension(GAME.thePlayer.dimension);
             final long seed = ws.getSeed();
-            LOGGER.info("current world is single player world. world seed is {}", seed);
+
+            LOGGER.info("current world is single player world, world seed is {}.", seed);
+
             return new SlimeSpawnChecker(seed);
         }
 
-        // TODO: リファクタリング
-        final Optional<InetSocketAddress> address = Refrection.getServerAddress();
-        if (address.isPresent())
-        {
-            final String host = address.get().getAddress().getHostName();
-            final Integer port = address.get().getPort();
-            if (MULTISEED_CONFIG.serverWorldSeedMap.contains(host, port))
-            {
-                final long seed = MULTISEED_CONFIG.serverWorldSeedMap.get(host, port);
-                LOGGER.info("current world is multi player world. world seed is {}", seed);
-                return new SlimeSpawnChecker(seed);
-            }
+        final Optional<Long> seed = findSeed(Refrection.getServerAddress());
 
-            final String ip = address.get().getAddress().getHostAddress();
-            if (MULTISEED_CONFIG.serverWorldSeedMap.contains(host, port))
-            {
-                final long seed = MULTISEED_CONFIG.serverWorldSeedMap.get(ip, port);
-                LOGGER.info("current world is multi player world. world seed is {}", seed);
-                return new SlimeSpawnChecker(seed);
-            }
+        if (seed.isPresent())
+        {
+            LOGGER.info("world seed is {}.", seed.get());
+            return new SlimeSpawnChecker(seed.get());
         }
 
-        LOGGER.info("current world is multi player world. world seed is {}", "unknown");
+        LOGGER.info("world seed is unknown.");
         return SEED_UNKNOWN;
+    }
+
+    private static Optional<Long> findSeed(final Optional<InetSocketAddress> address)
+    {
+        if (!address.isPresent())
+            return Optional.absent();
+
+        final InetAddress inetAddress = address.get().getAddress();
+
+        final String host = inetAddress.getHostName();
+        final String ip = inetAddress.getHostAddress();
+        final Integer port = address.get().getPort();
+
+        LOGGER.info("multiplayer server: host={}, ip={}, port={}", host, ip, port);
+
+        return seedConfig().get(host, port).or(seedConfig().get(ip, port));
+    }
+
+    private static MultiServerWorldSeedConfig seedConfig()
+    {
+        return MultiServerWorldSeedConfig.instance();
     }
 
     //---------------------
