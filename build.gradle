@@ -21,15 +21,18 @@ apply plugin: 'checkstyle'
 
 apply from: 'project/version-writer.gradle'
 
-sourceCompatibility = JavaVersion.VERSION_1_7
-targetCompatibility = JavaVersion.VERSION_1_7
-tasks.withType(Compile) { options.encoding = 'UTF-8' }
+def jreVersion = JavaVersion.VERSION_1_7
+def encoding = 'UTF-8'
 
 group = "net.awairo.mcmod"
 archivesBaseName = "SpawnChecker"
 version = versionInfo.version()
 
 ext.modid = "spawnchecker"
+
+sourceCompatibility = jreVersion
+targetCompatibility = jreVersion
+[compileJava, compileTestJava]*.options*.encoding = encoding
 
 minecraft {
     // forge version
@@ -183,3 +186,5 @@ gradle.taskGraph.whenReady { taskGraph ->
 }
 
 apply from: 'project/publish.gradle'
+
+task wrapper(type: Wrapper) { gradleVersion = '2.0' }
