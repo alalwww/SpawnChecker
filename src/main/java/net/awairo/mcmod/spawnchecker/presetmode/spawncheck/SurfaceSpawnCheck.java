@@ -49,6 +49,11 @@ public class SurfaceSpawnCheck extends SkeletalWorldSpawnCheck
         super(mode);
     }
 
+    public SlimeSpawnChecker slimeSpawnChecker()
+    {
+        return slimeSpawnChecker;
+    }
+
     @Override
     protected void setOptionSet(OptionSet options)
     {

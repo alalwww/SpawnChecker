@@ -91,8 +91,8 @@ public class SlimeChunkVisualizerMode extends SkeletalPresetMode<SlimeChunkVisua
     @Override
     protected void onStart()
     {
-        slimeSpawnChecker = SlimeSpawnChecker.newCheckerOfCurrentWorld();
         spawnCheck = new SurfaceSpawnCheck(this);
+        slimeSpawnChecker = spawnCheck.slimeSpawnChecker();
         chunkMarkers = Lists.newArrayListWithCapacity(consts.slimeChunkMarkerCacheInitSize);
     }
 
