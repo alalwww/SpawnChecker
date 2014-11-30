@@ -13,7 +13,7 @@ package net.awairo.mcmod.common.v1.client.gui;
 
 import net.minecraft.client.gui.GuiScreen;
 
-import cpw.mods.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.client.FMLClientHandler;
 
 /**
  * BackButton.

@@ -28,6 +28,7 @@ import org.apache.logging.log4j.Logger;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -180,7 +181,7 @@ public class SlimeSpawnChecker implements SpawnCheck
 
         // 湿地ばいーむ
         final World world = GAME.theWorld;
-        if (world == null || world.getBiomeGenForCoords(x, z) != BiomeGenBase.swampland)
+        if (world == null || world.getBiomeGenForCoords(new BlockPos(x, 64, z)) != BiomeGenBase.swampland)
             return false;
 
         return COPIED_LOGICS.canSpawnByLightLevel(x, y, z, CONSTS.spawnableLightLevel);

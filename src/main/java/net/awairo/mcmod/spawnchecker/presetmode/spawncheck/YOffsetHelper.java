@@ -13,14 +13,17 @@
 
 package net.awairo.mcmod.spawnchecker.presetmode.spawncheck;
 
-import java.util.Arrays;
+import java.util.EnumSet;
+import java.util.Set;
 
 import com.google.common.collect.ImmutableMap;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLever;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 
 import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
@@ -81,7 +84,7 @@ public enum YOffsetHelper
     private double getYOffsetInternal(final int x, final int y, final int z)
     {
         final WorldClient world = minecraft.theWorld;
-        final Block block = world.getBlock(x, y, z);
+        final Block block = world.getBlockState(new BlockPos(x, y, z)).getBlock();
 
         if (block != null)
         {
@@ -131,12 +134,15 @@ public enum YOffsetHelper
     {
         // TODO: 定数化
         private static final double OFFSET = 0.18d;
-        private static final int[] ON_BLOCK = { 5, 6, 13, 14 };
+
+        private static final Set<BlockLever.EnumOrientation> ON_BLOCK = EnumSet.of(
+                BlockLever.EnumOrientation.UP_X,
+                BlockLever.EnumOrientation.UP_Z);
 
         @Override
         public double apply(final WorldClient world, final int x, final int y, final int z)
         {
-            return Arrays.binarySearch(ON_BLOCK, world.getBlockMetadata(x, y, z)) >= 0 ? OFFSET : 0;
+            return ON_BLOCK.contains(world.getBlockState(new BlockPos(x, y, z)).getValue(BlockLever.FACING)) ? OFFSET : 0;
         }
     }
 
@@ -150,7 +156,7 @@ public enum YOffsetHelper
         @Override
         public double apply(WorldClient world, int x, int y, int z)
         {
-            Blocks.snow_layer.setBlockBoundsBasedOnState(world, x, y, z);
+            Blocks.snow_layer.setBlockBoundsBasedOnState(world, new BlockPos(x, y, z));
             return Blocks.snow_layer.getBlockBoundsMaxY();
         }
 

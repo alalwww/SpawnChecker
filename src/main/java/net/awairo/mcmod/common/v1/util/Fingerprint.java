@@ -18,7 +18,7 @@ import org.apache.logging.log4j.Logger;
 
 import net.minecraft.client.resources.I18n;
 
-import cpw.mods.fml.common.event.FMLFingerprintViolationEvent;
+import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent;
 
 /**
  * 署名.

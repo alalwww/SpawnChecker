@@ -15,9 +15,12 @@ package net.awairo.mcmod.spawnchecker.client.common;
 
 import static com.google.common.base.Preconditions.*;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
 
 import com.google.common.base.Optional;
+import com.google.common.base.Throwables;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,8 +28,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.network.NetworkManager;
+import net.minecraft.tileentity.MobSpawnerBaseLogic;
 
-import cpw.mods.fml.relauncher.ReflectionHelper;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import net.awairo.mcmod.spawnchecker.SpawnChecker;
 
@@ -56,15 +60,55 @@ public final class Refrection
 
         final NetworkManager netManager = sendQueue.getNetworkManager();
 
-        if (netManager.getSocketAddress() instanceof InetSocketAddress)
-            return Optional.fromNullable((InetSocketAddress) netManager.getSocketAddress());
+        if (netManager.getRemoteAddress() instanceof InetSocketAddress)
+            return Optional.fromNullable((InetSocketAddress) netManager.getRemoteAddress());
 
-        if (LOGGER.isDebugEnabled() && netManager.getSocketAddress() != null)
-            LOGGER.debug(netManager.getSocketAddress().getClass().getName());
+        if (LOGGER.isDebugEnabled() && netManager.getRemoteAddress() != null)
+            LOGGER.debug(netManager.getRemoteAddress().getClass().getName());
 
         LOGGER.warn("not found InetSocketAddress");
 
         return Optional.absent();
+    }
+
+    private static volatile Method getEntityNameToSpawn;
+    private static volatile boolean failed;
+    private static final Object lock = new Object();
+
+    public static String getEntityNameToSpawnFrom(MobSpawnerBaseLogic logic)
+    {
+        // TODO: コードがひどい、なおしたい
+        if (failed) return "Pig";
+
+        if (getEntityNameToSpawn == null)
+        {
+            synchronized (lock)
+            {
+                if (getEntityNameToSpawn == null)
+                {
+                    String[] names = { "getEntityNameToSpawn", ConstantsConfig.instance().getEntityNameToSpawnSrgName };
+                    try
+                    {
+                        getEntityNameToSpawn = ReflectionHelper.findMethod(MobSpawnerBaseLogic.class, null, names);
+                    }
+                    catch (RuntimeException ignore)
+                    {
+                        LOGGER.warn("refrection failed", ignore);
+                        failed = true;
+                        return "Pig";
+                    }
+                }
+            }
+        }
+
+        try
+        {
+            return (String) getEntityNameToSpawn.invoke(logic);
+        }
+        catch (IllegalAccessException | InvocationTargetException e)
+        {
+            throw Throwables.propagate(e);
+        }
     }
 
     private static <T, E> T getFieldValue(Class<? super E> clazz, E instance, String... names)

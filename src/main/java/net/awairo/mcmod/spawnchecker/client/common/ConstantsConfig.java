@@ -89,6 +89,9 @@ public class ConstantsConfig extends ConfigCategory
     /** WorldClient#sendQueue のsrg-name. */
     public final String sendQueueSrgName;
 
+    /** MobSpawnerBaseLogic#getEntityNameToSpawn() の srg-name. */
+    public final String getEntityNameToSpawnSrgName;
+
     /** CachedSupplierのキャッシュサイズ初期値. */
     public final int defaultCachedSupplierSize;
 
@@ -250,7 +253,11 @@ public class ConstantsConfig extends ConfigCategory
 
         // リフレクション
         sendQueueSrgName = getValueOf("sendQueueSrgName", "field_73035_a")
-                .comment("default: field_73035_a (for mc 1.7.2)")
+                .comment("default: field_73035_a (for 1.8-11.14.0.1245-1.8)")
+                .getString();
+
+        getEntityNameToSpawnSrgName = getValueOf("getEntityNameToSpawnSrgName", "func_98276_e")
+                .comment("default: func_98276_e (for 1.8-11.14.0.1245-1.8)")
                 .getString();
 
         // マーカーキャッシュのデフォルトサイズ

@@ -21,9 +21,9 @@ import com.google.common.primitives.Ints;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent.Phase;
-import cpw.mods.fml.common.gameevent.TickEvent.RenderTickEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
+import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 
 import net.awairo.mcmod.spawnchecker.client.ClientManager;
 import net.awairo.mcmod.spawnchecker.client.mode.Mode;
@@ -122,7 +122,7 @@ public final class InformationManager extends ClientManager
         for (Mode.Information info : infos)
         {
             renderer.draw(posX + info.offsetX(), posY + info.offsetY(), info);
-            posY += Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT;
+            posY += Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT; // TODO: standardGalacticFontRendererかも
         }
 
         renderer.endDrawing();

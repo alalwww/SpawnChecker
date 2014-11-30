@@ -36,9 +36,10 @@ targetCompatibility = jreVersion
 
 minecraft {
     // forge version
-    version = "1.7.10-10.13.1.1217"
+    version = "1.8-11.14.0.1245-1.8"
 
-    assetDir = "run/assets"
+    runDir = "run"
+    mappings = "snapshot_nodoc_20140930"
 
     // this configurations is copied this replacement configuration to source copy tasks
     replace '@VERSION@', project.version

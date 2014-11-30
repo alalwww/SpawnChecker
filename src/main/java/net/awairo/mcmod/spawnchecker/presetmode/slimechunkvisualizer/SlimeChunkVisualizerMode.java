@@ -19,7 +19,7 @@ import com.google.common.collect.Lists;
 import com.google.common.primitives.Ints;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.util.MathHelper;
 
 import net.awairo.mcmod.spawnchecker.client.common.CoordHelper;
@@ -117,7 +117,7 @@ public class SlimeChunkVisualizerMode extends SkeletalPresetMode<SlimeChunkVisua
 
         spawnCheck.setBrightness(commonState().computedBrightness());
 
-        final EntityClientPlayerMP p = game.thePlayer;
+        final EntityPlayerSP p = game.thePlayer;
 
         final int px = MathHelper.floor_double(p.posX);
         final int py = MathHelper.floor_double(p.posY) + (int) Math.floor(p.height);

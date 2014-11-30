@@ -15,11 +15,11 @@ package net.awairo.mcmod.spawnchecker.client;
 
 import net.minecraft.client.settings.KeyBinding;
 
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLInterModComms.IMCMessage;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLInterModComms.IMCMessage;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import net.awairo.mcmod.spawnchecker.Proxy;
 import net.awairo.mcmod.spawnchecker.SpawnChecker;

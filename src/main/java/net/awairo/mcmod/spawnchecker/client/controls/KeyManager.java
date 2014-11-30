@@ -17,8 +17,8 @@ import org.lwjgl.input.Keyboard;
 
 import net.minecraft.client.Minecraft;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent.ClientTickEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 
 import net.awairo.mcmod.spawnchecker.client.ClientManager;
 import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
