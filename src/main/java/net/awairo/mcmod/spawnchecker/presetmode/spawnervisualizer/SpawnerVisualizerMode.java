@@ -134,9 +134,9 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
         spawnLimitAreaMarker = new MobSpawnerSpawnLimitAreaMarker(config());
         activateAreaMarker = new MobSpawnerActivateAreaMarker(config());
 
-        // スポーン判定を行う範囲 x:8block, y:3block, z:8block
+        // スポーン判定を行う範囲 x:9block, y:3block, z:9block
         // TODO： スポーナーのTileEntityのもつロジックから参照したほうがよさそう
-        final int size = 8 * 3 * 8;
+        final int size = 9 * 3 * 9;
         inherents = new int[size];
         for (int i = 0; i < inherents.length; i++)
             inherents[i] = RANDOM.nextInt(1024);
@@ -347,9 +347,9 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
             return;
 
         // TODO: スポーン範囲などはタイルエンティティのもつロジックの情報から得るべきっぽい
-        final int maxX = foundSpawnerX + 4;
+        final int maxX = foundSpawnerX + 5;
         final int maxY = foundSpawnerY + 2;
-        final int maxZ = foundSpawnerZ + 4;
+        final int maxZ = foundSpawnerZ + 5;
 
         int inherentIndex = 0;
         for (int posX = foundSpawnerX - 4; posX < maxX; posX++)

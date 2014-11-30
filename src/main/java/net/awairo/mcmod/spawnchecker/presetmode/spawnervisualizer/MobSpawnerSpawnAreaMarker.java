@@ -36,7 +36,7 @@ public class MobSpawnerSpawnAreaMarker extends SkeletalMarker<MobSpawnerSpawnAre
     {
         // TODO: 設定値のロード
         model.setMin(-4, -1, -4);
-        model.setMax(4, 2, 4);
+        model.setMax(5, 2, 5);
         model.setOffset(0.01d);
     }
 
