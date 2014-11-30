@@ -184,7 +184,7 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
             // クリックをやめるまでに再度スポーナーをクリックしたか判定すると、ON/OFFが何度も切り替わってしまうので
             // クリックが始まった直後の初回のみクリックされた対象をチェックし、
             // 以降はクリックが中断されるまでクリック対象が何か判定しない
-            if (!clicking && game.objectMouseOver != null)
+            if (!clicking && game.objectMouseOver != null && game.objectMouseOver.func_178782_a() != null)
             {
                 clicking = true;
 
