@@ -60,8 +60,7 @@ public enum CopiedLogics
      */
     public boolean canSpawnAtLocation(int x, int y, int z, EntityLiving.SpawnPlacementType type)
     {
-        //canCreatureTypeSpawnAtLocation
-        return SpawnerAnimals.func_180267_a(type, game.theWorld, new BlockPos(x, y, z));
+        return SpawnerAnimals.canCreatureTypeSpawnAtLocation(type, game.theWorld, new BlockPos(x, y, z));
     }
 
     /**

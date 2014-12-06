@@ -184,7 +184,7 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
             // クリックをやめるまでに再度スポーナーをクリックしたか判定すると、ON/OFFが何度も切り替わってしまうので
             // クリックが始まった直後の初回のみクリックされた対象をチェックし、
             // 以降はクリックが中断されるまでクリック対象が何か判定しない
-            if (!clicking && game.objectMouseOver != null && game.objectMouseOver.func_178782_a() != null)
+            if (!clicking && game.objectMouseOver != null && game.objectMouseOver.getBlockPos() != null)
             {
                 clicking = true;
 
@@ -194,7 +194,7 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
 
                 // 叩いたのがスポーナーか判断
                 final MovingObjectPosition mop = game.objectMouseOver;
-                final BlockPos pos = mop.func_178782_a();
+                final BlockPos pos = mop.getBlockPos();
 
                 // 開始位置での素振りはスポーナーなくなってるのでトグる
                 boolean same = foundSpawnerX == pos.getX();
@@ -244,8 +244,8 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
     private boolean isMouseClicked()
     {
         // 右クリ左クリどっちでもおｋ、途中で左右クリックをに入れ替えるような奴はおらんやろｗ
-        return game.gameSettings.keyBindAttack.getIsKeyPressed()
-                || game.gameSettings.keyBindUseItem.getIsKeyPressed();
+        return game.gameSettings.keyBindAttack.isKeyDown()
+                || game.gameSettings.keyBindUseItem.isKeyDown();
     }
 
     private boolean isPlayerCloseToTheFoundSpawner()
@@ -269,7 +269,7 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
         if (mop == null || mop.typeOfHit != MovingObjectType.BLOCK)
             return false;
 
-        final BlockPos pos = mop.func_178782_a();
+        final BlockPos pos = mop.getBlockPos();
         return isSpawnerAt(pos.getX(), pos.getY(), pos.getZ());
     }
 

@@ -88,8 +88,8 @@ class Renderer
 
         final int x = info.hasIcon() ? posX + getMessageOffset(info) : posX;
         final int y = posY;
-        // return game.fontRendererObj.drawStringWithShadow(info.message(), x, y, rgba);
-        return game.fontRendererObj.func_175063_a(info.message(), x, y, rgba);
+
+        return game.fontRendererObj.drawStringWithShadow(info.message(), x, y, rgba);
     }
 
     private void drawIcon(int posX, int posY, Mode.Information info, int rgb, int a)
@@ -118,8 +118,7 @@ class Renderer
 
         game.renderEngine.bindTexture(info.getIconResource());
         t.getWorldRenderer().startDrawingQuads();
-        //t.getWorldRenderer().setColorRGBA_I(rgb, a);
-        t.getWorldRenderer().func_178974_a(rgb, a);
+        t.getWorldRenderer().setColorRGBA_I(rgb, a);
         t.getWorldRenderer().addVertexWithUV(lbx, lby, consts().guiPosZ, consts().iconTextureUMin, consts().iconTextureVMax);
         t.getWorldRenderer().addVertexWithUV(rbx, rby, consts().guiPosZ, consts().iconTextureUMax, consts().iconTextureVMax);
         t.getWorldRenderer().addVertexWithUV(rtx, rty, consts().guiPosZ, consts().iconTextureUMax, consts().iconTextureVMin);
