@@ -36,10 +36,10 @@ public final class State implements CommonState
     public State(ModeConfig config)
     {
         horizontalRange = LimitedNumber.ofInteger(config.horizontalRange)
-                .min(0).max(32).step(1).build();
+                .min(1).max(32).step(1).build();
 
         verticalRange = LimitedNumber.ofInteger(config.verticalRange)
-                .min(0).max(32).step(1).build();
+                .min(1).max(32).step(1).build();
 
         brightness = LimitedNumber.ofInteger(config.brightness)
                 .min(-5).max(5).step(1).build();
