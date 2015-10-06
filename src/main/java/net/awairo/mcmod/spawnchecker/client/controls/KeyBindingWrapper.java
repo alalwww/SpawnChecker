@@ -46,7 +46,7 @@ class KeyBindingWrapper extends KeyBinding
      */
     public void update(final long currentTime)
     {
-        if (!getIsKeyPressed())
+        if (!isKeyDown())
         {
             lastPressTime = -1L;
             return;
@@ -71,7 +71,7 @@ class KeyBindingWrapper extends KeyBinding
     {
         return Objects.toStringHelper(this)
                 .add("keyCode", getKeyCode())
-                .add("pressed", getIsKeyPressed())
+                .add("pressed", isKeyDown())
                 .add("keyDescription", getKeyDescription())
                 .add("lastPressTime", lastPressTime)
                 .toString();

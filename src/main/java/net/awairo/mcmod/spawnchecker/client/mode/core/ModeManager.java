@@ -20,9 +20,9 @@ import net.minecraft.world.World;
 
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent.Phase;
-import cpw.mods.fml.common.gameevent.TickEvent.RenderTickEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
+import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 
 import net.awairo.mcmod.spawnchecker.client.ClientManager;
 import net.awairo.mcmod.spawnchecker.client.common.Settings;

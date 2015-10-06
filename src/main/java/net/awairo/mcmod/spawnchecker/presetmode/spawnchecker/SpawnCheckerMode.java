@@ -15,7 +15,7 @@ package net.awairo.mcmod.spawnchecker.presetmode.spawnchecker;
 
 import com.google.common.primitives.Ints;
 
-import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.util.MathHelper;
 
 import net.awairo.mcmod.spawnchecker.client.mode.SelectableMode;
@@ -102,7 +102,7 @@ public final class SpawnCheckerMode extends SkeletalPresetMode<SpawnCheckerMode>
 
         // TODO: このあたりのリファクタリング、したい
 
-        final EntityClientPlayerMP p = game.thePlayer;
+        final EntityPlayerSP p = game.thePlayer;
 
         final int px = MathHelper.floor_double(p.posX);
         final int pz = MathHelper.floor_double(p.posZ);

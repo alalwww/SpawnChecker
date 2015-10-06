@@ -23,7 +23,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 
-import cpw.mods.fml.client.IModGuiFactory;
+import net.minecraftforge.fml.client.IModGuiFactory;
 
 /**
  * Mod設定画面ファクトリ.

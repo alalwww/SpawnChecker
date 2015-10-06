@@ -27,10 +27,12 @@ import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.MobSpawnerBaseLogic;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityMobSpawner;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 
 import net.awairo.mcmod.spawnchecker.SpawnChecker;
+import net.awairo.mcmod.spawnchecker.client.common.Refrection;
 import net.awairo.mcmod.spawnchecker.client.marker.CachedSupplier;
 import net.awairo.mcmod.spawnchecker.client.mode.ConditionalMode;
 import net.awairo.mcmod.spawnchecker.presetmode.SkeletalPresetMode;
@@ -132,9 +134,9 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
         spawnLimitAreaMarker = new MobSpawnerSpawnLimitAreaMarker(config());
         activateAreaMarker = new MobSpawnerActivateAreaMarker(config());
 
-        // スポーン判定を行う範囲 x:8block, y:3block, z:8block
+        // スポーン判定を行う範囲 x:9block, y:3block, z:9block
         // TODO： スポーナーのTileEntityのもつロジックから参照したほうがよさそう
-        final int size = 8 * 3 * 8;
+        final int size = 9 * 3 * 9;
         inherents = new int[size];
         for (int i = 0; i < inherents.length; i++)
             inherents[i] = RANDOM.nextInt(1024);
@@ -182,7 +184,7 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
             // クリックをやめるまでに再度スポーナーをクリックしたか判定すると、ON/OFFが何度も切り替わってしまうので
             // クリックが始まった直後の初回のみクリックされた対象をチェックし、
             // 以降はクリックが中断されるまでクリック対象が何か判定しない
-            if (!clicking && game.objectMouseOver != null)
+            if (!clicking && game.objectMouseOver != null && game.objectMouseOver.getBlockPos() != null)
             {
                 clicking = true;
 
@@ -192,11 +194,12 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
 
                 // 叩いたのがスポーナーか判断
                 final MovingObjectPosition mop = game.objectMouseOver;
+                final BlockPos pos = mop.getBlockPos();
 
                 // 開始位置での素振りはスポーナーなくなってるのでトグる
-                boolean same = foundSpawnerX == mop.blockX;
-                same = same && foundSpawnerY == mop.blockY;
-                same = same && foundSpawnerZ == mop.blockZ;
+                boolean same = foundSpawnerX == pos.getX();
+                same = same && foundSpawnerY == pos.getY();
+                same = same && foundSpawnerZ == pos.getZ();
                 if (same && started)
                     return false;
 
@@ -204,12 +207,12 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
                     // スポーナーじゃないのでトグらない
                     return started;
 
-                foundSpawner = getSpawnerTileEntity(mop.blockX, mop.blockY, mop.blockZ);
+                foundSpawner = getSpawnerTileEntity(pos.getX(), pos.getY(), pos.getZ());
                 if (foundSpawner == null)
                     // TileEntityが想定外のタイプだった。ブロック座標を直前で確認しているので、発生しないはずだが、念のためチェック
                     return false;
 
-                final MobSpawnerBaseLogic logic = foundSpawner.func_145881_a();
+                final MobSpawnerBaseLogic logic = foundSpawner.getSpawnerBaseLogic();
                 if (foundSpawnerLogic == logic)
                     // 既に同じ参照のロジックを参照しているなら変更されていないので再設定しなくて大丈夫
                     return true;
@@ -218,9 +221,9 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
                 foundSpawnerLogic = logic;
 
                 scheduleResetSpawnerPosition = true;
-                foundSpawnerX = mop.blockX;
-                foundSpawnerY = mop.blockY;
-                foundSpawnerZ = mop.blockZ;
+                foundSpawnerX = pos.getX();
+                foundSpawnerY = pos.getY();
+                foundSpawnerZ = pos.getZ();
 
                 LOG.info("found mob spawner(x,y,z): {}, {}, {}\n",
                         foundSpawnerX, foundSpawnerY, foundSpawnerZ);
@@ -241,8 +244,8 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
     private boolean isMouseClicked()
     {
         // 右クリ左クリどっちでもおｋ、途中で左右クリックをに入れ替えるような奴はおらんやろｗ
-        return game.gameSettings.keyBindAttack.getIsKeyPressed()
-                || game.gameSettings.keyBindUseItem.getIsKeyPressed();
+        return game.gameSettings.keyBindAttack.isKeyDown()
+                || game.gameSettings.keyBindUseItem.isKeyDown();
     }
 
     private boolean isPlayerCloseToTheFoundSpawner()
@@ -266,12 +269,13 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
         if (mop == null || mop.typeOfHit != MovingObjectType.BLOCK)
             return false;
 
-        return isSpawnerAt(mop.blockX, mop.blockY, mop.blockZ);
+        final BlockPos pos = mop.getBlockPos();
+        return isSpawnerAt(pos.getX(), pos.getY(), pos.getZ());
     }
 
     private boolean isSpawnerAt(int x, int y, int z)
     {
-        return game.theWorld.getBlock(x, y, z) == Blocks.mob_spawner;
+        return game.theWorld.getBlockState(new BlockPos(x, y, z)).getBlock() == Blocks.mob_spawner;
     }
 
     @Override
@@ -310,7 +314,7 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
                     .setPoint(foundSpawnerX, foundSpawnerY, foundSpawnerZ);
 
             spawnableCheck = MobSpawnerSpawnableCheck.EntityMap
-                    .newInstanceOf(foundSpawnerLogic.getEntityNameToSpawn());
+                    .newInstanceOf(Refrection.getEntityNameToSpawnFrom(foundSpawnerLogic));
         }
 
         hidden = options().contains(SPAWNER_HIDDEN);
@@ -343,9 +347,9 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
             return;
 
         // TODO: スポーン範囲などはタイルエンティティのもつロジックの情報から得るべきっぽい
-        final int maxX = foundSpawnerX + 4;
+        final int maxX = foundSpawnerX + 5;
         final int maxY = foundSpawnerY + 2;
-        final int maxZ = foundSpawnerZ + 4;
+        final int maxZ = foundSpawnerZ + 5;
 
         int inherentIndex = 0;
         for (int posX = foundSpawnerX - 4; posX < maxX; posX++)
@@ -387,7 +391,7 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
 
     private TileEntityMobSpawner getSpawnerTileEntity(int x, int y, int z)
     {
-        final TileEntity te = game.theWorld.getTileEntity(x, y, z);
+        final TileEntity te = game.theWorld.getTileEntity(new BlockPos(x, y, z));
 
         if (te instanceof TileEntityMobSpawner)
             return (TileEntityMobSpawner) te;

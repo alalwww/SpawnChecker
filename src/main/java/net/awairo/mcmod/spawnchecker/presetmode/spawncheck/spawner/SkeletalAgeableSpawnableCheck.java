@@ -16,6 +16,7 @@ package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.spawner;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.BlockPos;
 
 /**
  * 管理可能エンティティ用の判定.
@@ -30,7 +31,7 @@ abstract class SkeletalAgeableSpawnableCheck extends SkeletalMobSpawnerSpawnable
     public boolean isSpawnable(int x, int y, int z)
     {
         // TODO：見直す
-        if (Minecraft.getMinecraft().theWorld.getBlock(x, y - 1, z) != Blocks.grass)
+        if (Minecraft.getMinecraft().theWorld.getBlockState(new BlockPos(x, y - 1, z)).getBlock() != Blocks.grass)
             return false;
 
         // TODO：空の明るさを見る、ブロックのblightnessを調べるほうの明るさ判定が必要

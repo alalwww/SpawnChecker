@@ -33,7 +33,7 @@ class Renderer
     private static final int MIN_ALPHA = 4;
 
     private final Minecraft game = Minecraft.getMinecraft();
-    private final Tessellator t = Tessellator.instance;
+    private final Tessellator t = Tessellator.getInstance();
 
     private float alpha = 1.0f;
 
@@ -88,7 +88,8 @@ class Renderer
 
         final int x = info.hasIcon() ? posX + getMessageOffset(info) : posX;
         final int y = posY;
-        return game.fontRenderer.drawStringWithShadow(info.message(), x, y, rgba);
+
+        return game.fontRendererObj.drawStringWithShadow(info.message(), x, y, rgba);
     }
 
     private void drawIcon(int posX, int posY, Mode.Information info, int rgb, int a)
@@ -116,12 +117,12 @@ class Renderer
         GL11.glEnable(GL11.GL_TEXTURE_2D);
 
         game.renderEngine.bindTexture(info.getIconResource());
-        t.startDrawingQuads();
-        t.setColorRGBA_I(rgb, a);
-        t.addVertexWithUV(lbx, lby, consts().guiPosZ, consts().iconTextureUMin, consts().iconTextureVMax);
-        t.addVertexWithUV(rbx, rby, consts().guiPosZ, consts().iconTextureUMax, consts().iconTextureVMax);
-        t.addVertexWithUV(rtx, rty, consts().guiPosZ, consts().iconTextureUMax, consts().iconTextureVMin);
-        t.addVertexWithUV(ltx, lty, consts().guiPosZ, consts().iconTextureUMin, consts().iconTextureVMin);
+        t.getWorldRenderer().startDrawingQuads();
+        t.getWorldRenderer().setColorRGBA_I(rgb, a);
+        t.getWorldRenderer().addVertexWithUV(lbx, lby, consts().guiPosZ, consts().iconTextureUMin, consts().iconTextureVMax);
+        t.getWorldRenderer().addVertexWithUV(rbx, rby, consts().guiPosZ, consts().iconTextureUMax, consts().iconTextureVMax);
+        t.getWorldRenderer().addVertexWithUV(rtx, rty, consts().guiPosZ, consts().iconTextureUMax, consts().iconTextureVMin);
+        t.getWorldRenderer().addVertexWithUV(ltx, lty, consts().guiPosZ, consts().iconTextureUMin, consts().iconTextureVMin);
         t.draw();
     }
 

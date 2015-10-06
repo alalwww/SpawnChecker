@@ -92,7 +92,7 @@ public class ModeConfig extends ConfigCategory
         horizontalRange = getValueOf("scanrange.horizontal", 10)
                 .comment("scan range of horizontal.\n"
                         + "(min: 1, max: 32, default: 10)");
-        if (horizontalRange.getInt() < -1)
+        if (horizontalRange.getInt() < 1)
             horizontalRange.set(10);
         if (horizontalRange.getInt() > 32)
             horizontalRange.set(10);
@@ -100,7 +100,7 @@ public class ModeConfig extends ConfigCategory
         verticalRange = getValueOf("scanrange.vertical", 5)
                 .comment("scan range of vertical.\n"
                         + "(min: 1, max: 32, default: 10)");
-        if (verticalRange.getInt() < -1)
+        if (verticalRange.getInt() < 1)
             verticalRange.set(10);
         if (verticalRange.getInt() > 32)
             verticalRange.set(10);

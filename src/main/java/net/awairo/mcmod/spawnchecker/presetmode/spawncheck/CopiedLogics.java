@@ -17,8 +17,8 @@ import com.google.common.primitives.Floats;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.SpawnerAnimals;
 
@@ -52,32 +52,15 @@ public enum CopiedLogics
      */
     public boolean canSpawnAtLocation(int x, int y, int z)
     {
-        return canSpawnAtLocation(x, y, z, EnumCreatureType.monster);
-    }
-
-    /**
-     * 生物がスポーンできる場所か判定.
-     */
-    public boolean canCreatureSpawnAtLocation(int x, int y, int z)
-    {
-        return canSpawnAtLocation(x, y, z, EnumCreatureType.creature);
-    }
-
-    /**
-     * 水棲生物がスポーンできる場所か判定.
-     */
-    public boolean canWaterCreatureSpawnAtLocation(int x, int y, int z)
-    {
-        return canSpawnAtLocation(x, y, z, EnumCreatureType.waterCreature);
+        return canSpawnAtLocation(x, y, z, EntityLiving.SpawnPlacementType.ON_GROUND);
     }
 
     /**
      * モンスターがスポーンできる場所か判定.
      */
-    public boolean canSpawnAtLocation(int x, int y, int z, EnumCreatureType type)
+    public boolean canSpawnAtLocation(int x, int y, int z, EntityLiving.SpawnPlacementType type)
     {
-        return SpawnerAnimals.canCreatureTypeSpawnAtLocation(
-                type, game.theWorld, x, y, z);
+        return SpawnerAnimals.canCreatureTypeSpawnAtLocation(type, game.theWorld, new BlockPos(x, y, z));
     }
 
     /**
@@ -94,7 +77,7 @@ public enum CopiedLogics
         // ブロック中央に配置
         entity.setPosition((double) x + 0.5F, y, (double) z + 0.5F);
 
-        final AxisAlignedBB copiedEntityAABB = entity.boundingBox.copy();
+        final AxisAlignedBB copiedEntityAABB = entity.getEntityBoundingBox().contract(0, 0, 0);
 
         if (!game.theWorld.getCollidingBoundingBoxes(entity, copiedEntityAABB).isEmpty())
         {
@@ -120,7 +103,7 @@ public enum CopiedLogics
      */
     public boolean canSpawnByLightLevel(int x, int y, int z, int lightLevel)
     {
-        return getSavedLightValue(EnumSkyBlock.Block, x, y, z) < lightLevel;
+        return getSavedLightValue(EnumSkyBlock.BLOCK, x, y, z) < lightLevel;
     }
 
     /**
@@ -141,7 +124,7 @@ public enum CopiedLogics
      */
     public boolean canSpawnByLightBrightness(int x, int y, int z)
     {
-        int skyLightValue = getSavedLightValue(EnumSkyBlock.Sky, x, y, z);
+        int skyLightValue = getSavedLightValue(EnumSkyBlock.SKY, x, y, z);
 
         // 15未満の場合はずれない
         if (skyLightValue < 15)
@@ -187,7 +170,7 @@ public enum CopiedLogics
 
         // 時間を元にして10段階にわけた明るさとブロックの明るさ-5のうち大きなほうを選択
         // この辺りのロジックの理由は失念…
-        lightValueMinus4 = Math.max(lightValueMinus4, getSavedLightValue(EnumSkyBlock.Block, x, y, z) - 5);
+        lightValueMinus4 = Math.max(lightValueMinus4, getSavedLightValue(EnumSkyBlock.BLOCK, x, y, z) - 5);
         float brightness = getLightBrightness(lightValueMinus4);
         return Floats.compare(config.spawnableMaxLightValue, brightness) >= 0;
     }
@@ -238,11 +221,13 @@ public enum CopiedLogics
 
     private int getSavedLightValue(EnumSkyBlock skyBlock, int x, int y, int z)
     {
-        return game.theWorld.getSavedLightValue(skyBlock, x, y, z);
+        return game.theWorld.getLightFor(skyBlock, new BlockPos(x, y, z));
+        //return game.theWorld.getLightFromNeighborsFor(skyBlock, new BlockPos(x, y, z)); こっちかも
+        //return game.theWorld.getSavedLightValue(skyBlock, new BlockPos(x, y, z)); 元
     }
 
     private float getLightBrightness(int x, int y, int z)
     {
-        return game.theWorld.getLightBrightness(x, y, z);
+        return game.theWorld.getLightBrightness(new BlockPos(x, y, z));
     }
 }

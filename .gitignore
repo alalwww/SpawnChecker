@@ -1,16 +1,5 @@
-/.gradle/
-/.settings/
-
-/bin/
-/build/
-/eclipse/
-/run/
-/olds/
-
-/.classpath
-/.project
-/.checkstyle
-/.pydevproject
+.gradle
+gradle.properties
 
 *.class
 *.jpage
@@ -18,6 +7,25 @@
 /src/main/resources/version.properties
 /.modrevision
 
-/.README.md.html
+.classpath
+.project
+.settings
+.checkstyle
+.pydevproject
+.groovy
+.README.md.html
+bin/
+build/
+eclipse/
+run/
+olds/
 gradle-app.setting
-/.groovy
+
+.idea
+*.iml
+*.ipr
+*.iws
+*.ids
+
+.DS_Store
+Thumbs.db

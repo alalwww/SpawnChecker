@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
         maven {
             name = "forge"
-            url = "http://files.minecraftforge.net/maven/"
+            url = "http://files.minecraftforge.net/maven"
         }
         maven {
             name = "sonatype"
@@ -34,11 +34,19 @@ sourceCompatibility = jreVersion
 targetCompatibility = jreVersion
 [compileJava, compileTestJava]*.options*.encoding = encoding
 
+[runClient, runServer].each {
+    it.jvmArgs += "-Dnet.awairo.develop=true"
+    it.jvmArgs += "-Dnet.awairo.debug=true"
+    it.jvmArgs += "-Dspawnchecker.ignoreFingerprintViolation=true"
+    it.jvmArgs += "-Dspawnchecker.presetmode.ignoreFingerprintViolation=true"
+}
+
 minecraft {
     // forge version
-    version = "1.7.10-10.13.1.1217"
+    version = "1.8-11.14.3.1502"
 
-    assetDir = "run/assets"
+    runDir = "run"
+    mappings = "snapshot_20141130"
 
     // this configurations is copied this replacement configuration to source copy tasks
     replace '@VERSION@', project.version

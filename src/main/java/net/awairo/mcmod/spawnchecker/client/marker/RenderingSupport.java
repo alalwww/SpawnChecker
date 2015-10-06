@@ -17,8 +17,10 @@ import java.awt.Color;
 
 import org.lwjgl.opengl.GL11;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.entity.RenderManager;
 
 import net.awairo.mcmod.common.v1.util.Colors;
@@ -33,13 +35,18 @@ public final class RenderingSupport
     /** @return レンダーマネージャー */
     public static RenderManager manager()
     {
-        return RenderManager.instance;
+        return Minecraft.getMinecraft().getRenderManager();
     }
 
     /** @return てっせレーター */
     public static Tessellator tessellator()
     {
-        return Tessellator.instance;
+        return Tessellator.getInstance();
+    }
+
+    public static WorldRenderer getWorldRenderer()
+    {
+        return tessellator().getWorldRenderer();
     }
 
     /**
@@ -80,7 +87,7 @@ public final class RenderingSupport
      */
     public static void startDrawingQuads()
     {
-        tessellator().startDrawingQuads();
+        getWorldRenderer().startDrawingQuads();
     }
 
     /**
@@ -88,7 +95,7 @@ public final class RenderingSupport
      */
     public static void startDrawingLines()
     {
-        tessellator().startDrawing(GL11.GL_LINES);
+        getWorldRenderer().startDrawing(GL11.GL_LINES);
     }
 
     /**
@@ -100,7 +107,7 @@ public final class RenderingSupport
      */
     public static void setTranslation(double xOffset, double yOffset, double zOffset)
     {
-        tessellator().setTranslation(xOffset, yOffset, zOffset);
+        getWorldRenderer().setTranslation(xOffset, yOffset, zOffset);
     }
 
     /**
@@ -112,7 +119,7 @@ public final class RenderingSupport
      */
     public static void addVertex(double x, double y, double z)
     {
-        tessellator().addVertex(x, y, z);
+        getWorldRenderer().addVertex(x, y, z);
     }
 
     /**
@@ -126,7 +133,7 @@ public final class RenderingSupport
      */
     public static void addVertexWithUV(double x, double y, double z, double u, double v)
     {
-        tessellator().addVertexWithUV(x, y, z, u, v);
+        getWorldRenderer().addVertexWithUV(x, y, z, u, v);
     }
 
     /**
@@ -149,8 +156,8 @@ public final class RenderingSupport
     // brightnessの値はかなり大きな数値っぽいけど何を設定しても色に反映されてくれない…
     public static void setColorAndBrightness(Color color, int brightness)
     {
-        tessellator().setBrightness(brightness);
-        tessellator().setColorRGBA(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+        //        getWorldRenderer().setBrightness(brightness);
+        //        getWorldRenderer().setColorRGBA(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
     }
 
     /**
