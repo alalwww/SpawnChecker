@@ -202,4 +202,4 @@ gradle.taskGraph.whenReady { taskGraph ->
 
 apply from: 'project/publish.gradle'
 
-task wrapper(type: Wrapper) { gradleVersion = '2.0' }
+task wrapper(type: Wrapper) { gradleVersion = '2.7' }
