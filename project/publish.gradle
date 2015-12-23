@@ -14,7 +14,7 @@ uploadArchives {
                 && project.hasProperty('maven_password')) {
 
             mavenDeployer {
-                configuration = configurations.deployerJars
+                configuration = configurations.deployJars
                 uniqueVersion = false
 
                 //beforeDeployment {

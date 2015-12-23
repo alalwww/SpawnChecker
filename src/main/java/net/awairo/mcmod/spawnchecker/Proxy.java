@@ -148,7 +148,7 @@ public abstract class Proxy
     /**
      * イベントリスナーのマネージャーを登録します.
      * 
-     * @param manager
+     * @param manager manager
      */
     protected static void registerEventListener(HandlerManager manager)
     {
@@ -161,6 +161,7 @@ public abstract class Proxy
      * 
      * @param eventListener イベントリスナーインスタンス
      */
+    @Deprecated
     protected static void registerFMLEventListener(Object eventListener)
     {
         if (eventListener == null) return;

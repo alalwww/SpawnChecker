@@ -74,7 +74,7 @@ public class ModeConfig extends ConfigCategory
     /**
      * Constructor.
      * 
-     * @param config
+     * @param config config
      */
     public ModeConfig(Config config)
     {
@@ -150,7 +150,7 @@ public class ModeConfig extends ConfigCategory
         final String[] ids = enablingItemsProp.getStringList();
         for (String id : ids)
         {
-            final Item item = (Item) Item.itemRegistry.getObject(id);
+            final Item item = Item.getByNameOrId(id);
 
             if (item == null)
             {
@@ -413,7 +413,7 @@ public class ModeConfig extends ConfigCategory
         /**
          * オプションID文字列の一覧にして返します.
          * 
-         * @param optionSetStrings オプションID文字列
+         * @param newList オプションID文字列
          * @return オプションID文字列の一覧
          */
         private static String[] toArray(List<OptionSet> newList)
