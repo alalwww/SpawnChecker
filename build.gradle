@@ -147,11 +147,11 @@ artifacts {
     archives sourceJar
 }
 
-task release(dependsOn:[clean,uploadArchives]) << {
+task release(dependsOn:[build]) << {
     description 'release '
 }
 
-task releaseSnapshot(dependsOn:[clean,uploadArchives]) << {
+task releaseSnapshot(dependsOn:[build]) << {
     description 'snapshot release'
 }
 
@@ -210,7 +210,5 @@ gradle.taskGraph.whenReady { taskGraph ->
 
     logger.quiet('upload archives version: ' + version)
 }
-
-apply from: 'project/publish.gradle'
 
 task wrapper(type: Wrapper) { gradleVersion = '2.7' }
