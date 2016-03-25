@@ -44,7 +44,7 @@ public enum Fingerprint
         checkNotNull(modid, "modid");
         checkNotNull(event, "event");
 
-        if (Env.develop() && event.isDirectory)
+        if (Env.develop() && event.isDirectory())
             return;
 
         final String msg = "\n"

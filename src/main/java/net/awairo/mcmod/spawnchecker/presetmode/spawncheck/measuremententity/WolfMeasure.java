@@ -14,6 +14,8 @@
 package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.measuremententity;
 
 import net.minecraft.entity.passive.EntityWolf;
+import net.minecraft.pathfinding.PathNavigate;
+import net.minecraft.world.World;
 
 /**
  * 狼のの測定用エンティティ.
@@ -25,6 +27,12 @@ final class WolfMeasure extends EntityWolf
     WolfMeasure()
     {
         super(null);
+    }
+
+    @Override
+    protected PathNavigate getNewNavigator(World worldIn)
+    {
+        return null;
     }
 
     @Override

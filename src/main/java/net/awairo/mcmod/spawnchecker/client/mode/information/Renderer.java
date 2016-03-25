@@ -17,10 +17,10 @@ import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
 import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
+import net.awairo.mcmod.spawnchecker.client.marker.RenderingSupport;
 import net.awairo.mcmod.spawnchecker.client.mode.Mode;
 
 /**
@@ -34,7 +34,6 @@ class Renderer
     private static final int MIN_ALPHA = 4;
 
     private final Minecraft game = Minecraft.getMinecraft();
-    private final Tessellator t = Tessellator.getInstance();
 
     private float alpha = 1.0f;
 
@@ -121,16 +120,16 @@ class Renderer
         GL11.glEnable(GL11.GL_TEXTURE_2D);
 
         game.renderEngine.bindTexture(info.getIconResource());
-        t.getWorldRenderer().begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
+        RenderingSupport.getWorldRenderer().begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
         addVertexWithUV(lbx, lby, consts().guiPosZ, consts().iconTextureUMin, consts().iconTextureVMax, r, g, b, a);
         addVertexWithUV(rbx, rby, consts().guiPosZ, consts().iconTextureUMax, consts().iconTextureVMax, r, g, b, a);
         addVertexWithUV(rtx, rty, consts().guiPosZ, consts().iconTextureUMax, consts().iconTextureVMin, r, g, b, a);
         addVertexWithUV(ltx, lty, consts().guiPosZ, consts().iconTextureUMin, consts().iconTextureVMin, r, g, b, a);
-        t.draw();
+        RenderingSupport.draw();
     }
 
     private void addVertexWithUV(double x, double y, double z, double u, double v, int r, int g, int b, int a) {
-        t.getWorldRenderer()
+        RenderingSupport.getWorldRenderer()
                 .pos(x, y, z)
                 .tex(u, v)
                 .color(r, g, b, a)

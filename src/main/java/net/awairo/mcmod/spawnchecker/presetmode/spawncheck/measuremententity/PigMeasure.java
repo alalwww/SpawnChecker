@@ -14,6 +14,8 @@
 package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.measuremententity;
 
 import net.minecraft.entity.passive.EntityPig;
+import net.minecraft.pathfinding.PathNavigate;
+import net.minecraft.world.World;
 
 /**
  * ,､_,､_,_
@@ -27,6 +29,12 @@ final class PigMeasure extends EntityPig
     PigMeasure()
     {
         super(null);
+    }
+
+    @Override
+    protected PathNavigate getNewNavigator(World worldIn)
+    {
+        return null;
     }
 
     @Override

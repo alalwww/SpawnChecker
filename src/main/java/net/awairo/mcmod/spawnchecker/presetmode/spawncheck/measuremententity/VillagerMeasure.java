@@ -13,6 +13,7 @@
 
 package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.measuremententity;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.passive.EntityVillager;
 
 /**
@@ -24,7 +25,12 @@ final class VillagerMeasure extends EntityVillager
 {
     VillagerMeasure()
     {
-        super(null);
+        super(Minecraft.getMinecraft().theWorld);
+        // コンストラクターに PathNavigate にアクセスする処理がありワールドが必須
+        // このままだとワールドが消えた時にGCに回収されなくなるため、
+        // 保持するワールドとワールドを保持するナビゲーターを削除して場当たり対応…
+        worldObj = null;
+        navigator = null;
     }
 
     @Override

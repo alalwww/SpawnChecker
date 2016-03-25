@@ -14,6 +14,8 @@
 package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.measuremententity;
 
 import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.pathfinding.PathNavigate;
+import net.minecraft.world.World;
 
 /**
  * 標準的なサイズのモンスター測定用エンティティ.
@@ -25,6 +27,12 @@ final class StandardSizeMobMeasure extends EntityMob
     StandardSizeMobMeasure()
     {
         super(null);
+    }
+
+    @Override
+    protected PathNavigate getNewNavigator(World worldIn)
+    {
+        return null;
     }
 
     @Override

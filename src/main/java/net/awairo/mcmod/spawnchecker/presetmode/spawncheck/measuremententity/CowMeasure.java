@@ -14,6 +14,8 @@
 package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.measuremententity;
 
 import net.minecraft.entity.passive.EntityCow;
+import net.minecraft.pathfinding.PathNavigate;
+import net.minecraft.world.World;
 
 /**
  * 牛またはムーシュールーム(キノコ牛)の測定用エンティティ.
@@ -25,6 +27,12 @@ final class CowMeasure extends EntityCow
     CowMeasure()
     {
         super(null);
+    }
+
+    @Override
+    protected PathNavigate getNewNavigator(World worldIn)
+    {
+        return null;
     }
 
     @Override

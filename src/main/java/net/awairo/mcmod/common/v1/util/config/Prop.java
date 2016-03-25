@@ -217,7 +217,7 @@ public final class Prop
 
     public Prop comment(String comment)
     {
-        property.comment = comment;
+        property.setComment(comment);
         return this;
     }
 

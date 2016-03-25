@@ -27,11 +27,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.init.Biomes;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraft.world.biome.BiomeGenBase;
 
 import net.awairo.mcmod.spawnchecker.SpawnChecker;
 import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
@@ -181,7 +181,7 @@ public class SlimeSpawnChecker implements SpawnCheck
 
         // 湿地ばいーむ
         final World world = GAME.theWorld;
-        if (world == null || world.getBiomeGenForCoords(new BlockPos(x, 64, z)) != BiomeGenBase.swampland)
+        if (world == null || world.getBiomeGenForCoords(new BlockPos(x, 64, z)) != Biomes.swampland)
             return false;
 
         return COPIED_LOGICS.canSpawnByLightLevel(x, y, z, CONSTS.spawnableLightLevel);

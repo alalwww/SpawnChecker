@@ -16,7 +16,7 @@ package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.spawner;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 
 /**
  * 管理可能エンティティ用の判定.

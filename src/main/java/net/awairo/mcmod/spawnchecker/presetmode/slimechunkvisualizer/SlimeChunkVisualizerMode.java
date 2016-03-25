@@ -20,7 +20,7 @@ import com.google.common.primitives.Ints;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 
 import net.awairo.mcmod.spawnchecker.client.common.CoordHelper;
 import net.awairo.mcmod.spawnchecker.client.marker.Marker;

@@ -15,14 +15,14 @@ package net.awairo.mcmod.spawnchecker.client.marker;
 
 import java.awt.Color;
 
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
 import net.awairo.mcmod.common.v1.util.Colors;
 
@@ -45,9 +45,9 @@ public final class RenderingSupport
         return Tessellator.getInstance();
     }
 
-    public static WorldRenderer getWorldRenderer()
+    public static VertexBuffer getWorldRenderer()
     {
-        return tessellator().getWorldRenderer();
+        return tessellator().getBuffer();
     }
 
     /**

@@ -459,7 +459,7 @@ public final class ModeManager extends ClientManager
             // gameRenderer.level.SpawnChecker
             profiler().endStartSection("SpawnChecker");
 
-            manager.renderMarker(event.partialTicks);
+            manager.renderMarker(event.getPartialTicks());
 
             profiler().endStartSection("FRenderLast");
         }

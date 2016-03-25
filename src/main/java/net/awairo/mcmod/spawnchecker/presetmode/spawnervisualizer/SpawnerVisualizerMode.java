@@ -27,9 +27,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.MobSpawnerBaseLogic;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityMobSpawner;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.MovingObjectPosition.MovingObjectType;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 
 import net.awairo.mcmod.spawnchecker.SpawnChecker;
 import net.awairo.mcmod.spawnchecker.client.common.Refrection;
@@ -193,7 +192,7 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
                     return started;
 
                 // 叩いたのがスポーナーか判断
-                final MovingObjectPosition mop = game.objectMouseOver;
+                final RayTraceResult mop = game.objectMouseOver;
                 final BlockPos pos = mop.getBlockPos();
 
                 // 開始位置での素振りはスポーナーなくなってるのでトグる
@@ -264,9 +263,9 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
         return game.thePlayer.inventory.getCurrentItem() != null;
     }
 
-    private boolean isTargetedOnSpawner(MovingObjectPosition mop)
+    private boolean isTargetedOnSpawner(RayTraceResult mop)
     {
-        if (mop == null || mop.typeOfHit != MovingObjectType.BLOCK)
+        if (mop == null || mop.typeOfHit != RayTraceResult.Type.BLOCK)
             return false;
 
         final BlockPos pos = mop.getBlockPos();

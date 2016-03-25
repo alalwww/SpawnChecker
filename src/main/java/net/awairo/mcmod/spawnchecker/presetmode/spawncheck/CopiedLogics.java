@@ -17,10 +17,10 @@ import com.google.common.primitives.Floats;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumSkyBlock;
-import net.minecraft.world.SpawnerAnimals;
+import net.minecraft.world.WorldEntitySpawner;
 
 import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
 
@@ -40,8 +40,6 @@ public enum CopiedLogics
 
     /**
      * Constructor.
-     * 
-     * @param config
      */
     CopiedLogics()
     {
@@ -60,7 +58,7 @@ public enum CopiedLogics
      */
     public boolean canSpawnAtLocation(int x, int y, int z, EntityLiving.SpawnPlacementType type)
     {
-        return SpawnerAnimals.canCreatureTypeSpawnAtLocation(type, game.theWorld, new BlockPos(x, y, z));
+        return WorldEntitySpawner.canCreatureTypeSpawnAtLocation(type, game.theWorld, new BlockPos(x, y, z));
     }
 
     /**
@@ -77,9 +75,9 @@ public enum CopiedLogics
         // ブロック中央に配置
         entity.setPosition((double) x + 0.5F, y, (double) z + 0.5F);
 
-        final AxisAlignedBB copiedEntityAABB = entity.getEntityBoundingBox().contract(0, 0, 0);
+        final AxisAlignedBB copiedEntityAABB = entity.getEntityBoundingBox();
 
-        if (!game.theWorld.getCollidingBoundingBoxes(entity, copiedEntityAABB).isEmpty())
+        if (!game.theWorld.getCubes(entity, copiedEntityAABB).isEmpty())
         {
             return true;
         }

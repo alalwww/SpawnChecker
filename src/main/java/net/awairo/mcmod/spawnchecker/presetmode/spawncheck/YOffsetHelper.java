@@ -20,11 +20,14 @@ import com.google.common.collect.ImmutableMap;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLever;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.state.BlockStateContainer;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 
 import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
 
@@ -50,11 +53,11 @@ public enum YOffsetHelper
         map = ImmutableMap.<Block, YOffsetFunction> builder()
                 .put(Blocks.lever, new LeverOffset())
                 .put(Blocks.snow_layer, new SnowOffset())
-                .put(Blocks.carpet, fixedValueFunction(Blocks.carpet.getBlockBoundsMaxY()))
-                .put(Blocks.rail, fixedValueFunction(Blocks.rail.getBlockBoundsMaxY()))
-                .put(Blocks.detector_rail, fixedValueFunction(Blocks.detector_rail.getBlockBoundsMaxY()))
-                .put(Blocks.golden_rail, fixedValueFunction(Blocks.golden_rail.getBlockBoundsMaxY()))
-                .put(Blocks.activator_rail, fixedValueFunction(Blocks.activator_rail.getBlockBoundsMaxY()))
+                .put(Blocks.carpet, fixedValueFunction(Blocks.carpet))
+                .put(Blocks.rail, fixedValueFunction(Blocks.rail))
+                .put(Blocks.detector_rail, fixedValueFunction(Blocks.detector_rail))
+                .put(Blocks.golden_rail, fixedValueFunction(Blocks.golden_rail))
+                .put(Blocks.activator_rail, fixedValueFunction(Blocks.activator_rail))
                 .put(Blocks.wooden_pressure_plate, pressurePlateOffset)
                 .put(Blocks.stone_pressure_plate, pressurePlateOffset)
                 .put(Blocks.heavy_weighted_pressure_plate, pressurePlateOffset)
@@ -110,6 +113,19 @@ public enum YOffsetHelper
     /**
      * 固定値を返す関数を生成します.
      * 
+     * @param block ブロック
+     * @return 固定値を返す関数
+     */
+    private static YOffsetFunction fixedValueFunction(Block block)
+    {
+        final IBlockState dummyState = new BlockStateContainer.StateImplementation(
+                Blocks.stone, ImmutableMap.<IProperty<?>, Comparable<?>>of()) {};
+        return fixedValueFunction(block.getBoundingBox(dummyState, null, null).maxY);
+    }
+
+    /**
+     * 固定値を返す関数を生成します.
+     * 
      * @param value 値
      * @return 固定値を返す関数
      */
@@ -156,8 +172,8 @@ public enum YOffsetHelper
         @Override
         public double apply(WorldClient world, int x, int y, int z)
         {
-            Blocks.snow_layer.setBlockBoundsBasedOnState(world, new BlockPos(x, y, z));
-            return Blocks.snow_layer.getBlockBoundsMaxY();
+            final BlockPos pos = new BlockPos(x, y, z);
+            return Blocks.snow_layer.getBoundingBox(world.getBlockState(pos), world, pos).maxY;
         }
 
     }

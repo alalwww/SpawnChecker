@@ -15,6 +15,8 @@ package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.measuremententity;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.pathfinding.PathNavigate;
+import net.minecraft.world.World;
 
 /**
  * 馬の測定用エンティティ.
@@ -29,6 +31,12 @@ final class HorseMeasure extends EntityHorse
         // インベントリをいじる処理があり、コンストラクターでワールドが必須
         // このままだとワールドが消えた時にGCに回収されなくなるため、保持するワールドを削除して場当たり対応…
         worldObj = null;
+    }
+
+    @Override
+    protected PathNavigate getNewNavigator(World worldIn)
+    {
+        return null;
     }
 
     @Override
