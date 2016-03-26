@@ -168,7 +168,7 @@ public final class InformationManager extends ClientManager
 
     private ScaledResolution newScaledResolution()
     {
-        return new ScaledResolution(GAME, GAME.displayWidth, GAME.displayHeight);
+        return new ScaledResolution(GAME);
     }
 
     // -------------------------

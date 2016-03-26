@@ -15,6 +15,7 @@ package net.awairo.mcmod.spawnchecker.client.marker;
 
 import java.awt.Color;
 
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
@@ -87,7 +88,7 @@ public final class RenderingSupport
      */
     public static void startDrawingQuads()
     {
-        getWorldRenderer().startDrawingQuads();
+        getWorldRenderer().begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
     }
 
     /**
@@ -95,7 +96,7 @@ public final class RenderingSupport
      */
     public static void startDrawingLines()
     {
-        getWorldRenderer().startDrawing(GL11.GL_LINES);
+        getWorldRenderer().begin(GL11.GL_LINES, DefaultVertexFormats.POSITION);
     }
 
     /**
@@ -119,31 +120,15 @@ public final class RenderingSupport
      */
     public static void addVertex(double x, double y, double z)
     {
-        getWorldRenderer().addVertex(x, y, z);
-    }
-
-    /**
-     * テクスチャの頂点座標を追加.
-     * 
-     * @param x x
-     * @param y y
-     * @param z z
-     * @param u u
-     * @param v v
-     */
-    public static void addVertexWithUV(double x, double y, double z, double u, double v)
-    {
-        getWorldRenderer().addVertexWithUV(x, y, z, u, v);
+        getWorldRenderer().pos(x, y, z).endVertex();
     }
 
     /**
      * 描画します.
-     * 
-     * @return バッファインデックス？
      */
-    public static int draw()
+    public static void draw()
     {
-        return tessellator().draw();
+        tessellator().draw();
     }
 
     /**
@@ -195,7 +180,7 @@ public final class RenderingSupport
         int a = (argb >> 24) & 0xff;
         int r = (argb >> 16) & 0xff;
         int g = (argb >> 8) & 0xff;
-        int b = (argb >> 0) & 0xff;
+        int b = argb & 0xff;
         setGLColor(r, g, b, a);
     }
 

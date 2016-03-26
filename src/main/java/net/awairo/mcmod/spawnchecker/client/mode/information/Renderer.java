@@ -18,6 +18,7 @@ import org.lwjgl.opengl.GL11;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
 import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
 import net.awairo.mcmod.spawnchecker.client.mode.Mode;
@@ -64,13 +65,16 @@ class Renderer
         GL11.glCullFace(GL11.GL_BACK);
         GL11.glDepthMask(false);
 
-        final int rgb = rgbOf(info.intColor());
-        int a = alpha == 1.0f
+        final int rgb = info.intColor() & 0xFFFFFF;
+        final int r = rgb >> 16 & 0xFF;
+        final int g = rgb >> 8 & 0xFF;
+        final int b = rgb & 0xFF;
+        final int a = alpha == 1.0f
                 ? alphaOf(info.intColor())
                 : Math.max(Math.round(alphaOf(info.intColor()) * alpha), MIN_ALPHA);
 
         if (info.hasIcon())
-            drawIcon(posX, posY, info, rgb, a);
+            drawIcon(posX, posY, info, r, g, b, a);
 
         drawString(posX, posY, info, rgb | a << 24);
         GL11.glDisable(GL11.GL_BLEND);
@@ -92,7 +96,7 @@ class Renderer
         return game.fontRendererObj.drawStringWithShadow(info.message(), x, y, rgba);
     }
 
-    private void drawIcon(int posX, int posY, Mode.Information info, int rgb, int a)
+    private void drawIcon(int posX, int posY, Mode.Information info, int r, int g, int b, int a)
     {
         startDraw();
 
@@ -117,18 +121,20 @@ class Renderer
         GL11.glEnable(GL11.GL_TEXTURE_2D);
 
         game.renderEngine.bindTexture(info.getIconResource());
-        t.getWorldRenderer().startDrawingQuads();
-        t.getWorldRenderer().setColorRGBA_I(rgb, a);
-        t.getWorldRenderer().addVertexWithUV(lbx, lby, consts().guiPosZ, consts().iconTextureUMin, consts().iconTextureVMax);
-        t.getWorldRenderer().addVertexWithUV(rbx, rby, consts().guiPosZ, consts().iconTextureUMax, consts().iconTextureVMax);
-        t.getWorldRenderer().addVertexWithUV(rtx, rty, consts().guiPosZ, consts().iconTextureUMax, consts().iconTextureVMin);
-        t.getWorldRenderer().addVertexWithUV(ltx, lty, consts().guiPosZ, consts().iconTextureUMin, consts().iconTextureVMin);
+        t.getWorldRenderer().begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
+        addVertexWithUV(lbx, lby, consts().guiPosZ, consts().iconTextureUMin, consts().iconTextureVMax, r, g, b, a);
+        addVertexWithUV(rbx, rby, consts().guiPosZ, consts().iconTextureUMax, consts().iconTextureVMax, r, g, b, a);
+        addVertexWithUV(rtx, rty, consts().guiPosZ, consts().iconTextureUMax, consts().iconTextureVMin, r, g, b, a);
+        addVertexWithUV(ltx, lty, consts().guiPosZ, consts().iconTextureUMin, consts().iconTextureVMin, r, g, b, a);
         t.draw();
     }
 
-    private static int rgbOf(int rgba)
-    {
-        return rgba & 0xFFFFFF;
+    private void addVertexWithUV(double x, double y, double z, double u, double v, int r, int g, int b, int a) {
+        t.getWorldRenderer()
+                .pos(x, y, z)
+                .tex(u, v)
+                .color(r, g, b, a)
+                .endVertex();
     }
 
     private static int alphaOf(int rgba)
