@@ -274,7 +274,7 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
 
     private boolean isSpawnerAt(int x, int y, int z)
     {
-        return game.theWorld.getBlockState(new BlockPos(x, y, z)).getBlock() == Blocks.mob_spawner;
+        return game.theWorld.getBlockState(new BlockPos(x, y, z)).getBlock() == Blocks.MOB_SPAWNER;
     }
 
     @Override

@@ -63,6 +63,8 @@ public enum CopiedLogics
 
     /**
      * 指定の座標に測定用のエンティティを移動し接触判定.
+     *
+     * EntityLiving#isNotColliding
      * 
      * @param x x座標
      * @param y y座標
@@ -77,12 +79,17 @@ public enum CopiedLogics
 
         final AxisAlignedBB copiedEntityAABB = entity.getEntityBoundingBox();
 
-        if (!game.theWorld.getCubes(entity, copiedEntityAABB).isEmpty())
+        if (game.theWorld.containsAnyLiquid(copiedEntityAABB))
         {
             return true;
         }
 
-        if (game.theWorld.isAnyLiquid(copiedEntityAABB))
+        if (!game.theWorld.getCollisionBoxes(entity, copiedEntityAABB).isEmpty())
+        {
+            return true;
+        }
+
+        if (!game.theWorld.checkNoEntityCollision(entity.getEntityBoundingBox(), entity))
         {
             return true;
         }

@@ -181,7 +181,7 @@ public class SlimeSpawnChecker implements SpawnCheck
 
         // 湿地ばいーむ
         final World world = GAME.theWorld;
-        if (world == null || world.getBiomeGenForCoords(new BlockPos(x, 64, z)) != Biomes.swampland)
+        if (world == null || world.getBiomeGenForCoords(new BlockPos(x, 64, z)) != Biomes.SWAMPLAND)
             return false;
 
         return COPIED_LOGICS.canSpawnByLightLevel(x, y, z, CONSTS.spawnableLightLevel);

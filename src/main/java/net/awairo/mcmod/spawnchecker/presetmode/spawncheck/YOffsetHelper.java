@@ -51,17 +51,17 @@ public enum YOffsetHelper
                 ConstantsConfig.instance().pressurePlateOffset);
 
         map = ImmutableMap.<Block, YOffsetFunction> builder()
-                .put(Blocks.lever, new LeverOffset())
-                .put(Blocks.snow_layer, new SnowOffset())
-                .put(Blocks.carpet, fixedValueFunction(Blocks.carpet))
-                .put(Blocks.rail, fixedValueFunction(Blocks.rail))
-                .put(Blocks.detector_rail, fixedValueFunction(Blocks.detector_rail))
-                .put(Blocks.golden_rail, fixedValueFunction(Blocks.golden_rail))
-                .put(Blocks.activator_rail, fixedValueFunction(Blocks.activator_rail))
-                .put(Blocks.wooden_pressure_plate, pressurePlateOffset)
-                .put(Blocks.stone_pressure_plate, pressurePlateOffset)
-                .put(Blocks.heavy_weighted_pressure_plate, pressurePlateOffset)
-                .put(Blocks.light_weighted_pressure_plate, pressurePlateOffset)
+                .put(Blocks.LEVER, new LeverOffset())
+                .put(Blocks.SNOW_LAYER, new SnowOffset())
+                .put(Blocks.CARPET, fixedValueFunction(Blocks.CARPET))
+                .put(Blocks.RAIL, fixedValueFunction(Blocks.RAIL))
+                .put(Blocks.DETECTOR_RAIL, fixedValueFunction(Blocks.DETECTOR_RAIL))
+                .put(Blocks.GOLDEN_RAIL, fixedValueFunction(Blocks.GOLDEN_RAIL))
+                .put(Blocks.ACTIVATOR_RAIL, fixedValueFunction(Blocks.ACTIVATOR_RAIL))
+                .put(Blocks.WOODEN_PRESSURE_PLATE, pressurePlateOffset)
+                .put(Blocks.STONE_PRESSURE_PLATE, pressurePlateOffset)
+                .put(Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE, pressurePlateOffset)
+                .put(Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE, pressurePlateOffset)
                 .build();
     }
 
@@ -119,7 +119,7 @@ public enum YOffsetHelper
     private static YOffsetFunction fixedValueFunction(Block block)
     {
         final IBlockState dummyState = new BlockStateContainer.StateImplementation(
-                Blocks.stone, ImmutableMap.<IProperty<?>, Comparable<?>>of()) {};
+                Blocks.STONE, ImmutableMap.<IProperty<?>, Comparable<?>>of()) {};
         return fixedValueFunction(block.getBoundingBox(dummyState, null, null).maxY);
     }
 
@@ -173,7 +173,7 @@ public enum YOffsetHelper
         public double apply(WorldClient world, int x, int y, int z)
         {
             final BlockPos pos = new BlockPos(x, y, z);
-            return Blocks.snow_layer.getBoundingBox(world.getBlockState(pos), world, pos).maxY;
+            return Blocks.SNOW_LAYER.getBoundingBox(world.getBlockState(pos), world, pos).maxY;
         }
 
     }
