@@ -13,6 +13,8 @@
 
 package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.spawner;
 
+import net.minecraft.util.math.BlockPos;
+
 /**
  * @author alalwww
  *
@@ -21,9 +23,9 @@ class MagmaCubeSpawnableCheck extends SkeletalMobSpawnerSpawnableCheck
 {
 
     @Override
-    public boolean isSpawnable(int x, int y, int z)
+    public boolean isSpawnable(BlockPos pos)
     {
-        if (logics().isColliding(x, y, z, entities().slime))
+        if (logics().isColliding(pos, entities().slime))
             return false;
 
         return true;

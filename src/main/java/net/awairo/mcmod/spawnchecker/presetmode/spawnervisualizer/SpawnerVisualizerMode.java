@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.google.common.collect.Lists;
+import net.awairo.mcmod.spawnchecker.presetmode.spawncheck.YOffsetHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -206,7 +207,7 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
                     // スポーナーじゃないのでトグらない
                     return started;
 
-                foundSpawner = getSpawnerTileEntity(pos.getX(), pos.getY(), pos.getZ());
+                foundSpawner = getSpawnerTileEntity(pos);
                 if (foundSpawner == null)
                     // TileEntityが想定外のタイプだった。ブロック座標を直前で確認しているので、発生しないはずだが、念のためチェック
                     return false;
@@ -359,6 +360,8 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
 
     private void checkSpawnable(int posX, int posY, int posZ, int inherentIndex)
     {
+        BlockPos pos = new BlockPos(posX, posY, posZ);
+
         // スポーン可否の判定に対応していないスポーナーの場合
         if (!spawnableCheck.supported())
         {
@@ -371,7 +374,7 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
         }
 
         final Color color;
-        if (spawnableCheck.isSpawnable(posX, posY, posZ))
+        if (spawnableCheck.isSpawnable(pos))
         {
             if (!spawnable) return;
             color = commonColor().spawnerSpawnablePoint();
@@ -388,9 +391,9 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
                 .setInherent(inherents[inherentIndex]));
     }
 
-    private TileEntityMobSpawner getSpawnerTileEntity(int x, int y, int z)
+    private TileEntityMobSpawner getSpawnerTileEntity(BlockPos pos)
     {
-        final TileEntity te = game.theWorld.getTileEntity(new BlockPos(x, y, z));
+        final TileEntity te = game.theWorld.getTileEntity(pos);
 
         if (te instanceof TileEntityMobSpawner)
             return (TileEntityMobSpawner) te;

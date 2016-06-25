@@ -19,6 +19,7 @@ import net.awairo.mcmod.spawnchecker.client.common.OptionSet;
 import net.awairo.mcmod.spawnchecker.client.mode.core.ModeBase;
 import net.awairo.mcmod.spawnchecker.presetmode.Options;
 import net.awairo.mcmod.spawnchecker.presetmode.spawnchecker.SpawnPointMarker;
+import net.minecraft.util.math.BlockPos;
 
 /**
  * 通常世界のスポーン判定.
@@ -90,27 +91,30 @@ public class SurfaceSpawnCheck extends SkeletalWorldSpawnCheck
     @Override
     public void check(int x, int y, int z)
     {
-        spawnCheckAt(x, y, z);
-        slimeSpawnCheckAt(x, y, z);
+        BlockPos pos = new BlockPos(x, y, z);
+        spawnCheckAt(pos);
+        slimeSpawnCheckAt(pos);
     }
 
     /**
      * スポーンチェック.
      * 
-     * @param x X座標
-     * @param y Y座標
-     * @param z Z座標
+     * @param pos 座標
      */
-    public void spawnCheckAt(int x, int y, int z)
+    public void spawnCheckAt(BlockPos pos)
     {
+        int x = pos.getX();
+        int y = pos.getY();
+        int z = pos.getZ();
+
         // この場所スポーンできるかな？
-        if (!copiedLogics.canSpawnAtLocation(x, y, z)) return;
+        if (!copiedLogics.canSpawnAtLocation(pos)) return;
 
         // ここに光はあるのかな？
-        if (!copiedLogics.canSpawnByLightLevel(x, y, z, consts.spawnableLightLevel)) return;
+        if (!copiedLogics.canSpawnByLightLevel(pos, consts.spawnableLightLevel)) return;
 
         // エンダーさんは入るかな？
-        if (!copiedLogics.isColliding(x, y, z, measureEntities.enderman))
+        if (!copiedLogics.isColliding(pos, measureEntities.enderman))
         {
             markers.add(cache.get()
                     .setModel(SpawnPointMarker.SPAWN_POINT)
@@ -122,7 +126,7 @@ public class SurfaceSpawnCheck extends SkeletalWorldSpawnCheck
         }
 
         // スケルトンとかそのあたりはどうだろう？
-        if (!copiedLogics.isColliding(x, y, z, measureEntities.standardSizeMob))
+        if (!copiedLogics.isColliding(pos, measureEntities.standardSizeMob))
         {
             markers.add(cache.get()
                     .setModel(SpawnPointMarker.SPAWN_POINT)
@@ -134,7 +138,7 @@ public class SurfaceSpawnCheck extends SkeletalWorldSpawnCheck
         }
 
         // クモなら、もしかして・・・？
-        if (!copiedLogics.isColliding(x, y, z, measureEntities.spider))
+        if (!copiedLogics.isColliding(pos, measureEntities.spider))
         {
             markers.add(cache.get()
                     .setModel(SpawnPointMarker.SPAWN_POINT)
@@ -150,26 +154,24 @@ public class SurfaceSpawnCheck extends SkeletalWorldSpawnCheck
     /**
      * 指定座標にスライムがスポーン可能か判定し、必要に応じてマーカーを追加します.
      * 
-     * @param x X座標
-     * @param y Y座標
-     * @param z Z座標
+     * @param pos 座標
      */
-    public void slimeSpawnCheckAt(int x, int y, int z)
+    public void slimeSpawnCheckAt(BlockPos pos)
     {
         if (!slime) return;
 
         // スポーン可能？
-        if (!slimeSpawnChecker.isSpawnable(x, y, z)) return;
+        if (!slimeSpawnChecker.isSpawnable(pos)) return;
 
         // 地面がある？
-        if (!copiedLogics.canSpawnAtLocation(x, y, z)) return;
+        if (!copiedLogics.canSpawnAtLocation(pos)) return;
 
         // 接触しないならスポーン可能
-        if (!copiedLogics.isColliding(x, y, z, measureEntities.slime))
+        if (!copiedLogics.isColliding(pos, measureEntities.slime))
         {
             markers.add(cache.get()
                     .setModel(SpawnPointMarker.SLIME_SPAWN_POINT)
-                    .setPoint(x, y, z)
+                    .setPoint(pos.getX(), pos.getY(), pos.getZ())
                     .showMarker(force || forceSlime || (hasEnableItem && slime))
                     .showGuideline(force || forceGuideline || (hasEnableItem && guideline))
                     .setColorAndBrightness(color.slime(), computedBrightness));
@@ -182,8 +184,6 @@ public class SurfaceSpawnCheck extends SkeletalWorldSpawnCheck
     {
         final ItemStack stack = game.thePlayer.inventory.getCurrentItem();
 
-        return stack != null
-                ? mode.enablingItems().contains(stack.getItem())
-                : false;
+        return stack != null && mode.enablingItems().contains(stack.getItem());
     }
 }

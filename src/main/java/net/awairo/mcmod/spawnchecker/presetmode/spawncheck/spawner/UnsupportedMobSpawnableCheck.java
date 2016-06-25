@@ -13,6 +13,8 @@
 
 package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.spawner;
 
+import net.minecraft.util.math.BlockPos;
+
 /**
  * 対応していないMob用.
  * 
@@ -21,7 +23,7 @@ package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.spawner;
 final class UnsupportedMobSpawnableCheck implements MobSpawnerSpawnableCheck
 {
     @Override
-    public boolean isSpawnable(int x, int y, int z)
+    public boolean isSpawnable(BlockPos pos)
     {
         return false;
     }

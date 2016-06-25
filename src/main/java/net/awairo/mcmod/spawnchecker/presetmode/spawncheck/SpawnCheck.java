@@ -13,6 +13,8 @@
 
 package net.awairo.mcmod.spawnchecker.presetmode.spawncheck;
 
+import net.minecraft.util.math.BlockPos;
+
 /**
  * スポーンチェックに用いる判定処理です.
  * 
@@ -23,10 +25,8 @@ public interface SpawnCheck
     /**
      * この座標にスポーン可能かを判定します.
      * 
-     * @param x X座標
-     * @param y Y座標
-     * @param z Z座標
+     * @param pos 座標
      * @return true はスポーン可能であることを意味します.
      */
-    boolean isSpawnable(int x, int y, int z);
+    boolean isSpawnable(BlockPos pos);
 }

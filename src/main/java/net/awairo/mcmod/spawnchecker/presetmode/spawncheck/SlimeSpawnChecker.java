@@ -150,15 +150,13 @@ public class SlimeSpawnChecker implements SpawnCheck
     /**
      * スライムがスポーン可能かを判定します.
      * 
-     * @param x X座標
-     * @param y Y座標
-     * @param z Z座標
+     * @param pos 座標
      * @return trueはスライムがスポーン可能
      */
     @Override
-    public boolean isSpawnable(int x, int y, int z)
+    public boolean isSpawnable(BlockPos pos)
     {
-        if (isSpawnableSwampland(x, y, z) || isSpawnablePos(x, y, z))
+        if (isSpawnableSwampland(pos) || isSpawnablePos(pos))
             return true;
 
         return false;
@@ -169,22 +167,22 @@ public class SlimeSpawnChecker implements SpawnCheck
      * 
      * @see net.minecraft.entity.monster.EntitySlime#getCanSpawnHere()
      */
-    private boolean isSpawnableSwampland(int x, int y, int z)
+    private boolean isSpawnableSwampland(BlockPos pos)
     {
         // スポーン可の高さより下
-        if (y <= CONSTS.slimeSpawnLimitMinYOnSwampland)
+        if (pos.getY() <= CONSTS.slimeSpawnLimitMinYOnSwampland)
             return false;
 
         // スポーン可の高さより上
-        if (y >= CONSTS.slimeSpawnLimitMaxYOnSwampland)
+        if (pos.getY() >= CONSTS.slimeSpawnLimitMaxYOnSwampland)
             return false;
 
         // 湿地ばいーむ
         final World world = GAME.theWorld;
-        if (world == null || world.getBiomeGenForCoords(new BlockPos(x, 64, z)) != Biomes.SWAMPLAND)
+        if (world == null || world.getBiomeGenForCoords(new BlockPos(pos.getX(), 64, pos.getZ())) != Biomes.SWAMPLAND)
             return false;
 
-        return COPIED_LOGICS.canSpawnByLightLevel(x, y, z, CONSTS.spawnableLightLevel);
+        return COPIED_LOGICS.canSpawnByLightLevel(pos, CONSTS.spawnableLightLevel);
     }
 
     /**
@@ -192,12 +190,12 @@ public class SlimeSpawnChecker implements SpawnCheck
      * 
      * @see net.minecraft.entity.monster.EntitySlime#getCanSpawnHere()
      */
-    private boolean isSpawnablePos(int x, int y, int z)
+    private boolean isSpawnablePos(BlockPos pos)
     {
-        if (y >= CONSTS.slimeSpawnLimitMaxY)
+        if (pos.getY() >= CONSTS.slimeSpawnLimitMaxY)
             return false;
 
-        return isSlimeChunk(x, z);
+        return isSlimeChunk(pos.getX(), pos.getZ());
     }
 
     // ------------------

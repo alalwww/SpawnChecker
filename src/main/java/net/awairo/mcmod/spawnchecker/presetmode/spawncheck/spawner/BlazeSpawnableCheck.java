@@ -13,6 +13,8 @@
 
 package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.spawner;
 
+import net.minecraft.util.math.BlockPos;
+
 /**
  * @author alalwww
  *
@@ -21,12 +23,12 @@ class BlazeSpawnableCheck extends SkeletalMobSpawnerSpawnableCheck
 {
 
     @Override
-    public boolean isSpawnable(int x, int y, int z)
+    public boolean isSpawnable(BlockPos pos)
     {
-        if (!logics().canSpawnByLightBrightness(x, y, z))
+        if (!logics().canSpawnByLightBrightness(pos))
             return false;
 
-        if (logics().isColliding(x, y, z, entities().standardSizeMob))
+        if (logics().isColliding(pos, entities().standardSizeMob))
             return false;
 
         return true;

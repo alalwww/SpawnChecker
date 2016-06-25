@@ -14,6 +14,7 @@
 package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.spawner;
 
 import net.awairo.mcmod.spawnchecker.presetmode.spawncheck.SlimeSpawnChecker;
+import net.minecraft.util.math.BlockPos;
 
 /**
  * @author alalwww
@@ -24,12 +25,12 @@ class SlimeSpawnableCheck extends SkeletalMobSpawnerSpawnableCheck
     private final SlimeSpawnChecker checker = SlimeSpawnChecker.newCheckerOfCurrentWorld();
 
     @Override
-    public boolean isSpawnable(int x, int y, int z)
+    public boolean isSpawnable(BlockPos pos)
     {
-        if (!checker.isSpawnable(x, y, z))
+        if (!checker.isSpawnable(pos))
             return false;
 
-        if (logics().isColliding(x, y, z, entities().standardSizeMob))
+        if (logics().isColliding(pos, entities().standardSizeMob))
             return false;
 
         return true;

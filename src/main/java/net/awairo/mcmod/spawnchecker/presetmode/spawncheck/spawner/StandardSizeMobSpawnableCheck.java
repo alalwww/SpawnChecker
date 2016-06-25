@@ -13,6 +13,8 @@
 
 package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.spawner;
 
+import net.minecraft.util.math.BlockPos;
+
 /**
  * 標準的なサイズのモンスターのスポーン可否判定.
  * 
@@ -21,15 +23,15 @@ package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.spawner;
 class StandardSizeMobSpawnableCheck extends SkeletalMobSpawnerSpawnableCheck
 {
     @Override
-    public boolean isSpawnable(int x, int y, int z)
+    public boolean isSpawnable(BlockPos pos)
     {
-        if (!logics().canSpawnByLightLevel(x, y, z, consts().spawnableLightLevel))
+        if (!logics().canSpawnByLightLevel(pos, consts().spawnableLightLevel))
             return false;
 
-        if (!logics().canSpawnByLightBrightness(x, y, z))
+        if (!logics().canSpawnByLightBrightness(pos))
             return false;
 
-        if (logics().isColliding(x, y, z, entities().standardSizeMob))
+        if (logics().isColliding(pos, entities().standardSizeMob))
             return false;
 
         return true;

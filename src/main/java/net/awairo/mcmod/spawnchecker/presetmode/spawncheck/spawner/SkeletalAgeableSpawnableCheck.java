@@ -28,17 +28,17 @@ abstract class SkeletalAgeableSpawnableCheck extends SkeletalMobSpawnerSpawnable
     abstract EntityAgeable measurementEntity();
 
     @Override
-    public boolean isSpawnable(int x, int y, int z)
+    public boolean isSpawnable(BlockPos pos)
     {
         // TODO：見直す
-        if (Minecraft.getMinecraft().theWorld.getBlockState(new BlockPos(x, y - 1, z)).getBlock() != Blocks.GRASS)
+        if (Minecraft.getMinecraft().theWorld.getBlockState(pos.down()).getBlock() != Blocks.GRASS)
             return false;
 
         // TODO：空の明るさを見る、ブロックのblightnessを調べるほうの明るさ判定が必要
-        if (logics().canSpawnByLightLevel(x, y, z, consts().spawnableLightLevel))
+        if (logics().canSpawnByLightLevel(pos, consts().spawnableLightLevel))
             return false;
 
-        if (logics().isColliding(x, y, z, measurementEntity()))
+        if (logics().isColliding(pos, measurementEntity()))
             return false;
 
         return true;

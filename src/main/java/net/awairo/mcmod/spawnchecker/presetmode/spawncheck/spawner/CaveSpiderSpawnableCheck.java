@@ -13,6 +13,8 @@
 
 package net.awairo.mcmod.spawnchecker.presetmode.spawncheck.spawner;
 
+import net.minecraft.util.math.BlockPos;
+
 /**
  * @author alalwww
  *
@@ -21,15 +23,15 @@ class CaveSpiderSpawnableCheck extends SkeletalMobSpawnerSpawnableCheck
 {
 
     @Override
-    public boolean isSpawnable(int x, int y, int z)
+    public boolean isSpawnable(BlockPos pos)
     {
-        if (!logics().canSpawnByLightLevel(x, y, z, consts().spawnableLightLevel))
+        if (!logics().canSpawnByLightLevel(pos, consts().spawnableLightLevel))
             return false;
 
-        if (!logics().canSpawnByLightBrightness(x, y, z))
+        if (!logics().canSpawnByLightBrightness(pos))
             return false;
 
-        if (logics().isColliding(x, y, z, entities().caveSpider))
+        if (logics().isColliding(pos, entities().caveSpider))
             return false;
 
         return true;

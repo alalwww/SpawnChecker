@@ -35,7 +35,7 @@ public interface MobSpawnerSpawnableCheck extends SpawnCheck
      * 
      * @author alalwww
      */
-    public static final class EntityMap
+    final class EntityMap
     {
         private static final ImmutableMap<String, Class<? extends MobSpawnerSpawnableCheck>> INSTANCE;
 

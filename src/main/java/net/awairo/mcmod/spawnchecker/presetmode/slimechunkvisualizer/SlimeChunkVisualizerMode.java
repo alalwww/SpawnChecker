@@ -20,6 +20,7 @@ import com.google.common.primitives.Ints;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 
 import net.awairo.mcmod.spawnchecker.client.common.CoordHelper;
@@ -220,7 +221,7 @@ public class SlimeChunkVisualizerMode extends SkeletalPresetMode<SlimeChunkVisua
             {
                 for (int y = fisstY; y >= lastY; y--)
                 {
-                    spawnCheck.slimeSpawnCheckAt(x, y, z);
+                    spawnCheck.slimeSpawnCheckAt(new BlockPos(x, y, z));
                 }
             }
         }

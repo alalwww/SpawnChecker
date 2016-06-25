@@ -15,6 +15,7 @@ package net.awairo.mcmod.spawnchecker.presetmode.spawncheck;
 
 import com.google.common.primitives.Floats;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -48,17 +49,18 @@ public enum CopiedLogics
     /**
      * モンスターがスポーンできる場所か判定.
      */
-    public boolean canSpawnAtLocation(int x, int y, int z)
+    public boolean canSpawnAtLocation(BlockPos pos)
     {
-        return canSpawnAtLocation(x, y, z, EntityLiving.SpawnPlacementType.ON_GROUND);
+        return canSpawnAtLocation(pos, EntityLiving.SpawnPlacementType.ON_GROUND);
     }
 
     /**
      * モンスターがスポーンできる場所か判定.
      */
-    public boolean canSpawnAtLocation(int x, int y, int z, EntityLiving.SpawnPlacementType type)
+    public boolean canSpawnAtLocation(BlockPos pos, EntityLiving.SpawnPlacementType type)
     {
-        return WorldEntitySpawner.canCreatureTypeSpawnAtLocation(type, game.theWorld, new BlockPos(x, y, z));
+        return WorldEntitySpawner.canCreatureTypeSpawnAtLocation(type, game.theWorld, pos);
+    }
     }
 
     /**
@@ -66,14 +68,16 @@ public enum CopiedLogics
      *
      * EntityLiving#isNotColliding
      * 
-     * @param x x座標
-     * @param y y座標
-     * @param z z座標
+     * @param pos 座標
      * @param entity 接触判定対象エンティティ
      * @return true は指定のエンティティを指定座標に配置した場合、ブロックないしはエンティティに接触する事を意味する
      */
-    public boolean isColliding(int x, int y, int z, EntityLiving entity)
+    public boolean isColliding(BlockPos pos, EntityLiving entity)
     {
+        int x = pos.getX();
+        int y = pos.getY();
+        int z = pos.getZ();
+
         // ブロック中央に配置
         entity.setPosition((double) x + 0.5F, y, (double) z + 0.5F);
 
@@ -100,15 +104,13 @@ public enum CopiedLogics
     /**
      * 指定座標の空の明るさを考慮しないライトレベルが、指定ライトレベルより小さいかを判定.
      * 
-     * @param x x座標
-     * @param y y座標
-     * @param z z座標
+     * @param pos 座標
      * @param lightLevel 判定用の16段階の明るさ(0～15)
      * @return true は座標はスポーンが可能な明るさ
      */
-    public boolean canSpawnByLightLevel(int x, int y, int z, int lightLevel)
+    public boolean canSpawnByLightLevel(BlockPos pos, int lightLevel)
     {
-        return getSavedLightValue(EnumSkyBlock.BLOCK, x, y, z) < lightLevel;
+        return getSavedLightValue(EnumSkyBlock.BLOCK, pos) < lightLevel;
     }
 
     /**
@@ -122,19 +124,17 @@ public enum CopiedLogics
      * 判定結果が正しくなくなるのは日の出および日の入り時の時間経過により変わる明るさであるため、多少のズレは割り切り。
      * </p>
      * 
-     * @param x x座標
-     * @param y y座標
-     * @param z z座標
+     * @param pos 座標
      * @return true は座標はスポーンが可能な明るさ
      */
-    public boolean canSpawnByLightBrightness(int x, int y, int z)
+    public boolean canSpawnByLightBrightness(BlockPos pos)
     {
-        int skyLightValue = getSavedLightValue(EnumSkyBlock.SKY, x, y, z);
+        int skyLightValue = getSavedLightValue(EnumSkyBlock.SKY, pos);
 
         // 15未満の場合はずれない
         if (skyLightValue < 15)
         {
-            return Floats.compare(config.spawnableMaxLightValue, getLightBrightness(x, y, z)) >= 0;
+            return Floats.compare(config.spawnableMaxLightValue, getLightBrightness(pos)) >= 0;
         }
 
         // 時間を条件に擬似的な明るさ算出を行いスポーン可否判定
@@ -175,7 +175,7 @@ public enum CopiedLogics
 
         // 時間を元にして10段階にわけた明るさとブロックの明るさ-5のうち大きなほうを選択
         // この辺りのロジックの理由は失念…
-        lightValueMinus4 = Math.max(lightValueMinus4, getSavedLightValue(EnumSkyBlock.BLOCK, x, y, z) - 5);
+        lightValueMinus4 = Math.max(lightValueMinus4, getSavedLightValue(EnumSkyBlock.BLOCK, pos) - 5);
         float brightness = getLightBrightness(lightValueMinus4);
         return Floats.compare(config.spawnableMaxLightValue, brightness) >= 0;
     }
@@ -224,15 +224,13 @@ public enum CopiedLogics
         }
     }
 
-    private int getSavedLightValue(EnumSkyBlock skyBlock, int x, int y, int z)
+    private int getSavedLightValue(EnumSkyBlock skyBlock, BlockPos pos)
     {
-        return game.theWorld.getLightFor(skyBlock, new BlockPos(x, y, z));
-        //return game.theWorld.getLightFromNeighborsFor(skyBlock, new BlockPos(x, y, z)); こっちかも
-        //return game.theWorld.getSavedLightValue(skyBlock, new BlockPos(x, y, z)); 元
+        return game.theWorld.getLightFromNeighborsFor(skyBlock, pos);
     }
 
-    private float getLightBrightness(int x, int y, int z)
+    private float getLightBrightness(BlockPos pos)
     {
-        return game.theWorld.getLightBrightness(new BlockPos(x, y, z));
+        return game.theWorld.getLightBrightness(pos);
     }
 }
