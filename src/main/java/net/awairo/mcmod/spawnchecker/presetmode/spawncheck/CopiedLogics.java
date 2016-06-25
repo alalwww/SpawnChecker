@@ -61,6 +61,13 @@ public enum CopiedLogics
     {
         return WorldEntitySpawner.canCreatureTypeSpawnAtLocation(type, game.theWorld, pos);
     }
+
+    /**
+     * EntityLiving#getCanSpawnHere
+     */
+    public boolean canSpawnHere(BlockPos pos, EntityLiving entity) {
+        IBlockState iblockstate = game.theWorld.getBlockState(pos.down());
+        return iblockstate.func_189884_a(entity);
     }
 
     /**

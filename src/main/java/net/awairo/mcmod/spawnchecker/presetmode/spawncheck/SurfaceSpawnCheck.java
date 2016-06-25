@@ -114,7 +114,8 @@ public class SurfaceSpawnCheck extends SkeletalWorldSpawnCheck
         if (!copiedLogics.canSpawnByLightLevel(pos, consts.spawnableLightLevel)) return;
 
         // エンダーさんは入るかな？
-        if (!copiedLogics.isColliding(pos, measureEntities.enderman))
+        if (!copiedLogics.isColliding(pos, measureEntities.enderman)
+                && copiedLogics.canSpawnHere(pos, measureEntities.enderman))
         {
             markers.add(cache.get()
                     .setModel(SpawnPointMarker.SPAWN_POINT)
@@ -126,7 +127,8 @@ public class SurfaceSpawnCheck extends SkeletalWorldSpawnCheck
         }
 
         // スケルトンとかそのあたりはどうだろう？
-        if (!copiedLogics.isColliding(pos, measureEntities.standardSizeMob))
+        if (!copiedLogics.isColliding(pos, measureEntities.standardSizeMob)
+                && copiedLogics.canSpawnHere(pos, measureEntities.standardSizeMob))
         {
             markers.add(cache.get()
                     .setModel(SpawnPointMarker.SPAWN_POINT)
@@ -138,7 +140,8 @@ public class SurfaceSpawnCheck extends SkeletalWorldSpawnCheck
         }
 
         // クモなら、もしかして・・・？
-        if (!copiedLogics.isColliding(pos, measureEntities.spider))
+        if (!copiedLogics.isColliding(pos, measureEntities.spider)
+                && copiedLogics.canSpawnHere(pos, measureEntities.spider))
         {
             markers.add(cache.get()
                     .setModel(SpawnPointMarker.SPAWN_POINT)
@@ -167,7 +170,8 @@ public class SurfaceSpawnCheck extends SkeletalWorldSpawnCheck
         if (!copiedLogics.canSpawnAtLocation(pos)) return;
 
         // 接触しないならスポーン可能
-        if (!copiedLogics.isColliding(pos, measureEntities.slime))
+        if (!copiedLogics.isColliding(pos, measureEntities.slime)
+                && copiedLogics.canSpawnHere(pos, measureEntities.slime))
         {
             markers.add(cache.get()
                     .setModel(SpawnPointMarker.SLIME_SPAWN_POINT)
