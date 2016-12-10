@@ -30,7 +30,7 @@ final class CowMeasure extends EntityCow
     }
 
     @Override
-    protected PathNavigate getNewNavigator(World worldIn)
+    protected PathNavigate createNavigator(World worldIn)
     {
         return null;
     }

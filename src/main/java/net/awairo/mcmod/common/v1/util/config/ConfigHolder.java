@@ -213,12 +213,12 @@ public class ConfigHolder
             if (event.phase != Phase.END) return;
 
             // ログアウトなどでワールドがなくなったら保存を試行
-            if (Minecraft.getMinecraft().theWorld != world)
+            if (Minecraft.getMinecraft().world != world)
             {
                 if (world != null)
                     saveConfigIfChanged();
 
-                world = Minecraft.getMinecraft().theWorld;
+                world = Minecraft.getMinecraft().world;
                 return;
             }
 

@@ -29,11 +29,11 @@ final class SlimeMeasure extends EntitySlime
     SlimeMeasure()
     {
         super(null);
-        setSlimeSize(SMALLEST);
+        setSlimeSize(SMALLEST, true);
     }
 
     @Override
-    protected PathNavigate getNewNavigator(World worldIn)
+    protected PathNavigate createNavigator(World worldIn)
     {
         return null;
     }

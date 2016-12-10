@@ -62,7 +62,7 @@ public class SlimeSpawnChecker implements SpawnCheck
         if (isSinglePlayer())
         {
             final MinecraftServer ms = GAME.getIntegratedServer();
-            final WorldServer ws = ms.worldServerForDimension(GAME.thePlayer.dimension);
+            final WorldServer ws = ms.worldServerForDimension(GAME.player.dimension);
             final long seed = ws.getSeed();
 
             LOGGER.info("current world is single player world, world seed is {}.", seed);
@@ -178,8 +178,9 @@ public class SlimeSpawnChecker implements SpawnCheck
             return false;
 
         // 湿地ばいーむ
-        final World world = GAME.theWorld;
-        if (world == null || world.getBiomeGenForCoords(new BlockPos(pos.getX(), 64, pos.getZ())) != Biomes.SWAMPLAND)
+        final World world = GAME.world;
+        // FIXME: ? getBiome or getBiomeForCoordsBody
+        if (world == null || world.getBiomeForCoordsBody(new BlockPos(pos.getX(), 64, pos.getZ())) != Biomes.SWAMPLAND)
             return false;
 
         return COPIED_LOGICS.canSpawnByLightLevel(pos, CONSTS.spawnableLightLevel);

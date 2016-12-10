@@ -30,7 +30,7 @@ final class WolfMeasure extends EntityWolf
     }
 
     @Override
-    protected PathNavigate getNewNavigator(World worldIn)
+    protected PathNavigate createNavigator(World worldIn)
     {
         return null;
     }

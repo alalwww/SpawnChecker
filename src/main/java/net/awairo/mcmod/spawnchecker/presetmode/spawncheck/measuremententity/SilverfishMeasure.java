@@ -30,7 +30,7 @@ final class SilverfishMeasure extends EntitySilverfish
     }
 
     @Override
-    protected PathNavigate getNewNavigator(World worldIn)
+    protected PathNavigate createNavigator(World worldIn)
     {
         return null;
     }

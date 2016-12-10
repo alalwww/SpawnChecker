@@ -32,7 +32,7 @@ final class PigMeasure extends EntityPig
     }
 
     @Override
-    protected PathNavigate getNewNavigator(World worldIn)
+    protected PathNavigate createNavigator(World worldIn)
     {
         return null;
     }

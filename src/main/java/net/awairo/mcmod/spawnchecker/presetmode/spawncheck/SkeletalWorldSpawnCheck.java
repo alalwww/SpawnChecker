@@ -74,7 +74,7 @@ public abstract class SkeletalWorldSpawnCheck implements WorldSpawnCheck
         color = mode.commonColor();
         cache = CachedSupplier.of(SpawnPointMarker.supplier());
         markers = Lists.newArrayListWithExpectedSize(consts.defaultSpawnCheckerMarkerListSize);
-        currentWorld = game.theWorld;
+        currentWorld = game.world;
     }
 
     /**
@@ -111,9 +111,9 @@ public abstract class SkeletalWorldSpawnCheck implements WorldSpawnCheck
         markers.clear();
 
         // TODO: いらんかも モードマネージャーがワールド変更時stop/startするはず。
-        if (currentWorld != game.theWorld)
+        if (currentWorld != game.world)
         {
-            currentWorld = game.theWorld;
+            currentWorld = game.world;
             cache.clearAll();
             markers.ensureCapacity(consts.defaultSpawnCheckerMarkerListSize);
         }

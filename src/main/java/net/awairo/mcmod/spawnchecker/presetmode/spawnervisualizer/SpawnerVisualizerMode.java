@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.google.common.collect.Lists;
-import net.awairo.mcmod.spawnchecker.presetmode.spawncheck.YOffsetHelper;
+import net.minecraft.item.ItemStack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -251,9 +251,9 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
     private boolean isPlayerCloseToTheFoundSpawner()
     {
         final double center = 0.5d;
-        double a = Math.pow(foundSpawnerX + center - game.thePlayer.posX, 2);
-        a += Math.pow(foundSpawnerY + center - game.thePlayer.posY, 2);
-        a += Math.pow(foundSpawnerZ + center - game.thePlayer.posZ, 2);
+        double a = Math.pow(foundSpawnerX + center - game.player.posX, 2);
+        a += Math.pow(foundSpawnerY + center - game.player.posY, 2);
+        a += Math.pow(foundSpawnerZ + center - game.player.posZ, 2);
 
         // TODO: 上限距離の定数化
         return Math.sqrt(a) < 24.0d;
@@ -261,7 +261,7 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
 
     private boolean isPlayerHasItem()
     {
-        return game.thePlayer.inventory.getCurrentItem() != null;
+        return game.player.inventory.getCurrentItem() != ItemStack.EMPTY;
     }
 
     private boolean isTargetedOnSpawner(RayTraceResult mop)
@@ -275,7 +275,7 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
 
     private boolean isSpawnerAt(int x, int y, int z)
     {
-        return game.theWorld.getBlockState(new BlockPos(x, y, z)).getBlock() == Blocks.MOB_SPAWNER;
+        return game.world.getBlockState(new BlockPos(x, y, z)).getBlock() == Blocks.MOB_SPAWNER;
     }
 
     @Override
@@ -393,7 +393,7 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
 
     private TileEntityMobSpawner getSpawnerTileEntity(BlockPos pos)
     {
-        final TileEntity te = game.theWorld.getTileEntity(pos);
+        final TileEntity te = game.world.getTileEntity(pos);
 
         if (te instanceof TileEntityMobSpawner)
             return (TileEntityMobSpawner) te;

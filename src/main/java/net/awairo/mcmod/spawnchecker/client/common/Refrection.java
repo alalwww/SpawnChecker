@@ -49,11 +49,11 @@ public final class Refrection
      */
     public static Optional<InetSocketAddress> getServerAddress()
     {
-        checkState(GAME.theWorld != null, "world is not started");
+        checkState(GAME.world != null, "world is not started");
         checkState(GAME.getIntegratedServer() == null, "current mode is the single player.");
 
         final NetHandlerPlayClient sendQueue = getFieldValue(
-                WorldClient.class, GAME.theWorld, "sendQueue", ConstantsConfig.instance().sendQueueSrgName);
+                WorldClient.class, GAME.world, "sendQueue", ConstantsConfig.instance().sendQueueSrgName);
 
         if (sendQueue == null)
             return Optional.absent();

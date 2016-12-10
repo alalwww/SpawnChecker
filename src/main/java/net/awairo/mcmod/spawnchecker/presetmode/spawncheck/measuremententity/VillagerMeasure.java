@@ -25,11 +25,11 @@ final class VillagerMeasure extends EntityVillager
 {
     VillagerMeasure()
     {
-        super(Minecraft.getMinecraft().theWorld);
+        super(Minecraft.getMinecraft().world);
         // コンストラクターに PathNavigate にアクセスする処理がありワールドが必須
         // このままだとワールドが消えた時にGCに回収されなくなるため、
         // 保持するワールドとワールドを保持するナビゲーターを削除して場当たり対応…
-        worldObj = null;
+        world = null;
         navigator = null;
     }
 

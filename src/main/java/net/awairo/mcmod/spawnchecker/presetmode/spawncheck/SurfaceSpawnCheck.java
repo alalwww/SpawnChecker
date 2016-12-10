@@ -186,7 +186,7 @@ public class SurfaceSpawnCheck extends SkeletalWorldSpawnCheck
     /** @return true は有効化するアイテムを持ってる */
     private boolean hasEnableItem()
     {
-        final ItemStack stack = game.thePlayer.inventory.getCurrentItem();
+        final ItemStack stack = game.player.inventory.getCurrentItem();
 
         return stack != null && mode.enablingItems().contains(stack.getItem());
     }

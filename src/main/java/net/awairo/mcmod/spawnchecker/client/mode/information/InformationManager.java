@@ -96,7 +96,7 @@ public final class InformationManager extends ClientManager
     {
         final long now = Minecraft.getSystemTime();
 
-        if (GAME.currentScreen != null || GAME.theWorld == null)
+        if (GAME.currentScreen != null || GAME.world == null)
             infos = null;
 
         if (!cache.isEmpty())

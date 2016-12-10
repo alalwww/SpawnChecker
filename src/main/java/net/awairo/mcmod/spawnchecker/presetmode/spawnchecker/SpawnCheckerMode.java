@@ -102,11 +102,11 @@ public final class SpawnCheckerMode extends SkeletalPresetMode<SpawnCheckerMode>
 
         // TODO: このあたりのリファクタリング、したい
 
-        final EntityPlayerSP p = game.thePlayer;
+        final EntityPlayerSP p = game.player;
 
-        final int px = MathHelper.floor_double(p.posX);
-        final int pz = MathHelper.floor_double(p.posZ);
-        final int py = MathHelper.floor_double(p.posY) + (int) Math.floor(p.height);
+        final int px = MathHelper.floor(p.posX);
+        final int pz = MathHelper.floor(p.posZ);
+        final int py = MathHelper.floor(p.posY) + (int) Math.floor(p.height);
 
         final int xRange = commonState().horizontalRange().current();
         final int zRange = xRange;

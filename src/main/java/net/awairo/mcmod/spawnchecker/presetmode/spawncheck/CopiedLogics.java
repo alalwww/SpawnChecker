@@ -59,15 +59,15 @@ public enum CopiedLogics
      */
     public boolean canSpawnAtLocation(BlockPos pos, EntityLiving.SpawnPlacementType type)
     {
-        return WorldEntitySpawner.canCreatureTypeSpawnAtLocation(type, game.theWorld, pos);
+        return WorldEntitySpawner.canCreatureTypeSpawnAtLocation(type, game.world, pos);
     }
 
     /**
      * EntityLiving#getCanSpawnHere
      */
     public boolean canSpawnHere(BlockPos pos, EntityLiving entity) {
-        IBlockState iblockstate = game.theWorld.getBlockState(pos.down());
-        return iblockstate.func_189884_a(entity);
+        IBlockState iblockstate = game.world.getBlockState(pos.down());
+        return iblockstate.canEntitySpawn(entity);
     }
 
     /**
@@ -90,17 +90,17 @@ public enum CopiedLogics
 
         final AxisAlignedBB copiedEntityAABB = entity.getEntityBoundingBox();
 
-        if (game.theWorld.containsAnyLiquid(copiedEntityAABB))
+        if (game.world.containsAnyLiquid(copiedEntityAABB))
         {
             return true;
         }
 
-        if (!game.theWorld.getCollisionBoxes(entity, copiedEntityAABB).isEmpty())
+        if (!game.world.getCollisionBoxes(entity, copiedEntityAABB).isEmpty())
         {
             return true;
         }
 
-        if (!game.theWorld.checkNoEntityCollision(entity.getEntityBoundingBox(), entity))
+        if (!game.world.checkNoEntityCollision(entity.getEntityBoundingBox(), entity))
         {
             return true;
         }
@@ -145,7 +145,7 @@ public enum CopiedLogics
         }
 
         // 時間を条件に擬似的な明るさ算出を行いスポーン可否判定
-        final int time = (int) (game.theWorld.getWorldTime() % 24000L);
+        final int time = (int) (game.world.getWorldTime() % 24000L);
 
         // 10段階に分割する際の適当に調整した除数
         // サーバー側の持つ明るさとの差をみながら調整し165くらいが妥当だったのでこの値
@@ -233,11 +233,11 @@ public enum CopiedLogics
 
     private int getSavedLightValue(EnumSkyBlock skyBlock, BlockPos pos)
     {
-        return game.theWorld.getLightFromNeighborsFor(skyBlock, pos);
+        return game.world.getLightFromNeighborsFor(skyBlock, pos);
     }
 
     private float getLightBrightness(BlockPos pos)
     {
-        return game.theWorld.getLightBrightness(pos);
+        return game.world.getLightBrightness(pos);
     }
 }

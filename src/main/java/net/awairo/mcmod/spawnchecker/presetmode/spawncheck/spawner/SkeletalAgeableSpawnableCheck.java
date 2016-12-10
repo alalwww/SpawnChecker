@@ -31,7 +31,7 @@ abstract class SkeletalAgeableSpawnableCheck extends SkeletalMobSpawnerSpawnable
     public boolean isSpawnable(BlockPos pos)
     {
         // TODO：見直す
-        if (Minecraft.getMinecraft().theWorld.getBlockState(pos.down()).getBlock() != Blocks.GRASS)
+        if (Minecraft.getMinecraft().world.getBlockState(pos.down()).getBlock() != Blocks.GRASS)
             return false;
 
         // TODO：空の明るさを見る、ブロックのblightnessを調べるほうの明るさ判定が必要

@@ -240,7 +240,7 @@ public final class ModeManager extends ClientManager
      */
     private void resetIfWorldChanged()
     {
-        final World wowld = Minecraft.getMinecraft().theWorld;
+        final World wowld = Minecraft.getMinecraft().world;
 
         // ワールド変わっていないので何もしない
         if (currentWorld == wowld)
@@ -343,7 +343,7 @@ public final class ModeManager extends ClientManager
 
     private static boolean notStartedTheWorld()
     {
-        return Minecraft.getMinecraft().theWorld == null;
+        return Minecraft.getMinecraft().world == null;
     }
 
     // ------------------------------------------------------------------------------------

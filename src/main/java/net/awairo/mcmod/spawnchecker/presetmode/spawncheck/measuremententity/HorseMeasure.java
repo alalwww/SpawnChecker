@@ -27,14 +27,14 @@ final class HorseMeasure extends EntityHorse
 {
     HorseMeasure()
     {
-        super(Minecraft.getMinecraft().theWorld);
+        super(Minecraft.getMinecraft().world);
         // インベントリをいじる処理があり、コンストラクターでワールドが必須
         // このままだとワールドが消えた時にGCに回収されなくなるため、保持するワールドを削除して場当たり対応…
-        worldObj = null;
+        world = null;
     }
 
     @Override
-    protected PathNavigate getNewNavigator(World worldIn)
+    protected PathNavigate createNavigator(World worldIn)
     {
         return null;
     }

@@ -79,14 +79,14 @@ public enum YOffsetHelper
     public static double getYOffset(double x, double y, double z)
     {
         return INSTANCE.getYOffsetInternal(
-                MathHelper.ceiling_double_int(x),
-                MathHelper.ceiling_double_int(y),
-                MathHelper.ceiling_double_int(z));
+                MathHelper.ceil(x),
+                MathHelper.ceil(y),
+                MathHelper.ceil(z));
     }
 
     private double getYOffsetInternal(final int x, final int y, final int z)
     {
-        final WorldClient world = minecraft.theWorld;
+        final WorldClient world = minecraft.world;
         final Block block = world.getBlockState(new BlockPos(x, y, z)).getBlock();
 
         if (block != null)
