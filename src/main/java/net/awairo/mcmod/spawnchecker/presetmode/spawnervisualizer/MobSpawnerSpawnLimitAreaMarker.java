@@ -34,8 +34,8 @@ public class MobSpawnerSpawnLimitAreaMarker extends SkeletalMarker<MobSpawnerSpa
     public MobSpawnerSpawnLimitAreaMarker(SpawnerVisualizerModeConfig config)
     {
         // TODO: 設定ロード
-        model.setMin(-8.0d);
-        model.setMax(9.0d);
+        model.setMin(-4.0d);
+        model.setMax(5.0d);
         model.setTop(5.0d);
         model.setBottom(-4.0d);
         model.setIntervals(2.0d);
