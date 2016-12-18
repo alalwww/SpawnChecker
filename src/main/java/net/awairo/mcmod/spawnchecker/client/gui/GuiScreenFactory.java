@@ -13,14 +13,11 @@
 
 package net.awairo.mcmod.spawnchecker.client.gui;
 
-import java.util.List;
 import java.util.Set;
 
 import com.google.common.collect.ImmutableSet;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 
 import net.minecraftforge.fml.client.IModGuiFactory;
@@ -57,35 +54,6 @@ public class GuiScreenFactory implements IModGuiFactory
     }
 
     @Override
-    public RuntimeOptionGuiHandler getHandlerFor(final RuntimeOptionCategoryElement element)
-    {
-        // TODO: 1060現在まだ呼び出し側が実装されてないっぽい？
-        System.out.println("\n\n----------------------------------------------------\n"
-                + "SpawnCheckerGuiScreenFactory getHandlerFor\n\n"
-                + "----------------------------------------------------");
-        return new RuntimeOptionGuiHandler()
-        {
-            @Override
-            public void paint(int x, int y, int w, int h)
-            {
-            }
-
-            @Override
-            public void close()
-            {
-            }
-
-            @Override
-            public void addWidgets(List<Gui> widgets, int x, int y, int w, int h)
-            {
-                widgets.add(new GuiButton(100, x + 10, y + 10, "HELLO"));
-            }
-
-            @Override
-            public void actionCallback(int actionId)
-            {
-            }
-        };
-    }
+    public RuntimeOptionGuiHandler getHandlerFor(final RuntimeOptionCategoryElement element) { return null; }
 
 }
