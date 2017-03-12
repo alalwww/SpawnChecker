@@ -105,7 +105,7 @@ public final class ClientSideProxy extends Proxy
         }
         catch (ReflectiveOperationException | RuntimeException e)
         {
-            // メッセージの内容に問題があるのは自信の責任ではないので落とさずロギングだけして無視
+            // メッセージの内容に問題があるのは自身の責任ではないので落とさずロギングだけして無視
             LOGGER.warn("unexpected imc event from {}", msg.getSender(), e);
         }
     }
