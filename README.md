@@ -19,13 +19,13 @@ Installation
 
 Controll
 ---------------------------------------------------------------------------
-key: `UP`, `DOWN`, `Num Add(+)`, `Num Sub(-)`, and modifier keys(CTRL/SHIFT/ALT)
+key: `UP`, `DOWN`, `RIGHT`, `LEFT`, `Num Add(+)`, `Num Sub(-)`, and modifier keys(CTRL/SHIFT/ALT)
 
 - `ctrl` + `up`/`down`: change mode
 - `up`/`down`: change mode option
-- `num +`/`num -`: change horizontal scan range
-- `shift`/`alt` + `num +`/`num -`: change vertical scan range
-- `ctrl` + `num +`/`num -`: change marker brightness
+- `num +` or `right`/`num -` or `left`: change horizontal scan range
+- `shift`/`alt` + `num +` or `right`/`num -` or `left`: change vertical scan range
+- `ctrl` + `num +` or `right`/`num -` or `left`: change marker brightness
 
 - click mob spawner block with bare hands: start spawner visualizer mode 
 
