@@ -38,7 +38,7 @@ public class GuiScreenFactory implements IModGuiFactory
 
     @Override
     public boolean hasConfigGui() {
-        return true;
+        return false;
     }
 
     @Override
