@@ -118,7 +118,7 @@ public final class SpawnCheckerMode extends SkeletalPresetMode<SpawnCheckerMode>
         final int firstZ = Ints.saturatedCast((long) pz - (long) zRange);
         final int lastZ = Ints.saturatedCast((long) pz + (long) zRange);
 
-        final int fisstY = Math.min(
+        final int firstY = Math.min(
                 Ints.saturatedCast((long) py + (long) yRange),
                 consts.scanRangeLimitMaxY);
 
@@ -130,7 +130,7 @@ public final class SpawnCheckerMode extends SkeletalPresetMode<SpawnCheckerMode>
         {
             for (int z = firstZ; z <= lastZ; z++)
             {
-                for (int y = fisstY; y >= lastY; y--)
+                for (int y = firstY; y >= lastY; y--)
                 {
                     spawnCheck.check(x, y, z);
                 }
