@@ -261,7 +261,7 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
 
     private boolean isPlayerHasItem()
     {
-        return game.player.inventory.getCurrentItem() != ItemStack.EMPTY;
+        return !game.player.inventory.getCurrentItem().isEmpty();
     }
 
     private boolean isTargetedOnSpawner(RayTraceResult mop)
