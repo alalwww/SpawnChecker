@@ -35,6 +35,8 @@ public final class KeyConfig extends ConfigCategory
 
     private static final String UP_KEY_DESC = "spawnchecker.key.up";
     private static final String DOWN_KEY_DESC = "spawnchecker.key.down";
+    private static final String RIGHT_KEY_DESC = "spawnchecker.key.right";
+    private static final String LEFT_KEY_DESC = "spawnchecker.key.left";
     private static final String PLUS_KEY_DESC = "spawnchecker.key.plus";
     private static final String MINUS_KEY_DESC = "spawnchecker.key.minus";
 
@@ -69,6 +71,8 @@ public final class KeyConfig extends ConfigCategory
         handlers = ImmutableList.of(
                 new UpKeyHandler(new KeyBindingWrapper(UP_KEY_DESC, Keyboard.KEY_UP, this)),
                 new DownKeyHandler(new KeyBindingWrapper(DOWN_KEY_DESC, Keyboard.KEY_DOWN, this)),
+                new RightKeyHandler(new KeyBindingWrapper(RIGHT_KEY_DESC, Keyboard.KEY_RIGHT, this)),
+                new LeftKeyHandler(new KeyBindingWrapper(LEFT_KEY_DESC, Keyboard.KEY_LEFT, this)),
                 new PlusKeyHandler(new KeyBindingWrapper(PLUS_KEY_DESC, Keyboard.KEY_ADD, this)),
                 new MinusKeyHandler(new KeyBindingWrapper(MINUS_KEY_DESC, Keyboard.KEY_SUBTRACT, this)));
     }
