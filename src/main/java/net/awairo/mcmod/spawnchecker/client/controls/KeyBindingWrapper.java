@@ -13,7 +13,7 @@
 
 package net.awairo.mcmod.spawnchecker.client.controls;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 
 import net.minecraft.client.settings.KeyBinding;
 
@@ -69,7 +69,7 @@ class KeyBindingWrapper extends KeyBinding
     @Override
     public String toString()
     {
-        return Objects.toStringHelper(this)
+        return MoreObjects.toStringHelper(this)
                 .add("keyCode", getKeyCode())
                 .add("pressed", isKeyDown())
                 .add("keyDescription", getKeyDescription())

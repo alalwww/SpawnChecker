@@ -122,7 +122,7 @@ public final class InformationManager extends ClientManager
         for (Mode.Information info : infos)
         {
             renderer.draw(posX + info.offsetX(), posY + info.offsetY(), info);
-            posY += Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT; // TODO: standardGalacticFontRendererかも
+            posY += Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT; // TODO: standardGalacticFontRendererかも
         }
 
         renderer.endDrawing();

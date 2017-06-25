@@ -92,7 +92,7 @@ class Renderer
         final int x = info.hasIcon() ? posX + getMessageOffset(info) : posX;
         final int y = posY;
 
-        return game.fontRendererObj.drawStringWithShadow(info.message(), x, y, rgba);
+        return game.fontRenderer.drawStringWithShadow(info.message(), x, y, rgba);
     }
 
     private void drawIcon(int posX, int posY, Mode.Information info, int r, int g, int b, int a)

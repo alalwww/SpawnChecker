@@ -62,7 +62,7 @@ public class SlimeSpawnChecker implements SpawnCheck
         if (isSinglePlayer())
         {
             final MinecraftServer ms = GAME.getIntegratedServer();
-            final WorldServer ws = ms.worldServerForDimension(GAME.player.dimension);
+            final WorldServer ws = ms.getWorld(GAME.player.dimension);
             final long seed = ws.getSeed();
 
             LOGGER.info("current world is single player world, world seed is {}.", seed);

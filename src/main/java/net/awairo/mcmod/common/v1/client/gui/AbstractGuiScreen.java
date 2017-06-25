@@ -47,9 +47,9 @@ public abstract class AbstractGuiScreen extends GuiScreen
         for (Label label : labels)
         {
             if (label.centering)
-                drawCenteredString(fontRendererObj, label.text, width / 2, label.y, label.color);
+                drawCenteredString(fontRenderer, label.text, width / 2, label.y, label.color);
             else
-                drawString(fontRendererObj, label.text, label.x, label.y, label.color);
+                drawString(fontRenderer, label.text, label.x, label.y, label.color);
         }
 
         super.drawScreen(mouseX, mouseY, renderPartialTicks);

@@ -20,7 +20,7 @@ import org.lwjgl.opengl.GL11;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
@@ -45,7 +45,7 @@ public final class RenderingSupport
         return Tessellator.getInstance();
     }
 
-    public static VertexBuffer getWorldRenderer()
+    public static BufferBuilder getWorldRenderer()
     {
         return tessellator().getBuffer();
     }

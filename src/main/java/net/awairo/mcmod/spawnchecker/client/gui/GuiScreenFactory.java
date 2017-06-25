@@ -13,9 +13,8 @@
 
 package net.awairo.mcmod.spawnchecker.client.gui;
 
+import java.util.Collections;
 import java.util.Set;
-
-import com.google.common.collect.ImmutableSet;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -30,11 +29,7 @@ import net.minecraftforge.fml.client.IModGuiFactory;
 public class GuiScreenFactory implements IModGuiFactory
 {
 
-    // TODO: インゲーム設定画面がまともに動くようになったらちゃんと設定する
-    //    private static final Set<RuntimeOptionCategoryElement> categories = ImmutableSet
-    //            .of(new RuntimeOptionCategoryElement("PARENT", "CHILD"));
-    private static final Set<RuntimeOptionCategoryElement> CATEGORIES = ImmutableSet
-            .of(new RuntimeOptionCategoryElement("HELP", "SpawnChecker"));
+    private static final Set<RuntimeOptionCategoryElement> CATEGORIES = Collections.emptySet();
 
     @Override
     public void initialize(Minecraft minecraft)
@@ -42,9 +37,20 @@ public class GuiScreenFactory implements IModGuiFactory
     }
 
     @Override
+    public boolean hasConfigGui() {
+        return true;
+    }
+
+    @Override
+    public GuiScreen createConfigGui(final GuiScreen parentScreen) {
+        return new GuiConfigScreen(parentScreen);
+    }
+
+    @Override
+    @Deprecated
     public Class<? extends GuiScreen> mainConfigGuiClass()
     {
-        return GuiConfigScreen.class;
+        return null;
     }
 
     @Override

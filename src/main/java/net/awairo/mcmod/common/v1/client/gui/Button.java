@@ -13,7 +13,7 @@ package net.awairo.mcmod.common.v1.client.gui;
 
 import static com.google.common.base.Preconditions.*;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.resources.I18n;
@@ -56,8 +56,8 @@ public class Button extends GuiButton
 
     void setPosition(int x, int y)
     {
-        xPosition = x;
-        yPosition = y;
+        this.x = x;
+        this.y = y;
     }
 
     ButtonContext context()
@@ -68,11 +68,11 @@ public class Button extends GuiButton
     @Override
     public String toString()
     {
-        return Objects.toStringHelper(this)
+        return MoreObjects.toStringHelper(this)
                 .add("context", context())
                 .add("id", id)
-                .add("x", xPosition)
-                .add("y", yPosition)
+                .add("x", x)
+                .add("y", y)
                 .add("width", width)
                 .add("height", height)
                 .add("label", displayString)

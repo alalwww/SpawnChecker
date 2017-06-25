@@ -15,8 +15,9 @@ package net.awairo.mcmod.spawnchecker.client.mode.core;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -366,13 +367,13 @@ public abstract class ModeBase<T extends ModeBase<T>> implements OperatableMode
     public final boolean equals(Object obj)
     {
         if (this == obj) return true;
-        return getClass().equals(obj.getClass()) && Objects.equal(id(), getClass().cast(obj).id());
+        return getClass().equals(obj.getClass()) && Objects.equals(id(), getClass().cast(obj).id());
     }
 
     @Override
     public String toString()
     {
-        final Objects.ToStringHelper helper = Objects.toStringHelper(getClass())
+        final MoreObjects.ToStringHelper helper = MoreObjects.toStringHelper(getClass())
                 .add("mode id", id())
                 .add("name", name());
 
