@@ -90,6 +90,7 @@ public class ConstantsConfig extends ConfigCategory
     public final String sendQueueSrgName;
 
     /** MobSpawnerBaseLogic#getEntityNameToSpawn() の srg-name. */
+    @Deprecated
     public final String getEntityNameToSpawnSrgName;
 
     /** CachedSupplierのキャッシュサイズ初期値. */
@@ -256,8 +257,8 @@ public class ConstantsConfig extends ConfigCategory
                 .comment("default: field_73035_a (for 1.8-11.14.0.1245-1.8)")
                 .getString();
 
-        getEntityNameToSpawnSrgName = getValueOf("getEntityNameToSpawnSrgName", "func_98276_e")
-                .comment("default: func_98276_e (for 1.8-11.14.0.1245-1.8)")
+        getEntityNameToSpawnSrgName = getValueOf("getEntityNameToSpawnSrgName", "undefined")
+                .comment("* It became unnecessary *")
                 .getString();
 
         // マーカーキャッシュのデフォルトサイズ

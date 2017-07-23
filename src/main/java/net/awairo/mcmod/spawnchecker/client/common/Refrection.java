@@ -71,46 +71,6 @@ public final class Refrection
         return Optional.absent();
     }
 
-    private static volatile Method getEntityNameToSpawn;
-    private static volatile boolean failed;
-    private static final Object lock = new Object();
-
-    public static String getEntityNameToSpawnFrom(MobSpawnerBaseLogic logic)
-    {
-        // TODO: コードがひどい、なおしたい
-        if (failed) return "Pig";
-
-        if (getEntityNameToSpawn == null)
-        {
-            synchronized (lock)
-            {
-                if (getEntityNameToSpawn == null)
-                {
-                    String[] names = { "getEntityNameToSpawn", ConstantsConfig.instance().getEntityNameToSpawnSrgName };
-                    try
-                    {
-                        getEntityNameToSpawn = ReflectionHelper.findMethod(MobSpawnerBaseLogic.class, null, names);
-                    }
-                    catch (RuntimeException ignore)
-                    {
-                        LOGGER.warn("refrection failed", ignore);
-                        failed = true;
-                        return "Pig";
-                    }
-                }
-            }
-        }
-
-        try
-        {
-            return (String) getEntityNameToSpawn.invoke(logic);
-        }
-        catch (IllegalAccessException | InvocationTargetException e)
-        {
-            throw Throwables.propagate(e);
-        }
-    }
-
     private static <T, E> T getFieldValue(Class<? super E> clazz, E instance, String... names)
     {
         try

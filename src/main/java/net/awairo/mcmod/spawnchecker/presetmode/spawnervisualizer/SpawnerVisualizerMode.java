@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Random;
 
 import com.google.common.collect.Lists;
-import net.minecraft.item.ItemStack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,7 +31,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 
 import net.awairo.mcmod.spawnchecker.SpawnChecker;
-import net.awairo.mcmod.spawnchecker.client.common.Refrection;
 import net.awairo.mcmod.spawnchecker.client.marker.CachedSupplier;
 import net.awairo.mcmod.spawnchecker.client.mode.ConditionalMode;
 import net.awairo.mcmod.spawnchecker.presetmode.SkeletalPresetMode;
@@ -314,7 +312,7 @@ public class SpawnerVisualizerMode extends SkeletalPresetMode<SpawnerVisualizerM
                     .setPoint(foundSpawnerX, foundSpawnerY, foundSpawnerZ);
 
             spawnableCheck = MobSpawnerSpawnableCheck.EntityMap
-                    .newInstanceOf(Refrection.getEntityNameToSpawnFrom(foundSpawnerLogic));
+                    .newInstanceOf(foundSpawnerLogic.getCachedEntity().getName());
         }
 
         hidden = options().contains(SPAWNER_HIDDEN);
