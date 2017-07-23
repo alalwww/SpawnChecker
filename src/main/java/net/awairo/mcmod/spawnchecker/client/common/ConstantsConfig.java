@@ -87,7 +87,11 @@ public class ConstantsConfig extends ConfigCategory
     public final int slimeChunkMarkerCacheInitSize;
 
     /** WorldClient#sendQueue のsrg-name. */
+    @Deprecated
     public final String sendQueueSrgName;
+
+    /** WorldClient#connection のsrg-name. */
+    public final String connectionSrgName;
 
     /** MobSpawnerBaseLogic#getEntityNameToSpawn() の srg-name. */
     @Deprecated
@@ -253,8 +257,12 @@ public class ConstantsConfig extends ConfigCategory
                 .getInt();
 
         // リフレクション
-        sendQueueSrgName = getValueOf("sendQueueSrgName", "field_73035_a")
-                .comment("default: field_73035_a (for 1.8-11.14.0.1245-1.8)")
+        sendQueueSrgName = getValueOf("sendQueueSrgName", "undefined")
+                .comment("* It became unnecessary *")
+                .getString();
+
+        connectionSrgName = getValueOf("connectionSrgName", "field_73035_a")
+                .comment("default: field_73035_a (for snapshot_20170624)")
                 .getString();
 
         getEntityNameToSpawnSrgName = getValueOf("getEntityNameToSpawnSrgName", "undefined")

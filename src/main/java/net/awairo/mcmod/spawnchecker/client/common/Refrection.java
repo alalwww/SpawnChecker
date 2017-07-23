@@ -53,7 +53,7 @@ public final class Refrection
         checkState(GAME.getIntegratedServer() == null, "current mode is the single player.");
 
         final NetHandlerPlayClient sendQueue = getFieldValue(
-                WorldClient.class, GAME.world, "sendQueue", ConstantsConfig.instance().sendQueueSrgName);
+                WorldClient.class, GAME.world, "connection", ConstantsConfig.instance().connectionSrgName);
 
         if (sendQueue == null)
             return Optional.absent();
