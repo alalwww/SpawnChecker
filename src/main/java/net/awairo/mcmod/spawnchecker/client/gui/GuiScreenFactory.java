@@ -47,19 +47,9 @@ public class GuiScreenFactory implements IModGuiFactory
     }
 
     @Override
-    @Deprecated
-    public Class<? extends GuiScreen> mainConfigGuiClass()
-    {
-        return null;
-    }
-
-    @Override
     public Set<RuntimeOptionCategoryElement> runtimeGuiCategories()
     {
         return CATEGORIES;
     }
-
-    @Override
-    public RuntimeOptionGuiHandler getHandlerFor(final RuntimeOptionCategoryElement element) { return null; }
 
 }
