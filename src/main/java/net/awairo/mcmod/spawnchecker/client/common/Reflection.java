@@ -37,7 +37,7 @@ import net.awairo.mcmod.spawnchecker.SpawnChecker;
 /**
  * リフレクションを行う処理.
  */
-public final class Refrection
+public final class Reflection
 {
     private static final Minecraft GAME = Minecraft.getMinecraft();
     private static final Logger LOGGER = LogManager.getLogger(SpawnChecker.MOD_ID);
@@ -84,7 +84,7 @@ public final class Refrection
         }
     }
 
-    private Refrection()
+    private Reflection()
     {
         throw new InternalError();
     }

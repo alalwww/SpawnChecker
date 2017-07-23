@@ -37,7 +37,7 @@ import net.awairo.mcmod.spawnchecker.SpawnChecker;
 import net.awairo.mcmod.spawnchecker.client.common.ConstantsConfig;
 import net.awairo.mcmod.spawnchecker.client.common.CoordHelper;
 import net.awairo.mcmod.spawnchecker.client.common.MultiServerWorldSeedConfig;
-import net.awairo.mcmod.spawnchecker.client.common.Refrection;
+import net.awairo.mcmod.spawnchecker.client.common.Reflection;
 
 /**
  * スライムスポーンの判定モデル.
@@ -70,7 +70,7 @@ public class SlimeSpawnChecker implements SpawnCheck
             return new SlimeSpawnChecker(seed);
         }
 
-        final Optional<Long> seed = findSeed(Refrection.getServerAddress());
+        final Optional<Long> seed = findSeed(Reflection.getServerAddress());
 
         if (seed.isPresent())
         {
