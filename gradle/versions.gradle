@@ -1,0 +1,32 @@
+ant.condition(property: "os", value: "windows") { os(family: "windows") }
+ant.condition(property: "os", value: "unix") { os(family: "unix") }
+
+def out = new ByteArrayOutputStream()
+exec {
+// WIP: よしなに修正する
+  def releaseTagPattern = "v*.*"//"v3.0.*"
+  def describeCmd = ["git", "describe", "--match", releaseTagPattern, "--long"]
+  switch (ant.properties.os) {
+    case "windows":
+      commandLine(["cmd", "/c"] + describeCmd)
+      break
+    case "unix":
+      commandLine(describeCmd)
+      break
+    default:
+      logger.error("unknown os")
+      throw new RuntimeException("unknown os.(" + ant.properties + ")")
+  }
+  standardOutput = out
+}
+
+def (_, tag, patch, gitHash) = (out.toString().trim() =~ /^v([^-]+)-(\d+)-(g[0-9a-f]+)$/)[0]
+
+project.ext.minecraftVersion = "1.13.2"
+project.ext.javaVersion = JavaVersion.VERSION_1_8
+project.ext.buildNumber = System.getenv("TRAVIS_BUILD_NUMBER") ?: "x"
+
+project.ext.tag = tag
+project.ext.patch = patch
+project.ext.gitHash = gitHash
+project.ext.versionValue = "3.0.0-SNAPSHOT" // WIP 動的に修正する
