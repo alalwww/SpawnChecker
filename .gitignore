@@ -1,31 +1,29 @@
+.DS_Store
+Thumbs.db
+
+# gradle
+build
 .gradle
 gradle.properties
 
-*.class
-*.jpage
-
-/src/main/resources/version.properties
-/.modrevision
-
+# eclipse
+bin
+*.launch
+.settings
+.metadata
 .classpath
 .project
-.settings
-.checkstyle
-.pydevproject
-.groovy
-.README.md.html
-bin/
-build/
-eclipse/
-run/
-olds/
-gradle-app.setting
 
-.idea
-*.iml
+# idea
+out
 *.ipr
 *.iws
-*.ids
+*.iml
+.idea
 
-.DS_Store
-Thumbs.db
+# other
+eclipse
+run
+
+# Files from Forge MDK
+forge*changelog.txt
