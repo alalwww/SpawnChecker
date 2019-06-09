@@ -1,0 +1,35 @@
+#
+# SpawnChecker.
+#
+logoFile="spawnchecker_logo.png"
+
+displayURL="https://awairo.net/minecraft/"
+issueTrackerURL="https://github.com/alalwww/SpawnChecker/issues"
+
+modLoader="javafml"
+loaderVersion="[25,)"
+
+[[mods]]
+modId="spawnchecker"
+version="{dummy}"
+displayName="SpawnChecker"
+authors="alalwww"
+credits="By alalwww, original mod idea by fillppo."
+description='''
+The SpawnChecker draw information of mob spawn points, slime chunks and the monster spawner on in-game.
+'''
+#updateJSONURL="https://awairo.net/minecraft/SpawnChecker-update.json"
+
+[[dependencies.spawnchecker]]
+  modId="forge"
+  mandatory=true
+  versionRange="[25,)"
+  ordering="NONE"
+  side="CLIENT"
+
+[[dependencies.spawnchecker]]
+  modId="minecraft"
+  mandatory=true
+  versionRange="[1.13.2]"
+  ordering="NONE"
+  side="CLIENT"
