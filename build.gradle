@@ -10,6 +10,9 @@ buildscript {
     classpath group: "net.minecraftforge.gradle", name: "ForgeGradle", version: "3.+", changing: true
   }
 }
+plugins {
+  id "net.minecrell.licenser" version "0.4"
+}
 apply plugin: "net.minecraftforge.gradle"
 apply plugin: "eclipse" // Do not delete it, because referred from FG
 
@@ -88,6 +91,18 @@ minecraft {
       environment "MOD_CLASSES", ""
     }
   }
+}
+
+license {
+  header = project.file("LICENSE-HEADER.txt")
+  ext {
+    name = "alalwww"
+    years = "2019"
+  }
+
+  exclude "**/*.json"
+  exclude "**/*.mcmeta"
+  exclude "**/*.toml"
 }
 
 task processModsTomlResources(type: Copy) {
