@@ -19,9 +19,10 @@
 
 package net.awairo.minecraft.spawnchecker.mode.marker;
 
-import net.minecraft.client.renderer.GlStateManager;
+import com.mojang.blaze3d.platform.GlStateManager;
+
 import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.math.Vec3d;
 
 import net.awairo.minecraft.spawnchecker.api.Marker;
@@ -38,7 +39,7 @@ public abstract class AbstractRenderer<M extends Marker> implements MarkerRender
     private final ModeState state;
 
     @NonNull
-    private final RenderManager renderManager;
+    private final EntityRendererManager renderManager;
 
     public void render(M marker, WorldRenderer renderer, int tickCount, float partialTicks) {
         GlStateManager.pushMatrix();

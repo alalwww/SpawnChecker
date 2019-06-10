@@ -22,15 +22,15 @@ package net.awairo.minecraft.spawnchecker.mode;
 import java.util.LinkedList;
 import java.util.stream.Stream;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.entity.EntitySpawnPlacementRegistry.SpawnPlacementType;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.EntitySpawnPlacementRegistry.PlacementType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.fluid.IFluidState;
-import net.minecraft.init.Blocks;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.EnumLightType;
+import net.minecraft.world.LightType;
 
 import net.awairo.minecraft.spawnchecker.api.Color;
 import net.awairo.minecraft.spawnchecker.api.Marker;
@@ -78,7 +78,7 @@ public class SpawnCheckMode extends SelectableMode {
         return Stream.empty();
     }
 
-    private Stream<Marker> updateInSurfaceWorld(WorldClient world, ScanArea area) {
+    private Stream<Marker> updateInSurfaceWorld(ClientWorld world, ScanArea area) {
 
         val markerBuilder = SpawnPointMarker.builder()
             .endermanMarkerColor(Color.ofColorCode("#40FF0064"))
@@ -89,7 +89,7 @@ public class SpawnCheckMode extends SelectableMode {
             .drawGuideline(config.drawGuideline());
 
         return area.xzStream().parallel().flatMap(xz -> {
-            val placeType = SpawnPlacementType.ON_GROUND;
+            val placeType = PlacementType.ON_GROUND;
             val posIterator = xz.posStream().iterator();
 
             if (!posIterator.hasNext())
@@ -97,7 +97,7 @@ public class SpawnCheckMode extends SelectableMode {
 
             val lightLevelThreshold = 7;
             BlockPos underLoc = null, loc;
-            IBlockState underBlock = null, locBlock;
+            BlockState underBlock = null, locBlock;
             IFluidState locFluid;
 
             boolean underIsSpawnableBlock = false;
@@ -112,7 +112,7 @@ public class SpawnCheckMode extends SelectableMode {
 
                 // region 足元のブロックがスポーン可能であることの判定
                 // 上面が平らならスポーンできるブロック
-                if (locBlock.isTopSolid()) {
+                if (locBlock.isSolid()) {
                     // 岩盤とバリアブロックにはスポーンできない
                     underIsSpawnableBlock =
                         locBlock.getBlock() != Blocks.BEDROCK && locBlock.getBlock() != Blocks.BARRIER;
@@ -135,7 +135,7 @@ public class SpawnCheckMode extends SelectableMode {
                 // region 現在の座標はなにもない空気ブロックであることの判定
                 // WorldEntitySpawner#isValidEmptySpawnBlock(IBlockState, IFluidState) と同様の判定
 
-                if (locBlock.isNormalCube() || locBlock.canProvidePower() || locBlock.isIn(BlockTags.RAILS)) {
+                if (locBlock.isOpaqueCube(world, loc) || locBlock.canProvidePower() || locBlock.isIn(BlockTags.RAILS)) {
                     underLoc = loc;
                     underBlock = locBlock;
                     continue;
@@ -150,7 +150,8 @@ public class SpawnCheckMode extends SelectableMode {
                 // endregion
 
                 // region 明るさ判定
-                if (world.getLightFromNeighborsFor(EnumLightType.BLOCK, loc) > lightLevelThreshold) {
+                // net.minecraft.entity.monster.MonsterEntity#isValidLightLevel()
+                if (world.getLightFor(LightType.BLOCK, loc) > lightLevelThreshold) {
                     underLoc = loc;
                     underBlock = locBlock;
                     continue;

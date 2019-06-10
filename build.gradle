@@ -1,5 +1,4 @@
 buildscript {
-  apply from: "./gradle/versions.gradle"
   repositories {
     mavenLocal()
     maven { url = "https://files.minecraftforge.net/maven" }
@@ -15,13 +14,32 @@ plugins {
 }
 apply plugin: "net.minecraftforge.gradle"
 apply plugin: "eclipse" // Do not delete it, because referred from FG
+apply from: "./gradle/versions.gradle"
 
 import org.apache.tools.ant.filters.FixCrLfFilter
 
 import static java.time.ZoneOffset.UTC
 import static java.time.ZonedDateTime.now
 
-version = versionValue
+ext {
+  modid = "spawnchecker"
+  javaVersion = JavaVersion.VERSION_1_8
+  if (System.getenv("TRAVIS_BUILD_NUMBER") != null) {
+    buildNumber = System.getenv("TRAVIS_BUILD_NUMBER")
+    snapshot = ""
+  } else {
+    buildNumber = "local"
+    snapshot = "-SNAPSHOT"
+  }
+  minecraftVersion = "1.14.3"
+  minecraftVersionRange = "[1.14.3]"
+  forgeVersionRange = "[27,)"
+  forgeVersion = "1.14.3-27.0.60"
+  mappingsChannel = "snapshot"
+  mappingsVersion = "20190719-1.14.3"
+}
+
+version = "${versionTag}.${commitCount}${snapshot}"
 group = "net.awairo.minecraft.spawnchecker"
 archivesBaseName = "spawnchecker-${minecraftVersion}"
 
@@ -38,7 +56,7 @@ repositories {
 }
 
 dependencies {
-  minecraft "net.minecraftforge:forge:1.13.2-25.0.219"
+  minecraft "net.minecraftforge:forge:${forgeVersion}"
 
   implementation "com.google.code.findbugs:jsr305:1.0"
 
@@ -59,7 +77,7 @@ minecraft {
   // stable_#            stables are built at the discretion of the MCP team.
   // Use non-default mappings at your own risk. they may not always work.
   // simply re-run your setup task after changing the mappings to update your workspace.
-  mappings channel: "stable", version: "47-1.13.2"
+  mappings channel: mappingsChannel, version: mappingsVersion
   // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
   // accessTransformer = file("build/resources/main/META-INF/accesstransformer.cfg")
@@ -96,6 +114,25 @@ minecraft {
 
       environment "MOD_CLASSES", ""
     }
+
+    data {
+      ideaModule "${project.name}.main"
+      workingDirectory project.file("run/data")
+
+      // Recommended logging data for a userdev environment
+      property "forge.logging.markers", "SCAN,REGISTRIES,REGISTRYDUMP"
+
+      // Recommended logging level for the console
+      property "forge.logging.console.level", "debug"
+
+      args "--mod", "spawnchecker", "--all", "--output", file("src/generated/resources/")
+
+      mods {
+        spawnchecker {
+          source sourceSets.main
+        }
+      }
+    }
   }
 }
 
@@ -117,9 +154,20 @@ task processModsTomlResources(type: Copy) {
     include "META-INF/mods.toml"
   }
   filter { line ->
-    line == "version=\"{dummy}\"" ? "version=\"${project.version}\"" : line
+    switch (line) {
+      case "version=\"{version}\"":
+        return "version=\"${project.version}\""
+      case "loaderVersion=\"{loaderVersion}\"":
+        return "loaderVersion=\"${forgeVersionRange}\""
+      case "  versionRange=\"{forgeVersionRange}\"":
+        return "  versionRange=\"${forgeVersionRange}\""
+      case "  versionRange=\"{minecraftVersionRange}\"":
+        return "  versionRange=\"${minecraftVersionRange}\""
+      default:
+        return line
+    }
   }
-  filter(FixCrLfFilter, eol: FixCrLfFilter.CrLf.newInstance('lf'))
+  filter(FixCrLfFilter, eol: FixCrLfFilter.CrLf.newInstance("lf"))
 }
 
 processResources {
@@ -141,7 +189,7 @@ jar {
     attributes "Implementation-Version": "${version}"
     attributes "Implementation-Timestamp": now(UTC).toString()
     attributes "CI-Build-Number": buildNumber
-    attributes "Git-Commit-Hash": gitHash
+    attributes "Git-Commit-Hash": commitHash
   }
 }
 
@@ -151,3 +199,5 @@ test {
     events "passed", "skipped", "failed"
   }
 }
+
+logger.quiet("---------------------------------\n mod id: {}\nversion: {}\n commit: {}\n  build: {}\n---------------------------------", modid, version, commitHash, buildNumber)

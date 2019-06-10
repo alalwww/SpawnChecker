@@ -25,8 +25,8 @@ import java.util.concurrent.ConcurrentSkipListSet;
 import javax.annotation.Nullable;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.Util;
 import net.minecraft.world.IWorld;
 
@@ -63,7 +63,7 @@ final class SpawnCheckerState {
     private int tickCount = 0;
 
     @Nullable
-    private EntityPlayerSP player = null;
+    private ClientPlayerEntity player = null;
 
     SpawnCheckerState(Minecraft minecraft, SpawnCheckerConfig config) {
         this.minecraft = minecraft;
@@ -79,15 +79,15 @@ final class SpawnCheckerState {
     }
 
     void loadWorld(IWorld world) {
-        if (world instanceof WorldClient) {
+        if (world instanceof ClientWorld) {
             loadedWorldClient.add(world);
-            modeState.loadWorldClient((WorldClient) world);
+            modeState.loadWorldClient((ClientWorld) world);
         }
     }
 
     void unloadWorld(IWorld world) {
-        if (world instanceof WorldClient) {
-            modeState.unloadWorldClient((WorldClient) world);
+        if (world instanceof ClientWorld) {
+            modeState.unloadWorldClient((ClientWorld) world);
             loadedWorldClient.remove(world);
         }
     }

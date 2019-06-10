@@ -24,10 +24,10 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
-import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 
 import lombok.NonNull;
 import lombok.Value;
@@ -84,7 +84,7 @@ public interface Mode {
     }
 
     interface State {
-        WorldClient worldClient();
+        ClientWorld worldClient();
         int tickCount();
         ScanRange.Horizontal horizontalRange();
         ScanRange.Vertical verticalRange();
@@ -95,7 +95,7 @@ public interface Mode {
 
     final class Name implements Comparable<Name> {
 
-        private final TextComponentTranslation textComponent;
+        private final TranslationTextComponent textComponent;
 
         public ITextComponent textComponent() {
             return textComponent;
@@ -106,7 +106,7 @@ public interface Mode {
         }
 
         public Name(@NonNull String translationKey) {
-            this.textComponent = new TextComponentTranslation(translationKey);
+            this.textComponent = new TranslationTextComponent(translationKey);
         }
 
         @Override

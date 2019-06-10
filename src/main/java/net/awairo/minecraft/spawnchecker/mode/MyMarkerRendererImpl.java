@@ -20,7 +20,7 @@
 package net.awairo.minecraft.spawnchecker.mode;
 
 import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.ResourceLocation;
 
@@ -33,7 +33,7 @@ final class MyMarkerRendererImpl implements MarkerRenderer {
     private final WorldRenderer worldRenderer;
     private final float partialTicks;
     private final TextureManager textureManager;
-    private final RenderManager renderManager;
+    private final EntityRendererManager renderManager;
 
     @Override
     public void bindTexture(ResourceLocation texture) {

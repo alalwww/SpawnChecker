@@ -19,30 +19,22 @@
 
 package net.awairo.minecraft.spawnchecker;
 
-import net.minecraft.profiler.Profiler;
+import net.minecraft.profiler.IProfiler;
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 final class WrappedProfiler {
-    private final Profiler underlying;
-
-    private boolean isProfiling() {
-        return underlying != null && underlying.isProfiling();
-    }
+    private final IProfiler underlying;
 
     private void start(final String subSection) {
-        if (isProfiling()) {
-            underlying.startSection(SpawnChecker.MOD_ID);
-            underlying.startSection(subSection);
-        }
+        underlying.startSection(SpawnChecker.MOD_ID);
+        underlying.startSection(subSection);
     }
 
     private void end() {
-        if (isProfiling()) {
-            underlying.endSection();
-            underlying.endSection();
-        }
+        underlying.endSection();
+        underlying.endSection();
     }
 
     // FIXME セクションの見直し

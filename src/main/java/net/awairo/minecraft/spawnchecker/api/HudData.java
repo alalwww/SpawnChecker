@@ -19,9 +19,10 @@
 
 package net.awairo.minecraft.spawnchecker.api;
 
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
+import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.platform.GlStateManager.DestFactor;
+import com.mojang.blaze3d.platform.GlStateManager.SourceFactor;
+
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -96,7 +97,7 @@ public interface HudData {
         }
 
         protected void setUpGlState() {
-            GlStateManager.enableTexture2D();
+            GlStateManager.enableTexture();
             GlStateManager.enableBlend();
             GlStateManager.blendFuncSeparate(
                 SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA,

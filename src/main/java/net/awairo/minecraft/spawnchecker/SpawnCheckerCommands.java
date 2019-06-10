@@ -21,6 +21,7 @@ package net.awairo.minecraft.spawnchecker;
 
 import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
@@ -31,12 +32,12 @@ import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.multiplayer.ClientSuggestionProvider;
 import net.minecraft.command.ISuggestionProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 
 import net.awairo.minecraft.spawnchecker.config.SpawnCheckerConfig;
 
@@ -54,14 +55,14 @@ final class SpawnCheckerCommands {
     private final SpawnCheckerConfig config;
 
     private static final ITextComponent TO_ENABLE =
-        new TextComponentTranslation("spawnchecker.command.message.toEnabled");
+        new TranslationTextComponent("spawnchecker.command.message.toEnabled");
     private static final ITextComponent TO_DISABLE =
-        new TextComponentTranslation("spawnchecker.command.message.toDisabled");
+        new TranslationTextComponent("spawnchecker.command.message.toDisabled");
 
     private static final ITextComponent GUIDELINE_ON =
-        new TextComponentTranslation("spawnchecker.command.message.guidelineOn");
+        new TranslationTextComponent("spawnchecker.command.message.guidelineOn");
     private static final ITextComponent GUIDELINE_OFF =
-        new TextComponentTranslation("spawnchecker.command.message.guidelineOff");
+        new TranslationTextComponent("spawnchecker.command.message.guidelineOff");
 
     private final CommandDispatcher<Source> dispatcher = new CommandDispatcher<>();
 
@@ -73,9 +74,9 @@ final class SpawnCheckerCommands {
     private Source commandSource;
 
     @SuppressWarnings("unchecked")
-    void registerTo(@NonNull EntityPlayerSP player) {
+    void registerTo(@NonNull ClientPlayerEntity player) {
         this.commandSource = new Source(player.connection.getSuggestionProvider());
-        player.connection.func_195515_i()
+        player.connection.func_195515_i() // probably getCommandDispatcher()
             .register((LiteralArgumentBuilder<ISuggestionProvider>) (LiteralArgumentBuilder<?>) builder());
     }
 
@@ -99,7 +100,6 @@ final class SpawnCheckerCommands {
                 .then(literal("on").executes(ctx -> success(ctx, config.presetModeConfig()::guidelineOn, GUIDELINE_ON)))
                 .then(literal("off").executes(ctx -> success(ctx, config.presetModeConfig()::guidelineOff, GUIDELINE_OFF)))
             )
-
             ;
     }
 
@@ -142,7 +142,7 @@ final class SpawnCheckerCommands {
 
         @Override
         @Nonnull
-        public Collection<ResourceLocation> getRecipeResourceLocations() {
+        public Stream<ResourceLocation> getRecipeResourceLocations() {
             return underlying.getRecipeResourceLocations();
         }
 
@@ -151,12 +151,6 @@ final class SpawnCheckerCommands {
         public CompletableFuture<Suggestions> getSuggestionsFromServer(
             @Nonnull CommandContext<ISuggestionProvider> context, @Nonnull SuggestionsBuilder suggestionsBuilder) {
             return underlying.getSuggestionsFromServer(context, suggestionsBuilder);
-        }
-
-        @Override
-        @Nonnull
-        public Collection<Coordinates> getCoordinates(boolean allowFloatCoords) {
-            return underlying.getCoordinates(allowFloatCoords);
         }
 
         @Override

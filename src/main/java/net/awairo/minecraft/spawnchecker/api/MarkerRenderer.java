@@ -20,9 +20,9 @@
 package net.awairo.minecraft.spawnchecker.api;
 
 import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
 
 public interface MarkerRenderer extends Renderer {
-    RenderManager renderManager();
+    EntityRendererManager renderManager();
     WorldRenderer worldRenderer();
 }

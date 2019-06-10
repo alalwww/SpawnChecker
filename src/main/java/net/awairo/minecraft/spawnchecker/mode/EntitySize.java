@@ -19,9 +19,10 @@
 
 package net.awairo.minecraft.spawnchecker.mode;
 
-import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.VoxelShapes;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -44,13 +45,14 @@ enum EntitySize {
     private final float height;
 
     // EntityLiving#isNotColliding(IWorldReaderBase)
-    boolean isNotColliding(WorldClient worldIn, BlockPos pos) {
+    boolean isNotColliding(ClientWorld worldIn, BlockPos pos) {
         val bb = boundingBox(pos);
         return !worldIn.containsAnyLiquid(bb)
             && worldIn.isCollisionBoxesEmpty(null, bb)
-            && worldIn.checkNoEntityCollision(null, bb);
+            && worldIn.checkNoEntityCollision(null, VoxelShapes.create(bb));
     }
-    boolean isNotCollidingWithoutOtherEntityCollision(WorldClient worldIn, BlockPos pos) {
+
+    boolean isNotCollidingWithoutOtherEntityCollision(ClientWorld worldIn, BlockPos pos) {
         val bb = boundingBox(pos);
         return !worldIn.containsAnyLiquid(bb)
             && worldIn.isCollisionBoxesEmpty(null, bb);

@@ -1,18 +1,17 @@
 #
 # SpawnChecker.
 #
-logoFile="spawnchecker_logo.png"
-
-displayURL="https://awairo.net/minecraft/"
-issueTrackerURL="https://github.com/alalwww/SpawnChecker/issues"
-
 modLoader="javafml"
-loaderVersion="[25,)"
+loaderVersion="{loaderVersion}"
+
+issueTrackerURL="https://github.com/alalwww/SpawnChecker/issues"
 
 [[mods]]
 modId="spawnchecker"
-version="{dummy}"
+version="{version}"
+logoFile="spawnchecker_logo.png"
 displayName="SpawnChecker"
+displayURL="https://awairo.net/minecraft/"
 authors="alalwww"
 credits="By alalwww, original mod idea by fillppo."
 description='''
@@ -23,13 +22,13 @@ The SpawnChecker draw information of mob spawn points, slime chunks and the mons
 [[dependencies.spawnchecker]]
   modId="forge"
   mandatory=true
-  versionRange="[25,)"
+  versionRange="{forgeVersionRange}"
   ordering="NONE"
   side="CLIENT"
 
 [[dependencies.spawnchecker]]
   modId="minecraft"
   mandatory=true
-  versionRange="[1.13.2]"
+  versionRange="{minecraftVersionRange}"
   ordering="NONE"
   side="CLIENT"

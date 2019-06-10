@@ -25,7 +25,7 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.MoreObjects;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
@@ -49,7 +49,7 @@ public class PlayerPos {
         return underlying;
     }
 
-    private PlayerPos(@NonNull EntityPlayer player) {
+    private PlayerPos(@NonNull PlayerEntity player) {
         this(player.getPositionVector());
     }
 

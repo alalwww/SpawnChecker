@@ -26,8 +26,8 @@ import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.world.ClientWorld;
 
 import net.awairo.minecraft.spawnchecker.api.Brightness;
 import net.awairo.minecraft.spawnchecker.api.HudData;
@@ -61,7 +61,7 @@ public class ModeState {
     @Nullable
     @Getter(AccessLevel.PUBLIC)
     @Setter(AccessLevel.PRIVATE)
-    private WorldClient worldClient = null;
+    private ClientWorld worldClient = null;
 
     private boolean worldClientLoaded() { return !worldClientNotLoaded(); }
 
@@ -145,7 +145,7 @@ public class ModeState {
         }
     }
 
-    public void loadWorldClient(WorldClient loadedWorld) {
+    public void loadWorldClient(ClientWorld loadedWorld) {
         if (worldClientLoaded()) {
             log.debug("World change. ({} -> {})", worldClient(), loadedWorld);
             unloadWorldClient(worldClient());
@@ -154,7 +154,7 @@ public class ModeState {
         log.debug("Load world. ({})", loadedWorld);
     }
 
-    public void unloadWorldClient(WorldClient unloadingWorld) {
+    public void unloadWorldClient(ClientWorld unloadingWorld) {
         if (worldClient() == unloadingWorld) { // because equals not implemented
             log.debug("Unload world. ({})", unloadingWorld);
             deactivateCurrentMode(new ModeStateSnapshot());
@@ -259,7 +259,7 @@ public class ModeState {
             );
         }
 
-        private final WorldClient worldClient;
+        private final ClientWorld worldClient;
         private final int tickCount;
         private final Horizontal horizontalRange;
         private final Vertical verticalRange;

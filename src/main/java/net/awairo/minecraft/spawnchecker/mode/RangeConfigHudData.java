@@ -22,7 +22,7 @@ package net.awairo.minecraft.spawnchecker.mode;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 
 import net.awairo.minecraft.spawnchecker.api.Color;
 import net.awairo.minecraft.spawnchecker.api.HudData;
@@ -56,8 +56,8 @@ final class RangeConfigHudData extends HudData.Simple {
         @NonNull ShowDuration showDuration) {
         super(modeName.textComponent(), icon, showDuration);
 
-        this.hRange = new TextComponentTranslation(HUD_H_RANGE_KEY, hRange.value());
-        this.vRange = new TextComponentTranslation(HUD_V_RANGE_KEY, vRange.value());
+        this.hRange = new TranslationTextComponent(HUD_H_RANGE_KEY, hRange.value());
+        this.vRange = new TranslationTextComponent(HUD_V_RANGE_KEY, vRange.value());
 
         this.iconMinX = TEXT_X;
         this.iconMaxX = TEXT_X + ICON_SIZE;

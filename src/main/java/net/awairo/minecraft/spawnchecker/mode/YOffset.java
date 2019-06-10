@@ -21,9 +21,9 @@ package net.awairo.minecraft.spawnchecker.mode;
 
 import java.util.Objects;
 
-import net.minecraft.block.BlockSlab;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.SlabBlock;
 import net.minecraft.state.properties.SlabType;
 
 import lombok.Getter;
@@ -41,18 +41,18 @@ public enum YOffset {
     final double topOffset;
     final double bottomOffset;
 
-    static YOffset of(IBlockState state, IBlockState underState) {
+    static YOffset of(BlockState state, BlockState underState) {
         if (snowOnTop(state))
             return singleTopSlab(underState) ? SINGLE_TOP_SLAB_SNOW_ON_TOP : SNOW_ON_TOP;
         return singleTopSlab(underState) ? SINGLE_TOP_SLAB : DEFAULT;
     }
 
-    private static boolean snowOnTop(IBlockState state) {
+    private static boolean snowOnTop(BlockState state) {
         return Objects.equals(state.getBlock(), Blocks.SNOW);
     }
 
-    private static boolean singleTopSlab(IBlockState underState) {
-        return underState.getBlock() instanceof BlockSlab && underState.get(BlockSlab.TYPE) == SlabType.TOP;
+    private static boolean singleTopSlab(BlockState underState) {
+        return underState.getBlock() instanceof SlabBlock && underState.get(SlabBlock.TYPE) == SlabType.TOP;
     }
 
     @Override
