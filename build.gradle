@@ -31,12 +31,12 @@ ext {
     buildNumber = "local"
     snapshot = "-SNAPSHOT"
   }
-  minecraftVersion = "1.14.3"
-  minecraftVersionRange = "[1.14.3]"
-  forgeVersionRange = "[27,)"
-  forgeVersion = "1.14.3-27.0.60"
+  minecraftVersion = "1.14.4"
+  minecraftVersionRange = "[1.14.4]"
+  forgeVersionRange = "[28,)"
+  forgeVersion = "1.14.4-28.0.40"
   mappingsChannel = "snapshot"
-  mappingsVersion = "20190719-1.14.3"
+  mappingsVersion = "20190804-1.14.3"
 }
 
 version = "${versionTag}.${commitCount}${snapshot}"
@@ -80,7 +80,7 @@ minecraft {
   mappings channel: mappingsChannel, version: mappingsVersion
   // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
-  // accessTransformer = file("build/resources/main/META-INF/accesstransformer.cfg")
+  // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
   // Default run configurations.
   // These can be tweaked, removed, or duplicated as needed.
