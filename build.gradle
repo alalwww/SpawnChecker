@@ -34,9 +34,9 @@ ext {
   minecraftVersion = "1.14.4"
   minecraftVersionRange = "[1.14.4]"
   forgeVersionRange = "[28,)"
-  forgeVersion = "1.14.4-28.0.40"
+  forgeVersion = "1.14.4-28.0.45"
   mappingsChannel = "snapshot"
-  mappingsVersion = "20190804-1.14.3"
+  mappingsVersion = "20190807-1.14.3"
 }
 
 version = "${versionTag}.${commitCount}${snapshot}"
