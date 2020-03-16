@@ -81,7 +81,7 @@ public class SpawnPointModel implements MarkerModel {
 
         renderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
 
-        val m = renderer.matrixStack().getLast().getPositionMatrix();
+        val m = renderer.matrixStack().getLast().getMatrix();
 
         float minU = 0.0f;
         float maxU = 0.5f;

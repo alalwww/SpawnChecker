@@ -36,7 +36,7 @@ ext {
   forgeVersionRange = "[31,)"
   forgeVersion = "1.15.2-31.1.24"
   mappingsChannel = "snapshot"
-  mappingsVersion = "20200122-1.15.1"
+  mappingsVersion = "20200316-1.15.1"
 }
 
 version = "${versionTag}.${commitCount}${snapshot}"
