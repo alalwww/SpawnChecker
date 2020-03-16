@@ -108,7 +108,7 @@ public interface Renderer {
     default void addVertex(double x, double y, double z, float u, float v, Color color) {
         buffer()
             .pos(x, y, z)
-            .tex((float)u, (float)v)
+            .tex(u, v)
             .color(color.red(), color.green(), color.blue(), color.alpha())
             .endVertex();
     }
