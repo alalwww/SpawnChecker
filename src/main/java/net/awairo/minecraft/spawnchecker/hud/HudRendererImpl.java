@@ -91,8 +91,8 @@ public final class HudRendererImpl implements HudRenderer {
         if (showStartTime == UNDEFINED) {
             showStartTime = now;
         }
-        val h = minecraft.mainWindow.getScaledHeight();
-        val w = minecraft.mainWindow.getScaledWidth();
+        val h = minecraft.getMainWindow().getScaledHeight();
+        val w = minecraft.getMainWindow().getScaledWidth();
         GlStateManager.pushMatrix();
         GlStateManager.translated(
             w / 20 + config.hudConfig().xOffset().value(),

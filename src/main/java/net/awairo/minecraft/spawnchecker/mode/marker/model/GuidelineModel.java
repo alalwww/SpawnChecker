@@ -35,7 +35,9 @@ public class GuidelineModel implements MarkerModel {
     public void draw(MarkerRenderer renderer) {
         GlStateManager.enableBlend();
         GlStateManager.blendFuncSeparate(
-            SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
+            SourceFactor.SRC_ALPHA.param, DestFactor.ONE_MINUS_SRC_ALPHA.param,
+            SourceFactor.ONE.param, DestFactor.ZERO.param
+        );
         renderer.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION);
 
         renderer.addVertex(0.5d, 0d, 0.5d);

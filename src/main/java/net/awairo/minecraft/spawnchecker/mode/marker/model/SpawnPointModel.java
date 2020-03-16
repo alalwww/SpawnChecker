@@ -72,17 +72,19 @@ public class SpawnPointModel implements MarkerModel {
     public void draw(MarkerRenderer renderer) {
         GlStateManager.enableBlend();
         GlStateManager.blendFuncSeparate(
-            SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
+            SourceFactor.SRC_ALPHA.param, DestFactor.ONE_MINUS_SRC_ALPHA.param,
+            SourceFactor.ONE.param, DestFactor.ZERO.param
+        );
         GlStateManager.enableTexture();
 
         renderer.bindTexture(texture);
 
         renderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
 
-        double minU = 0.0d;
-        double maxU = 0.5d;
-        double minV = 0.0d;
-        double maxV = 0.5d;
+        float minU = 0.0f;
+        float maxU = 0.5f;
+        float minV = 0.0f;
+        float maxV = 0.5f;
         // top
         renderer.addVertex(iMin, oMaxY, iMin, minU, minV);
         renderer.addVertex(iMin, oMaxY, iMax, minU, maxV);

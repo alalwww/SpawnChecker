@@ -83,7 +83,7 @@ public interface Renderer {
             .endVertex();
     }
 
-    default void addVertex(double x, double y, double z, double u, double v) {
+    default void addVertex(double x, double y, double z, float u, float v) {
         buffer()
             .pos(x, y, z)
             .tex(u, v)
@@ -97,10 +97,10 @@ public interface Renderer {
             .endVertex();
     }
 
-    default void addVertex(double x, double y, double z, double u, double v, Color color) {
+    default void addVertex(double x, double y, double z, float u, float v, Color color) {
         buffer()
             .pos(x, y, z)
-            .tex(u, v)
+            .tex((float)u, (float)v)
             .color(color.red(), color.green(), color.blue(), color.alpha())
             .endVertex();
     }
