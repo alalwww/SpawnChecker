@@ -48,14 +48,14 @@ enum EntitySize {
     boolean isNotColliding(ClientWorld worldIn, BlockPos pos) {
         val bb = boundingBox(pos);
         return !worldIn.containsAnyLiquid(bb)
-            && worldIn.func_226665_a__(null, bb)
+            && worldIn.func_226665_a__(null, bb) // isCollisionBoxesEmpty
             && worldIn.checkNoEntityCollision(null, VoxelShapes.create(bb));
     }
 
     boolean isNotCollidingWithoutOtherEntityCollision(ClientWorld worldIn, BlockPos pos) {
         val bb = boundingBox(pos);
         return !worldIn.containsAnyLiquid(bb)
-            && worldIn.func_226665_a__(null, bb);
+            && worldIn.func_226665_a__(null, bb); // isCollisionBoxesEmpty
     }
 
     AxisAlignedBB boundingBox(BlockPos pos) {
