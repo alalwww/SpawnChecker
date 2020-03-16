@@ -216,7 +216,7 @@ public final class SpawnChecker {
     private void onRenderWorldLast(RenderWorldLastEvent event) {
         if (state.started()) {
             profiler.startRenderMarker();
-            state.modeState().renderMarkers(event.getContext(), event.getPartialTicks());
+            state.modeState().renderMarkers(event.getContext(), event.getPartialTicks(), event.getMatrixStack());
             profiler.endRenderMarker();
         }
     }

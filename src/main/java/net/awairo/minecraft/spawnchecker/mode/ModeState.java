@@ -25,6 +25,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.world.ClientWorld;
@@ -189,13 +190,14 @@ public class ModeState {
         });
     }
 
-    public void renderMarkers(WorldRenderer worldRenderer, float partialTicks) {
+    public void renderMarkers(WorldRenderer worldRenderer, float partialTicks, MatrixStack matrixStack) {
         if (worldClientNotLoaded())
             return;
 
         val renderer = new MyMarkerRendererImpl(
             worldRenderer,
             partialTicks,
+            matrixStack,
             minecraft.getTextureManager(),
             minecraft.getRenderManager()
         );

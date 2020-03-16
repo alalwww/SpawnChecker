@@ -19,6 +19,7 @@
 
 package net.awairo.minecraft.spawnchecker.api;
 
+import net.minecraft.client.renderer.Matrix4f;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.renderer.BufferBuilder;
@@ -86,6 +87,13 @@ public interface Renderer {
     default void addVertex(double x, double y, double z, float u, float v) {
         buffer()
             .pos(x, y, z)
+            .tex(u, v)
+            .endVertex();
+    }
+
+    default void addVertex(Matrix4f m, double x, double y, double z, float u, float v) {
+        buffer()
+            .pos(m, (float)x, (float)y, (float)z)
             .tex(u, v)
             .endVertex();
     }

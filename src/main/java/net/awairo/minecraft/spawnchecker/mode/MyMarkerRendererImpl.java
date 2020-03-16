@@ -19,6 +19,7 @@
 
 package net.awairo.minecraft.spawnchecker.mode;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.texture.TextureManager;
@@ -32,6 +33,7 @@ import lombok.Value;
 final class MyMarkerRendererImpl implements MarkerRenderer {
     private final WorldRenderer worldRenderer;
     private final float partialTicks;
+    private final MatrixStack matrixStack;
     private final TextureManager textureManager;
     private final EntityRendererManager renderManager;
 
