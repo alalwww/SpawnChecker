@@ -20,9 +20,9 @@
 package net.awairo.minecraft.spawnchecker.mode.marker.model;
 
 import com.google.common.base.MoreObjects;
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.platform.GlStateManager.DestFactor;
 import com.mojang.blaze3d.platform.GlStateManager.SourceFactor;
+import com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -70,12 +70,12 @@ public class SpawnPointModel implements MarkerModel {
     @SuppressWarnings("Duplicates")
     @Override
     public void draw(MarkerRenderer renderer) {
-        GlStateManager.enableBlend();
-        GlStateManager.blendFuncSeparate(
+        RenderSystem.enableBlend();
+        RenderSystem.blendFuncSeparate(
             SourceFactor.SRC_ALPHA.param, DestFactor.ONE_MINUS_SRC_ALPHA.param,
             SourceFactor.ONE.param, DestFactor.ZERO.param
         );
-        GlStateManager.enableTexture();
+        RenderSystem.enableTexture();
 
         renderer.bindTexture(texture);
 
@@ -119,7 +119,7 @@ public class SpawnPointModel implements MarkerModel {
         renderer.addVertex(m, oMax, iMin, iMax, minU, maxV);
 
         renderer.draw();
-        GlStateManager.disableBlend();
+        RenderSystem.disableBlend();
     }
 
     @Override

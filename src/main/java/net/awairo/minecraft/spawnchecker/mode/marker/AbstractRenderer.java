@@ -19,7 +19,7 @@
 
 package net.awairo.minecraft.spawnchecker.mode.marker;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -41,16 +41,20 @@ public abstract class AbstractRenderer<M extends Marker> implements MarkerRender
     @NonNull
     private final EntityRendererManager renderManager;
 
+    @NonNull
+    private final MatrixStack matrixStack;
+
     public void render(M marker, WorldRenderer renderer, int tickCount, float partialTicks) {
-        GlStateManager.pushMatrix();
+        matrixStack.push();
         //        translatedTo(marker.pos(), renderManager.viewerPosX, renderManager.viewerPosY, renderManager.viewerPosZ);
-        //        marker.color().setToColor4F(GlStateManager::color4f);
+        //        marker.color().setToColor4F(RenderSystem::color4f);
         drawModel();
-        GlStateManager.popMatrix();
+        matrixStack.pop();
+
     }
 
     protected void translatedTo(Vec3d pos, double viewerPosX, double viewerPosY, double viewerPosZ) {
-        GlStateManager.translated(
+        matrixStack.translate(
             pos.x - viewerPosX,
             pos.y - viewerPosY,
             pos.z - viewerPosZ
