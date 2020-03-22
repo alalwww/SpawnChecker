@@ -28,6 +28,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 
+import net.awairo.minecraft.spawnchecker.api.Color;
 import net.awairo.minecraft.spawnchecker.api.HudData;
 import net.awairo.minecraft.spawnchecker.api.HudData.Visibility;
 import net.awairo.minecraft.spawnchecker.api.HudRenderer;
@@ -70,6 +71,39 @@ public final class HudRendererImpl implements HudRenderer {
     public void bindTexture(ResourceLocation texture) {
         minecraft.textureManager.bindTexture(texture);
     }
+
+    @Override
+    public void addVertex(double x, double y, double z) {
+        buffer()
+            .pos(x, y, z)
+            .endVertex();
+    }
+
+    @Override
+    public void addVertex(double x, double y, double z, float u, float v) {
+        buffer()
+            .pos(x, y, z)
+            .tex(u, v)
+            .endVertex();
+    }
+
+    @Override
+    public void addVertex(double x, double y, double z, Color color) {
+        buffer()
+            .pos(x, y, z)
+            .color(color.red(), color.green(), color.blue(), color.alpha())
+            .endVertex();
+    }
+
+    @Override
+    public void addVertex(double x, double y, double z, float u, float v, Color color) {
+        buffer()
+            .pos(x, y, z)
+            .tex(u, v)
+            .color(color.red(), color.green(), color.blue(), color.alpha())
+            .endVertex();
+    }
+
 
     public void setData(HudData hudData) {
         removeData();

@@ -22,7 +22,6 @@ package net.awairo.minecraft.spawnchecker.api;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.Matrix4f;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.util.ResourceLocation;
@@ -78,40 +77,13 @@ public interface Renderer {
         buffer().begin(glMode, format);
     }
 
-    default void addVertex(double x, double y, double z) {
-        buffer()
-            .pos(x, y, z)
-            .endVertex();
-    }
+    void addVertex(double x, double y, double z);
 
-    default void addVertex(double x, double y, double z, float u, float v) {
-        buffer()
-            .pos(x, y, z)
-            .tex(u, v)
-            .endVertex();
-    }
+    void addVertex(double x, double y, double z, float u, float v);
 
-    default void addVertex(Matrix4f m, double x, double y, double z, float u, float v) {
-        buffer()
-            .pos(m, (float) x, (float) y, (float) z)
-            .tex(u, v)
-            .endVertex();
-    }
+    void addVertex(double x, double y, double z, Color color);
 
-    default void addVertex(double x, double y, double z, Color color) {
-        buffer()
-            .pos(x, y, z)
-            .color(color.red(), color.green(), color.blue(), color.alpha())
-            .endVertex();
-    }
-
-    default void addVertex(double x, double y, double z, float u, float v, Color color) {
-        buffer()
-            .pos(x, y, z)
-            .tex(u, v)
-            .color(color.red(), color.green(), color.blue(), color.alpha())
-            .endVertex();
-    }
+    void addVertex(double x, double y, double z, float u, float v, Color color);
 
     default void draw() {
         tessellator().draw();

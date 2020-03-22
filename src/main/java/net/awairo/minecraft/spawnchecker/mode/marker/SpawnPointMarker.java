@@ -114,11 +114,10 @@ public class SpawnPointMarker implements Marker {
             return;
 
         val viewerPos = renderer.renderManager().info.getProjectedView();
-        val matrixStack = renderer.matrixStack();
-        matrixStack.push();
+        renderer.push();
         {
             color.setToColor4F(RenderSystem::color4f);
-            matrixStack.translate(
+            renderer.translate(
                 ((double) pos.getX()) - viewerPos.x,
                 ((double) pos.getY()) - viewerPos.y - 1d, // 1ブロック下げる
                 ((double) pos.getZ()) - viewerPos.z
@@ -126,21 +125,21 @@ public class SpawnPointMarker implements Marker {
             markerModel.draw(renderer);
 
         }
-        matrixStack.pop();
+        renderer.pop();
 
         if (guidelineModel == null)
             return;
 
-        matrixStack.push();
+        renderer.push();
         {
             color.setToColor4F(RenderSystem::color4f);
-            matrixStack.translate(
+            renderer.translate(
                 ((double) pos.getX()) - viewerPos.x,
                 ((double) pos.getY()) - viewerPos.y,
                 ((double) pos.getZ()) - viewerPos.z
             );
             guidelineModel.draw(renderer);
         }
-        matrixStack.pop();
+        renderer.pop();
     }
 }

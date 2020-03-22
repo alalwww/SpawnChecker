@@ -19,13 +19,18 @@
 
 package net.awairo.minecraft.spawnchecker.api;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-
+import net.minecraft.client.renderer.Quaternion;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 
 public interface MarkerRenderer extends Renderer {
     EntityRendererManager renderManager();
     WorldRenderer worldRenderer();
-    MatrixStack matrixStack();
+
+    void push();
+    void pop();
+    void translate(double x, double y, double z);
+    void scale(float m00, float m11, float m22);
+    void rotate(Quaternion quaternion);
+    void clear();
 }
