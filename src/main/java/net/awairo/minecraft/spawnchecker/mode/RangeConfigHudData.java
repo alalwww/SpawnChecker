@@ -69,7 +69,8 @@ final class RangeConfigHudData extends HudData.Simple {
     protected void drawIcon(ResourceLocation icon, HudRenderer renderer, Color color) {
         super.drawIcon(icon, renderer, color);
 
-        final double xMin, yMin1, yMin2, xMax, yMax1, yMax2, z, uMin, uMax, vMin, vMax;
+        final double xMin, yMin1, yMin2, xMax, yMax1, yMax2, z;
+        final float uMin, uMax, vMin, vMax;
         xMin = iconMinX;
         xMax = iconMaxX;
         yMin1 = renderer.fontRenderer().FONT_HEIGHT + LINE_OFFSET;
@@ -77,8 +78,8 @@ final class RangeConfigHudData extends HudData.Simple {
         yMin2 = yMin1 * 2;
         yMax2 = yMin1 * 2 + ICON_SIZE;
         z = 0d;
-        uMin = vMin = 0d;
-        uMax = vMax = 1d;
+        uMin = vMin = 0f;
+        uMax = vMax = 1f;
 
         renderer.bindTexture(HudIconResource.HORIZONTAL_RANGE.location());
         renderer.beginQuads(DefaultVertexFormats.POSITION_TEX_COLOR);

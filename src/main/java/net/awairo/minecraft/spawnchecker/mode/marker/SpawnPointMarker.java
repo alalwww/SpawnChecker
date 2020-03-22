@@ -20,8 +20,8 @@
 package net.awairo.minecraft.spawnchecker.mode.marker;
 
 import javax.annotation.Nullable;
-import com.mojang.blaze3d.platform.GlStateManager;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 
@@ -114,10 +114,11 @@ public class SpawnPointMarker implements Marker {
             return;
 
         val viewerPos = renderer.renderManager().info.getProjectedView();
-        GlStateManager.pushMatrix();
+        val matrixStack = renderer.matrixStack();
+        matrixStack.push();
         {
-            color.setToColor4F(GlStateManager::color4f);
-            GlStateManager.translated(
+            color.setToColor4F(RenderSystem::color4f);
+            matrixStack.translate(
                 ((double) pos.getX()) - viewerPos.x,
                 ((double) pos.getY()) - viewerPos.y - 1d, // 1ブロック下げる
                 ((double) pos.getZ()) - viewerPos.z
@@ -125,21 +126,21 @@ public class SpawnPointMarker implements Marker {
             markerModel.draw(renderer);
 
         }
-        GlStateManager.popMatrix();
+        matrixStack.pop();
 
         if (guidelineModel == null)
             return;
 
-        GlStateManager.pushMatrix();
+        matrixStack.push();
         {
-            color.setToColor4F(GlStateManager::color4f);
-            GlStateManager.translated(
+            color.setToColor4F(RenderSystem::color4f);
+            matrixStack.translate(
                 ((double) pos.getX()) - viewerPos.x,
                 ((double) pos.getY()) - viewerPos.y,
                 ((double) pos.getZ()) - viewerPos.z
             );
             guidelineModel.draw(renderer);
         }
-        GlStateManager.popMatrix();
+        matrixStack.pop();
     }
 }

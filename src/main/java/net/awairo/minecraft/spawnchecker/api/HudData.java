@@ -19,9 +19,9 @@
 
 package net.awairo.minecraft.spawnchecker.api;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.platform.GlStateManager.DestFactor;
 import com.mojang.blaze3d.platform.GlStateManager.SourceFactor;
+import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
@@ -97,21 +97,23 @@ public interface HudData {
         }
 
         protected void setUpGlState() {
-            GlStateManager.enableTexture();
-            GlStateManager.enableBlend();
-            GlStateManager.blendFuncSeparate(
-                SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA,
-                SourceFactor.ONE, DestFactor.ZERO
+            RenderSystem.enableTexture();
+            RenderSystem.enableTexture();
+            RenderSystem.enableBlend();
+            RenderSystem.blendFuncSeparate(
+                SourceFactor.SRC_ALPHA.param, DestFactor.ONE_MINUS_SRC_ALPHA.param,
+                SourceFactor.ONE.param, DestFactor.ZERO.param
             );
         }
 
         @SuppressWarnings("Duplicates")
         protected void drawIcon(ResourceLocation icon, HudRenderer renderer, Color color) {
-            final double xMin, yMin, xMax, yMax, z, uMin, uMax, vMin, vMax;
+            final double xMin, yMin, xMax, yMax, z;
+            final float uMin, uMax, vMin, vMax;
             xMin = yMin = z = 0d;
             xMax = yMax = ICON_SIZE;
-            uMin = vMin = 0d;
-            uMax = vMax = 1d;
+            uMin = vMin = 0f;
+            uMax = vMax = 1f;
             renderer.bindTexture(icon);
             renderer.beginQuads(DefaultVertexFormats.POSITION_TEX_COLOR);
             renderer.addVertex(xMin, yMin, z, uMin, vMin, color);

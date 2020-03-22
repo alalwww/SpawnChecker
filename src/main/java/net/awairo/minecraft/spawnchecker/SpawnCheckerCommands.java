@@ -76,7 +76,7 @@ final class SpawnCheckerCommands {
     @SuppressWarnings("unchecked")
     void registerTo(@NonNull ClientPlayerEntity player) {
         this.commandSource = new Source(player.connection.getSuggestionProvider());
-        player.connection.func_195515_i() // probably getCommandDispatcher()
+        player.connection.getCommandDispatcher()
             .register((LiteralArgumentBuilder<ISuggestionProvider>) (LiteralArgumentBuilder<?>) builder());
     }
 

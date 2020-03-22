@@ -20,9 +20,9 @@
 package net.awairo.minecraft.spawnchecker.mode.marker.model;
 
 import com.google.common.base.MoreObjects;
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.platform.GlStateManager.DestFactor;
 import com.mojang.blaze3d.platform.GlStateManager.SourceFactor;
+import com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -70,52 +70,56 @@ public class SpawnPointModel implements MarkerModel {
     @SuppressWarnings("Duplicates")
     @Override
     public void draw(MarkerRenderer renderer) {
-        GlStateManager.enableBlend();
-        GlStateManager.blendFuncSeparate(
-            SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
-        GlStateManager.enableTexture();
+        RenderSystem.enableBlend();
+        RenderSystem.blendFuncSeparate(
+            SourceFactor.SRC_ALPHA.param, DestFactor.ONE_MINUS_SRC_ALPHA.param,
+            SourceFactor.ONE.param, DestFactor.ZERO.param
+        );
+        RenderSystem.enableTexture();
 
         renderer.bindTexture(texture);
 
         renderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
 
-        double minU = 0.0d;
-        double maxU = 0.5d;
-        double minV = 0.0d;
-        double maxV = 0.5d;
+        val m = renderer.matrixStack().getLast().getMatrix();
+
+        float minU = 0.0f;
+        float maxU = 0.5f;
+        float minV = 0.0f;
+        float maxV = 0.5f;
         // top
-        renderer.addVertex(iMin, oMaxY, iMin, minU, minV);
-        renderer.addVertex(iMin, oMaxY, iMax, minU, maxV);
-        renderer.addVertex(iMax, oMaxY, iMax, maxU, maxV);
-        renderer.addVertex(iMax, oMaxY, iMin, maxU, minV);
+        renderer.addVertex(m, iMin, oMaxY, iMin, minU, minV);
+        renderer.addVertex(m, iMin, oMaxY, iMax, minU, maxV);
+        renderer.addVertex(m, iMax, oMaxY, iMax, maxU, maxV);
+        renderer.addVertex(m, iMax, oMaxY, iMin, maxU, minV);
         // bottom
-        renderer.addVertex(iMin, oMinY, iMin, minU, minV);
-        renderer.addVertex(iMax, oMinY, iMin, maxU, minV);
-        renderer.addVertex(iMax, oMinY, iMax, maxU, maxV);
-        renderer.addVertex(iMin, oMinY, iMax, minU, maxV);
+        renderer.addVertex(m, iMin, oMinY, iMin, minU, minV);
+        renderer.addVertex(m, iMax, oMinY, iMin, maxU, minV);
+        renderer.addVertex(m, iMax, oMinY, iMax, maxU, maxV);
+        renderer.addVertex(m, iMin, oMinY, iMax, minU, maxV);
         // east
-        renderer.addVertex(iMin, iMin, oMin, minU, minV);
-        renderer.addVertex(iMin, iMax, oMin, minU, maxV);
-        renderer.addVertex(iMax, iMax, oMin, maxU, maxV);
-        renderer.addVertex(iMax, iMin, oMin, maxU, minV);
+        renderer.addVertex(m, iMin, iMin, oMin, minU, minV);
+        renderer.addVertex(m, iMin, iMax, oMin, minU, maxV);
+        renderer.addVertex(m, iMax, iMax, oMin, maxU, maxV);
+        renderer.addVertex(m, iMax, iMin, oMin, maxU, minV);
         // west
-        renderer.addVertex(iMin, iMin, oMax, minU, minV);
-        renderer.addVertex(iMax, iMin, oMax, maxU, minV);
-        renderer.addVertex(iMax, iMax, oMax, maxU, maxV);
-        renderer.addVertex(iMin, iMax, oMax, minU, maxV);
+        renderer.addVertex(m, iMin, iMin, oMax, minU, minV);
+        renderer.addVertex(m, iMax, iMin, oMax, maxU, minV);
+        renderer.addVertex(m, iMax, iMax, oMax, maxU, maxV);
+        renderer.addVertex(m, iMin, iMax, oMax, minU, maxV);
         // north
-        renderer.addVertex(oMin, iMin, iMin, minU, minV);
-        renderer.addVertex(oMin, iMin, iMax, minU, maxV);
-        renderer.addVertex(oMin, iMax, iMax, maxU, maxV);
-        renderer.addVertex(oMin, iMax, iMin, maxU, minV);
+        renderer.addVertex(m, oMin, iMin, iMin, minU, minV);
+        renderer.addVertex(m, oMin, iMin, iMax, minU, maxV);
+        renderer.addVertex(m, oMin, iMax, iMax, maxU, maxV);
+        renderer.addVertex(m, oMin, iMax, iMin, maxU, minV);
         // south
-        renderer.addVertex(oMax, iMin, iMin, minU, minV);
-        renderer.addVertex(oMax, iMax, iMin, maxU, minV);
-        renderer.addVertex(oMax, iMax, iMax, maxU, maxV);
-        renderer.addVertex(oMax, iMin, iMax, minU, maxV);
+        renderer.addVertex(m, oMax, iMin, iMin, minU, minV);
+        renderer.addVertex(m, oMax, iMax, iMin, maxU, minV);
+        renderer.addVertex(m, oMax, iMax, iMax, maxU, maxV);
+        renderer.addVertex(m, oMax, iMin, iMax, minU, maxV);
 
         renderer.draw();
-        GlStateManager.disableBlend();
+        RenderSystem.disableBlend();
     }
 
     @Override

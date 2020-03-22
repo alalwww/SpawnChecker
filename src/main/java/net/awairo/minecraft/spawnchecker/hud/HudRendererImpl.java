@@ -21,8 +21,8 @@ package net.awairo.minecraft.spawnchecker.hud;
 
 import java.util.Objects;
 import javax.annotation.Nullable;
-import com.mojang.blaze3d.platform.GlStateManager;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.util.ResourceLocation;
@@ -91,17 +91,17 @@ public final class HudRendererImpl implements HudRenderer {
         if (showStartTime == UNDEFINED) {
             showStartTime = now;
         }
-        val h = minecraft.mainWindow.getScaledHeight();
-        val w = minecraft.mainWindow.getScaledWidth();
-        GlStateManager.pushMatrix();
-        GlStateManager.translated(
+        val h = minecraft.getMainWindow().getScaledHeight();
+        val w = minecraft.getMainWindow().getScaledWidth();
+        RenderSystem.pushMatrix();
+        RenderSystem.translated(
             w / 20 + config.hudConfig().xOffset().value(),
             h / 3 + config.hudConfig().yOffset().value(),
             0d
         );
-        GlStateManager.scalef(1.0f, 1.0f, 1f);
+        RenderSystem.scalef(1.0f, 1.0f, 1f);
         val hudVisibility = hudData.draw(this, now - showStartTime);
-        GlStateManager.popMatrix();
+        RenderSystem.popMatrix();
 
         if (hudVisibility == Visibility.HIDE)
             removeData();
@@ -112,9 +112,9 @@ public final class HudRendererImpl implements HudRenderer {
     //        if (!state.enabled())
     //            return;
     //
-    //        GlStateManager.enableBlend();
-    //        GlStateManager.blendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
-    //        GlStateManager.enableTexture2D();
+    //        RenderSystem.enableBlend();
+    //        RenderSystem.blendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
+    //        RenderSystem.enableTexture2D();
     //
     //        val x = 0f;
     //        val y = 50f;
