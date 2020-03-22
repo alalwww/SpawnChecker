@@ -20,8 +20,8 @@
 package net.awairo.minecraft.spawnchecker.mode.marker;
 
 import javax.annotation.Nullable;
-
 import com.mojang.blaze3d.systems.RenderSystem;
+
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 

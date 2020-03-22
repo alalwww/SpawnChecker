@@ -76,7 +76,7 @@ public final class KeyBindingState {
             .keyCode(GLFW.GLFW_KEY_UP)
             .ordinal(0)
             .build();
-//        bindings.add(prevMode);
+        //        bindings.add(prevMode);
 
         nextMode = new SpawnCheckerKeyBinding.Builder(this)
             .descriptionSuffix("nextMode")
@@ -84,7 +84,7 @@ public final class KeyBindingState {
             .keyCode(GLFW.GLFW_KEY_DOWN)
             .ordinal(1)
             .build();
-//        bindings.add(nextMode);
+        //        bindings.add(nextMode);
 
         prevModeOption = new SpawnCheckerKeyBinding.Builder(this)
             .descriptionSuffix("prevModeOption")
@@ -92,7 +92,7 @@ public final class KeyBindingState {
             .keyCode(GLFW.GLFW_KEY_UP)
             .ordinal(2)
             .build();
-//        bindings.add(prevModeOption);
+        //        bindings.add(prevModeOption);
 
         nextModeOption = new SpawnCheckerKeyBinding.Builder(this)
             .descriptionSuffix("nextModeOption")
@@ -100,7 +100,7 @@ public final class KeyBindingState {
             .keyCode(GLFW.GLFW_KEY_DOWN)
             .ordinal(3)
             .build();
-//        bindings.add(nextModeOption);
+        //        bindings.add(nextModeOption);
 
         horizontalRangePlus = new SpawnCheckerKeyBinding.Builder(this)
             .descriptionSuffix("horizontalRangePlus")
@@ -140,7 +140,7 @@ public final class KeyBindingState {
             .keyCode(GLFW.GLFW_KEY_KP_ADD)
             .ordinal(8)
             .build();
-//        bindings.add(brightnessPlus);
+        //        bindings.add(brightnessPlus);
 
         brightnessMinus = new SpawnCheckerKeyBinding.Builder(this)
             .descriptionSuffix("brightnessMinus")
@@ -148,7 +148,7 @@ public final class KeyBindingState {
             .keyCode(GLFW.GLFW_KEY_KP_SUBTRACT)
             .ordinal(9)
             .build();
-//        bindings.add(brightnessMinus);
+        //        bindings.add(brightnessMinus);
 
         this.bindings = Collections.unmodifiableCollection(bindings);
     }

@@ -21,8 +21,8 @@ package net.awairo.minecraft.spawnchecker.hud;
 
 import java.util.Objects;
 import javax.annotation.Nullable;
-
 import com.mojang.blaze3d.systems.RenderSystem;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.util.ResourceLocation;

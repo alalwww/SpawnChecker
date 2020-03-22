@@ -20,6 +20,7 @@
 package net.awairo.minecraft.spawnchecker.api;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 

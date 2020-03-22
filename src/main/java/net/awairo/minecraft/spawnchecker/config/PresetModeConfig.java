@@ -57,9 +57,11 @@ public final class PresetModeConfig {
     public boolean drawGuideline() {
         return drawGuideline.get();
     }
+
     public UpdateResult guidelineOn() {
         return updater.update(drawGuideline, true);
     }
+
     public UpdateResult guidelineOff() {
         return updater.update(drawGuideline, false);
     }

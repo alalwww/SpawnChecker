@@ -103,6 +103,7 @@ public final class SpawnCheckerConfig {
     public boolean enabled() { return enabledValue.get(); }
 
     public UpdateResult enable() { return update(enabledValue, true); }
+
     public UpdateResult disable() { return update(enabledValue, false); }
 
     // endregion
