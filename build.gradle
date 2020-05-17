@@ -200,4 +200,37 @@ test {
   }
 }
 
+task signJar {
+  dependsOn "reobfJar"
+  description = "signing jar file"
+
+  def jarFile = jar.archivePath /* jar.archiveFile */
+
+  inputs.file jarFile
+  outputs.file jarFile
+
+  if (project.hasProperty('signing_alias') && project.hasProperty('signing_storepass')) {
+    doFirst {
+      println("doFirst")
+      logger.info('Signing jar: ' + jarFile)
+    }
+    doLast {
+      println("doLast")
+      println("ant.signjar")
+      ant.signjar(
+        jar: jarFile,
+        alias: project.signing_alias,
+        storepass: project.signing_storepass,
+        preservelastmodified: true
+      )
+    }
+  } else {
+    doLast {
+      logger.info('has not singing property')
+    }
+  }
+}
+
+assemble.dependsOn "signJar"
+
 logger.quiet("---------------------------------\n mod id: {}\nversion: {}\n commit: {}\n  build: {}\n---------------------------------", modid, version, commitHash, buildNumber)
