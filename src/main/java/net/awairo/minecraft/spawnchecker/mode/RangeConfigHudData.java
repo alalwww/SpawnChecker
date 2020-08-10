@@ -19,6 +19,8 @@
 
 package net.awairo.minecraft.spawnchecker.mode;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -66,8 +68,8 @@ final class RangeConfigHudData extends HudData.Simple {
 
     @Override
     @SuppressWarnings("Duplicates")
-    protected void drawIcon(ResourceLocation icon, HudRenderer renderer, Color color) {
-        super.drawIcon(icon, renderer, color);
+    protected void drawIcon(MatrixStack stack, ResourceLocation icon, HudRenderer renderer, Color color) {
+        super.drawIcon(stack, icon, renderer, color);
 
         final double xMin, yMin1, yMin2, xMax, yMax1, yMax2, z;
         final float uMin, uMax, vMin, vMax;
@@ -82,7 +84,7 @@ final class RangeConfigHudData extends HudData.Simple {
         uMax = vMax = 1f;
 
         renderer.bindTexture(HudIconResource.HORIZONTAL_RANGE.location());
-        renderer.beginQuads(DefaultVertexFormats.POSITION_TEX_COLOR);
+        renderer.beginQuads(DefaultVertexFormats.POSITION_COLOR_TEX);
         renderer.addVertex(xMin, yMin1, z, uMin, vMin, color);
         renderer.addVertex(xMin, yMax1, z, uMin, vMax, color);
         renderer.addVertex(xMax, yMax1, z, uMax, vMax, color);
@@ -90,7 +92,7 @@ final class RangeConfigHudData extends HudData.Simple {
         renderer.draw();
 
         renderer.bindTexture(HudIconResource.VERTICAL_RANGE.location());
-        renderer.beginQuads(DefaultVertexFormats.POSITION_TEX_COLOR);
+        renderer.beginQuads(DefaultVertexFormats.POSITION_COLOR_TEX);
         renderer.addVertex(xMin, yMin2, z, uMin, vMin, color);
         renderer.addVertex(xMin, yMax2, z, uMin, vMax, color);
         renderer.addVertex(xMax, yMax2, z, uMax, vMax, color);
@@ -100,14 +102,15 @@ final class RangeConfigHudData extends HudData.Simple {
     }
 
     @Override
-    protected void drawText(ITextComponent text, HudRenderer renderer, Color color) {
+    protected void drawText(MatrixStack stack, ITextComponent text, HudRenderer renderer, Color color) {
         if (isTransparentText(color))
             return;
 
-        super.drawText(text, renderer, color);
+        super.drawText(stack, text, renderer, color);
 
         renderer.fontRenderer()
             .drawStringWithShadow(
+                stack,
                 hRange.getString(),
                 textX,
                 TEXT_Y + renderer.fontRenderer().FONT_HEIGHT + LINE_OFFSET,
@@ -116,6 +119,7 @@ final class RangeConfigHudData extends HudData.Simple {
 
         renderer.fontRenderer()
             .drawStringWithShadow(
+                stack,
                 vRange.getString(),
                 textX,
                 TEXT_Y + (renderer.fontRenderer().FONT_HEIGHT + LINE_OFFSET) * 2,

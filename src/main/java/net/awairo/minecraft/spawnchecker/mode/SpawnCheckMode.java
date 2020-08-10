@@ -27,7 +27,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.EntitySpawnPlacementRegistry.PlacementType;
 import net.minecraft.entity.EntityType;
-import net.minecraft.fluid.IFluidState;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.LightType;
@@ -71,7 +71,8 @@ public class SpawnCheckMode extends SelectableMode {
         val area = new ScanArea(playerPos, modeState.horizontalRange(), modeState.verticalRange());
 
         // TODO: ネザー、エンド対応
-        if (world.getDimension().isSurfaceWorld()) {
+        // if (world.getDimension().isSurfaceWorld()) {
+        if (world.func_239132_a_() instanceof net.minecraft.client.world.DimensionRenderInfo.Overworld) {
             return updateInSurfaceWorld(world, area);
         }
 
@@ -98,7 +99,7 @@ public class SpawnCheckMode extends SelectableMode {
             val lightLevelThreshold = 7;
             BlockPos underLoc = null, loc;
             BlockState underBlock = null, locBlock;
-            IFluidState locFluid;
+            FluidState locFluid;
 
             boolean underIsSpawnableBlock = false;
 
@@ -133,7 +134,7 @@ public class SpawnCheckMode extends SelectableMode {
                 // endregion
 
                 // region 現在の座標はなにもない空気ブロックであることの判定
-                // WorldEntitySpawner#isValidEmptySpawnBlock(IBlockState, IFluidState) と同様の判定
+                // WorldEntitySpawner#func_234968_a_[isValidEmptySpawnBlock](IBlockReader, BlockPos, BlockState, FluidState, EntityType) と同様の判定
 
                 if (locBlock.isOpaqueCube(world, loc) || locBlock.canProvidePower() || locBlock.isIn(BlockTags.RAILS)) {
                     underLoc = loc;

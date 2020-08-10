@@ -99,11 +99,10 @@ public final class HudRendererImpl implements HudRenderer {
     public void addVertex(double x, double y, double z, float u, float v, Color color) {
         buffer()
             .pos(x, y, z)
-            .tex(u, v)
             .color(color.red(), color.green(), color.blue(), color.alpha())
+            .tex(u, v)
             .endVertex();
     }
-
 
     public void setData(HudData hudData) {
         removeData();

@@ -22,7 +22,7 @@ package net.awairo.minecraft.spawnchecker.mode.marker;
 import javax.annotation.Nonnull;
 import com.google.common.base.MoreObjects;
 
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 
 import net.awairo.minecraft.spawnchecker.api.Marker;
 
@@ -35,7 +35,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 abstract class FixedMarker implements Marker {
 
-    private final Vec3d pos;
+    private final Vector3d pos;
 
     @Nonnull
     @Override

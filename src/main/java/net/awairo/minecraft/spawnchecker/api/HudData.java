@@ -19,6 +19,7 @@
 
 package net.awairo.minecraft.spawnchecker.api;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager.DestFactor;
 import com.mojang.blaze3d.platform.GlStateManager.SourceFactor;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -66,11 +67,12 @@ public interface HudData {
         @Override
         public Visibility draw(@NonNull HudRenderer renderer, long elapsedMillis) {
             if (showDuration.isLessThan(elapsedMillis)) {
+                val stack = new MatrixStack();
                 val color = baseColor.withAlpha(computeAlpha(elapsedMillis));
                 if (!color.isTransparent()) {
                     setUpGlState();
-                    drawIcon(icon, renderer, color);
-                    drawText(text, renderer, color);
+                    drawIcon(stack, icon, renderer, color);
+                    drawText(stack, text, renderer, color);
                 }
                 if (elapsedMillis == 0) {
                     log.debug(
@@ -107,7 +109,7 @@ public interface HudData {
         }
 
         @SuppressWarnings("Duplicates")
-        protected void drawIcon(ResourceLocation icon, HudRenderer renderer, Color color) {
+        protected void drawIcon(MatrixStack stack, ResourceLocation icon, HudRenderer renderer, Color color) {
             final double xMin, yMin, xMax, yMax, z;
             final float uMin, uMax, vMin, vMax;
             xMin = yMin = z = 0d;
@@ -115,7 +117,7 @@ public interface HudData {
             uMin = vMin = 0f;
             uMax = vMax = 1f;
             renderer.bindTexture(icon);
-            renderer.beginQuads(DefaultVertexFormats.POSITION_TEX_COLOR);
+            renderer.beginQuads(DefaultVertexFormats.POSITION_COLOR_TEX);
             renderer.addVertex(xMin, yMin, z, uMin, vMin, color);
             renderer.addVertex(xMin, yMax, z, uMin, vMax, color);
             renderer.addVertex(xMax, yMax, z, uMax, vMax, color);
@@ -123,11 +125,11 @@ public interface HudData {
             renderer.draw();
         }
 
-        protected void drawText(ITextComponent text, HudRenderer renderer, Color color) {
+        protected void drawText(MatrixStack stack, ITextComponent text, HudRenderer renderer, Color color) {
             if (isTransparentText(color))
                 return;
 
-            renderer.fontRenderer().drawStringWithShadow(text.getString(), Simple.TEXT_X, Simple.TEXT_Y, color.toInt());
+            renderer.fontRenderer().drawStringWithShadow(stack, text.getString(), Simple.TEXT_X, Simple.TEXT_Y, color.toInt());
         }
 
         // alpha = 3 以下だと不透明で描画されたためスキップした

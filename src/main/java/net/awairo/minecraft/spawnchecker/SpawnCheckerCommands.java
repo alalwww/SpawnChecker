@@ -20,6 +20,7 @@
 package net.awairo.minecraft.spawnchecker;
 
 import java.util.Collection;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
@@ -35,9 +36,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.multiplayer.ClientSuggestionProvider;
 import net.minecraft.command.ISuggestionProvider;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Util;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.World;
 
 import net.awairo.minecraft.spawnchecker.config.SpawnCheckerConfig;
 
@@ -115,11 +119,13 @@ final class SpawnCheckerCommands {
     }
 
     @RequiredArgsConstructor
-    private final class Source implements ISuggestionProvider {
+    private static final class Source implements ISuggestionProvider {
         private final ClientSuggestionProvider underlying;
 
         void sendFeedback(ITextComponent message) {
-            Minecraft.getInstance().player.sendMessage(message);
+            if (Minecraft.getInstance().player != null) {
+                Minecraft.getInstance().player.sendMessage(message, Util.DUMMY_UUID);
+            }
         }
 
         @Override
@@ -151,6 +157,11 @@ final class SpawnCheckerCommands {
         public CompletableFuture<Suggestions> getSuggestionsFromServer(
             @Nonnull CommandContext<ISuggestionProvider> context, @Nonnull SuggestionsBuilder suggestionsBuilder) {
             return underlying.getSuggestionsFromServer(context, suggestionsBuilder);
+        }
+
+        @Override
+        public Set<RegistryKey<World>> func_230390_p_() {
+            return underlying.func_230390_p_();
         }
 
         @Override
