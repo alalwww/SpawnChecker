@@ -4,6 +4,8 @@
 modLoader="javafml"
 loaderVersion="{loaderVersion}"
 
+license="GNU LGPL"
+
 issueTrackerURL="https://github.com/alalwww/SpawnChecker/issues"
 
 [[mods]]

@@ -39,6 +39,7 @@ import net.minecraft.command.ISuggestionProvider;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
+import net.minecraft.util.registry.DynamicRegistries;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -162,6 +163,11 @@ final class SpawnCheckerCommands {
         @Override
         public Set<RegistryKey<World>> func_230390_p_() {
             return underlying.func_230390_p_();
+        }
+
+        @Override
+        public DynamicRegistries func_241861_q() {
+            return underlying.func_241861_q();
         }
 
         @Override
