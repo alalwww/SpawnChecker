@@ -20,6 +20,7 @@
 package net.awairo.minecraft.spawnchecker;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
@@ -39,6 +40,7 @@ import net.minecraft.command.ISuggestionProvider;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
+import net.minecraft.util.registry.DynamicRegistries;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -132,6 +134,26 @@ final class SpawnCheckerCommands {
         @Nonnull
         public Collection<String> getPlayerNames() {
             return underlying.getPlayerNames();
+        }
+
+        @Override
+        public Collection<String> getTargetedEntity() {
+            return underlying.getTargetedEntity();
+        }
+
+        @Override
+        public Collection<Coordinates> func_217294_q() {
+            return underlying.func_217294_q();
+        }
+
+        @Override
+        public Collection<Coordinates> func_217293_r() {
+            return underlying.func_217293_r();
+        }
+
+        @Override
+        public DynamicRegistries func_241861_q() {
+            return underlying.func_241861_q();
         }
 
         @Override
