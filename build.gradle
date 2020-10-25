@@ -210,13 +210,8 @@ task signJar {
   outputs.file jarFile
 
   if (project.hasProperty('signing_alias') && project.hasProperty('signing_storepass')) {
-    doFirst {
-      println("doFirst")
-      logger.info('Signing jar: ' + jarFile)
-    }
     doLast {
-      println("doLast")
-      println("ant.signjar")
+      logger.quiet('signJar: ' + jarFile)
       ant.signjar(
         jar: jarFile,
         alias: project.signing_alias,
@@ -226,7 +221,7 @@ task signJar {
     }
   } else {
     doLast {
-      logger.info('has not singing property')
+      logger.quiet('Skip signJar')
     }
   }
 }
