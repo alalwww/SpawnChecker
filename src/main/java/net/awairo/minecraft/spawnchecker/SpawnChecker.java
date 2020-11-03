@@ -98,14 +98,11 @@ public final class SpawnChecker {
         // Mod config events
         modBus.addListener(this::onModConfigLoading);
 
-        // IMC events
-        modBus.addListener(this::onIMCEnqueue);
-        modBus.addListener(this::onIMCProcess);
-
+        // World load/unload
         forgeBus.addListener(this::onWorldLoad);
         forgeBus.addListener(this::onWorldUnload);
 
-        // gui connecting hook
+        // GUI connecting hook
         forgeBus.addListener(this::onGuiOpenEvent);
 
         // Tick events
@@ -154,18 +151,6 @@ public final class SpawnChecker {
         log.info("SpawnChecker config loading.");
         configHolder.loadConfig(event.getConfig());
         log.info("SpawnChecker config loaded.");
-    }
-
-    // endregion
-
-    // region [FML] IMC events
-
-    private void onIMCEnqueue(InterModEnqueueEvent event) {
-        log.debug("onIMCEnqueue({})", event);
-    }
-
-    private void onIMCProcess(InterModProcessEvent event) {
-        log.debug("onIMCProcess({})", event);
     }
 
     // endregion
